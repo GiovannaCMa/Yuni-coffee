@@ -1,0 +1,16 @@
+:root {
+  --ion-color-primary: #8B4513; /* marrom */
+  --ion-color-primary-shade: #7A3E0F;
+  --ion-color-primary-tint: #A0522D;
+}
+ion-tabs {
+  ion-tab-bar {
+    --background: #8B4513;
+    --color: #fff;
+    --color-selected: #FFD700;
+  }
+}
+ion-content {
+  --background: #fff; /* marrom */
+  --color:var(--background)
+}

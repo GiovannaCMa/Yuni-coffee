@@ -1,0 +1,7 @@
+{
+  "name": "coffe",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular-standalone"
+}
