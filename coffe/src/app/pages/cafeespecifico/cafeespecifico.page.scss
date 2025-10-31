@@ -3,14 +3,31 @@
   --ion-color-primary-shade: #7A3E0F;
   --ion-color-primary-tint: #A0522D;
 }
-ion-tabs {
-  ion-tab-bar {
+ion-footer {
+   ion-toolbar {
     --background: #8B4513;
     --color: #fff;
     --color-selected: #FFD700;
   }
+  ion-label{
+     --background: #8B4513;
+    --color: #fff;
+  }
+}
+
+ion-list {
+  --background: #fff 
+  --color: #8B4513;
 }
 ion-content {
-  --background: #fff; /* marrom */
-  --color:var(--background)
+  --background: #ffffff; /* fundo branco */
+  color: #000000; /* texto preto */
 }
+
+ion-item {
+  --background: #ffffff;
+  color: #000000;
+}
+
+
+
