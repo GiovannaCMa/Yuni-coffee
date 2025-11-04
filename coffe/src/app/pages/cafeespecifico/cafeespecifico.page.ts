@@ -2,43 +2,52 @@ import { Component, OnInit } from '@angular/core';
 import { IonicModule } from '@ionic/angular';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { cartOutline } from 'ionicons/icons';
-import { addIcons } from 'ionicons';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { Router } from '@angular/router'; // 🆕 Import do Router
 
 @Component({
-  selector: 'app-cafeespecifico',
-  templateUrl: './cafeespecifico.page.html',
-  styleUrls: ['./cafeespecifico.page.scss'],
+  selector: 'app-cafe-especifico',
+  templateUrl: './Cafeespecifico.page.html',
+  styleUrls: ['./Cafeespecifico.page.scss'],
   standalone: true,
   imports: [IonicModule, CommonModule, FormsModule, HttpClientModule]
 })
-export class CafeespecificoPage implements OnInit {
+export class CafeespecificoPage  implements OnInit {
   drinks: any[] = [];
-  drinkSelecionado: any = null;
 
-  constructor(private http: HttpClient) {
-    addIcons({ cartOutline });
-  }
+  // 🆕 Adicionando o Router aqui
+  constructor(private http: HttpClient, private router: Router) {}
 
   ngOnInit() {
-    // Buscar drinks da API (exemplo: categoria "Cocktail")
-    this.http.get('https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=Cocktail')
+    this.http
+      .get('https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=Coffee')
       .subscribe({
         next: (res: any) => {
-          // A API retorna { drinks: [...] }
-          this.drinks = res.drinks.map((drink: any, index: number) => ({
-            ...drink,
-            preco: (10 + index * 2).toFixed(2) // preço fictício
-          }));
+          const todosDrinks = res.drinks;
+
+          const proibidos = [
+             
+            'frappé', 'frappe', 'egg cream', 'just a moonmint',
+            'microwave hot cocoa', 'masala chai', 'la',
+            'melya', 'yo', 'coke'
+          ];
+
+          this.drinks = todosDrinks
+            .filter((drink: any) => {
+              const nome = (drink.strDrink || '').toLowerCase();
+              return !proibidos.some(p => nome.includes(p));
+            })
+            .map((drink: any, index: number) => ({
+              ...drink,
+              preco: (8 + index * 1.5).toFixed(2) //valor do drink
+            }));
         },
         error: (err) => console.error('Erro ao consumir API:', err)
       });
   }
 
-  selecionarDrink(drink: any) {
-    this.drinkSelecionado = drink;
-    console.log('Drink selecionado:', drink);
+  abrirDetalhe(drink: any) {
+    localStorage.setItem('drinkSelecionado', JSON.stringify(drink));
+    this.router.navigate(['/cafedetalhes']); // vai pra página de detalhes
   }
 }
-

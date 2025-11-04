@@ -1,38 +1,22 @@
-
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Café </ion-title>
+  </ion-toolbar>
+</ion-header>
 
 <ion-content>
-  <!-- Lista de cafés -->
-  <ion-list>
-    <ion-item *ngFor="let drink of drinks" (click)="selecionarDrink(drink)">
-      <ion-label>
-        <img [src]="drink.strDrinkThumb" alt="{{ drink.strDrink}} "> 
-        <h2>{{ drink.strDrink }}</h2>
-        <p>{{ drink.preco }}</p>
-      </ion-label>
-    </ion-item>
-  </ion-list>
+  <ion-grid>
+    <ion-row>
+      <ion-col size="6" *ngFor="let drink of drinks">
+        <!-- 🔹 troquei selecionarDrink(drink) por abrirDetalhe(drink) -->
+        <ion-card (click)="abrirDetalhe(drink)">
+          <img [src]="drink.strDrinkThumb" [alt]="drink.strDrink" />
+          <ion-card-header>
+            <ion-card-title>{{ drink.strDrink }}</ion-card-title>
+            <p>R$ {{ drink.preco }}</p>
+          </ion-card-header>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-content>
-<!-- Barra inferior com ícone do carrinho e preço -->
-<ion-footer>
-  <ion-toolbar>
-    <ion-buttons slot="end" class="flex items-center gap-2">
-      <!-- Ícone do carrinho -->
-      <ion-button>
-        <ion-icon name="cart-outline"></ion-icon>
-      </ion-button>
-
-      <!-- Título fixo -->
-      <ion-item *ngFor="let drink of drinks" (click)="selecionarDrink(drink)">
-      <ion-label>
-        <strong>Total:</strong>
-        <p>{{drink.preco}}</p>
-      </ion-label>
-</ion-item>
-      <!-- Preço do café selecionado -->
-      <ion-label *ngIf="drinkSelecionado" color="primary">
-        <strong>R$ {{ drinkSelecionado.preco || 12.90 }}</strong>
-      </ion-label>
-
-    </ion-buttons>
-  </ion-toolbar>
-</ion-footer>
