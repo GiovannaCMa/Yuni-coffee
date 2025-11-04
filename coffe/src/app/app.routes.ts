@@ -8,5 +8,15 @@ export const routes: Routes = [
   {
     path: 'cafeespecifico',
     loadComponent: () => import('./pages/cafeespecifico/cafeespecifico.page').then(m => m.CafeespecificoPage)
+  },
+  {
+    path: 'bebidasFrias',
+    loadComponent:() => import('./pages/bebidasFrias/bebidasFrias.page').then(m => m.BebidasFriasPage)
+  },
+  {
+    path: 'bebidasFriasDetalhes',
+    loadComponent: () =>
+      import('./pages/bebidasFrias/friosDetalhes/bebidasFriasDetalhes.page')
+        .then(m => m.BebidasFriasDetalhesPage)
   }
 ];

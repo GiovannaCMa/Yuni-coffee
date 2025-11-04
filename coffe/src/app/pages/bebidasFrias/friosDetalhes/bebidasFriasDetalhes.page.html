@@ -1,0 +1,19 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>{{ drink?.strDrink }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="drink">
+  <ion-card>
+    <img [src]="drink.strDrinkThumb" [alt]="drink.strDrink" />
+    <ion-card-header>
+      <ion-card-title>{{ drink.strDrink }}</ion-card-title>
+      <p>Preço: R$ {{ drink.preco }}</p>
+    </ion-card-header>
+  </ion-card>
+
+  <ion-button expand="block" color="primary" (click)="voltar()">
+    Voltar
+  </ion-button>
+</ion-content>
