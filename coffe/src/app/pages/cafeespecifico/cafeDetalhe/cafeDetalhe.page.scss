@@ -1,0 +1,20 @@
+:host{
+  --cor-detalhes:#9E887C;
+}
+ion-header, ion-toolbar {
+  --border-width: 0;          /* remove a borda inferior */
+  --border-color: transparent; /* garante que fique invisível */
+  box-shadow: none !important; /* tira qualquer sombra residual */
+}
+.material-symbols-outlined {
+  font-size: 28px;
+  color: var(--cor-detalhes); /* 💗 exemplo: rosa */
+  vertical-align: middle;
+  transition: color 0.2s ease;
+  padding: 7px;
+}
+.arrow{
+  border: 2px solid var(--cor-detalhes);
+  background-color: transparent;
+  border-radius: 50px;
+}

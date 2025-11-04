@@ -1,0 +1,22 @@
+
+<ion-header>
+  <button (click)="voltar()" expand="block" fill="clear" shape="round" class="arrow">
+    <span class="material-symbols-outlined">arrow_back</span>
+  </button>
+</ion-header>
+
+
+
+<ion-content *ngIf="drink">
+  <ion-card>
+    <img [src]="drink.strDrinkThumb" [alt]="drink.strDrink" />
+    <ion-card-header>
+      <ion-card-title>{{ drink.strDrink }}</ion-card-title>
+      <p>Preço: R$ {{ drink.preco }}</p>
+    </ion-card-header>
+  </ion-card>
+
+  <ion-button expand="block" color="primary" (click)="voltar()">
+    Voltar
+  </ion-button>
+</ion-content>

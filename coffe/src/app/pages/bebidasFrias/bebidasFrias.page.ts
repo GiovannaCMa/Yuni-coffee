@@ -6,13 +6,13 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { Router } from '@angular/router'; // 🆕 Import do Router
 
 @Component({
-  selector: 'app-cafe-especifico',
-  templateUrl: './Cafeespecifico.page.html',
-  styleUrls: ['./Cafeespecifico.page.scss'],
+  selector: 'app-bebidas-frias',
+  templateUrl: './bebidasFrias.page.html',
+  styleUrls: ['./bebidasFrias.page.scss'],
   standalone: true,
   imports: [IonicModule, CommonModule, FormsModule, HttpClientModule]
 })
-export class CafeespecificoPage  implements OnInit {
+export class BebidasFriasPage implements OnInit {
   drinks: any[] = [];
 
   // 🆕 Adicionando o Router aqui
@@ -20,13 +20,13 @@ export class CafeespecificoPage  implements OnInit {
 
   ngOnInit() {
     this.http
-      .get('https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=Coffee')
+      .get('https://www.thecocktaildb.com/api/json/v1/1/filter.php?a=Non_Alcoholic')
       .subscribe({
         next: (res: any) => {
           const todosDrinks = res.drinks;
 
           const proibidos = [
-             
+            'coffee', 'tea', 'chocolate', 'cappuccino',
             'frappé', 'frappe', 'egg cream', 'just a moonmint',
             'microwave hot cocoa', 'masala chai', 'la',
             'melya', 'yo', 'coke'
@@ -48,6 +48,6 @@ export class CafeespecificoPage  implements OnInit {
 
   abrirDetalhe(drink: any) {
     localStorage.setItem('drinkSelecionado', JSON.stringify(drink));
-    this.router.navigate(['/cafedetalhes']); // vai pra página de detalhes
+    this.router.navigate(['/bebidasFriasDetalhes']); // vai pra página de detalhes
   }
 }
