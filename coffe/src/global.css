@@ -30,3 +30,6 @@
 /* @import "@ionic/angular/css/palettes/dark.always.css"; */
 /* @import "@ionic/angular/css/palettes/dark.class.css"; */
 @import '@ionic/angular/css/palettes/dark.system.css';/*# sourceMappingURL=global.css.map */
+body{
+  background-color: #FFF4EF;
+}

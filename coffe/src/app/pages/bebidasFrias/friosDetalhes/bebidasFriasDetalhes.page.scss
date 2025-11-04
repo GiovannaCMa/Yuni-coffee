@@ -1,11 +1,20 @@
+@import url('https://fonts.googleapis.com/css2?family=Sansation:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap');
+
 :host{
   --cor-detalhes:#9E887C;
+  --cor-fundo: #FFF4EF;
+}
+ion-content{
+background-color: vaa;
 }
 ion-header, ion-toolbar {
-  --border-width: 0;          /* remove a borda inferior */
-  --border-color: transparent; /* garante que fique invisível */
-  box-shadow: none !important; /* tira qualquer sombra residual */
+  --background: #FFF4EF !important; /* ✅ cor de fundo do header */
+  --ion-background-color: #FFF4EF !important;
+  background: #FFF4EF !important;  /* força o fundo mesmo em Shadow DOM */
+  box-shadow: none;                 /* remove a sombra padrão */
+  --border-width: 0;                /* remove divisória */
 }
+
 .material-symbols-outlined {
   font-size: 28px;
   color: var(--cor-detalhes); /* 💗 exemplo: rosa */
@@ -17,4 +26,29 @@ ion-header, ion-toolbar {
   border: 2px solid var(--cor-detalhes);
   background-color: transparent;
   border-radius: 50px;
+  margin: 20px 10px 5px 40px;
+}
+img {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  width: 400px;
+  margin: 0 auto;
+  display: block;
+  border-radius: 90px;
+}
+ion-card {
+  box-shadow: none;
+}
+ion-content {
+  --background: #FFF4EF; /* muda o fundo do conteúdo */
+}
+ion-card {
+  background-color: transparent;
+}
+ion-card-title{
+  font-size: 30px;
+  font-family: "Sansation", sans-serif;
+  font-weight: 600;
 }
