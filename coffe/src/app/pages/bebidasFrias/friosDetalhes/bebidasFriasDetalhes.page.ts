@@ -25,5 +25,5 @@ export class BebidasFriasDetalhesPage implements OnInit {
   }
   voltar() {
     this.router.navigate(['/bebidasFrias']);
-}
+  }
 }

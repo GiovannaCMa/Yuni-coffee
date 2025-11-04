@@ -39,14 +39,13 @@ export class BebidasFriasPage implements OnInit {
             })
             .map((drink: any, index: number) => ({
               ...drink,
-              preco: (8 + index * 1.5).toFixed(2)
+              preco: (8 + index * 1.5).toFixed(2) //valor do drink
             }));
         },
         error: (err) => console.error('Erro ao consumir API:', err)
       });
   }
 
-  // 🆕 Nova função — substitui selecionarDrink
   abrirDetalhe(drink: any) {
     localStorage.setItem('drinkSelecionado', JSON.stringify(drink));
     this.router.navigate(['/bebidasFriasDetalhes']); // vai pra página de detalhes
