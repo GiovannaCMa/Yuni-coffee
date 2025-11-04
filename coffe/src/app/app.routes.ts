@@ -2,6 +2,11 @@ import { Routes } from '@angular/router';
 
 export const routes: Routes = [
   {
+    path: '',
+    loadComponent: () => import('./inicio/inicio.page').then( m => m.InicioPage)
+  },
+
+  {
     path: 'home',
     loadComponent: () => import('./home/home.page').then((m) => m.HomePage),
   },
@@ -14,5 +19,4 @@ export const routes: Routes = [
     path: 'cafeespecifico',
     loadComponent: () => import('./pages/cafeespecifico/cafeespecifico.page').then( m => m.CafeespecificoPage)
   },
-  // Removed duplicate 'home' route with loadChildren due to missing module file
 ];
