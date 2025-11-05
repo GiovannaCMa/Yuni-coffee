@@ -11,12 +11,19 @@ export const routes: Routes = [
   },
   {
     path: 'bebidasFrias',
-    loadComponent:() => import('./pages/bebidasFrias/bebidasFrias.page').then(m => m.BebidasFriasPage)
+    loadComponent: () =>
+      import('./pages/bebidasFrias/bebidasFrias.page').then(m => m.BebidasFriasPage)
   },
+
   {
     path: 'bebidasFriasDetalhes',
     loadComponent: () =>
       import('./pages/bebidasFrias/friosDetalhes/bebidasFriasDetalhes.page')
         .then(m => m.BebidasFriasDetalhesPage)
+  },
+  {
+    path: 'cafedetalhes',
+    loadComponent: () =>
+      import('./pages/cafeespecifico/cafeDetalhe/cafeDetalhe.page').then(m => m.CafeDetalhePage )
   }
 ];
