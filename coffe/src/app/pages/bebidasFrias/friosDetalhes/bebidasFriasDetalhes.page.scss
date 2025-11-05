@@ -22,18 +22,40 @@ ion-header, ion-toolbar {
   transition: color 0.2s ease;
   padding: 7px;
 }
-.arrow{
+/* .arrow{
   border: 2px solid var(--cor-detalhes);
   background-color: transparent;
   border-radius: 50px;
   margin: 20px 10px 5px 40px;
 }
-img {
+.arrow img{
+  width: 30px;
+  margin: 4px;
+} */
+
+.arrow {
+  border: 2px solid var(--cor-detalhes);
+  background-color: transparent;
+  border-radius: 50%;
+  margin: 20px 10px 5px 40px;
+  width: 45px;  /* adiciona largura fixa */
+  height: 45px; /* adiciona altura fixa */
+  padding: 0;   /* remove padding */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.arrow img {
+  width: 30px;  /* ajusta tamanho da imagem */
+  margin: 0;    /* remove margens */
+}
+.container_imagem img {
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
-  width: 400px;
+  width: 300px;
   margin: 0 auto;
   display: block;
   border-radius: 90px;
@@ -51,4 +73,22 @@ ion-card-title{
   font-size: 30px;
   font-family: "Sansation", sans-serif;
   font-weight: 600;
+}
+.yc-chip {
+  border-radius: 18px;
+  --background: #fff;
+  --color: #6b4b3a;
+  border: 2px solid #e6d6cf;
+  flex: 0 0 auto;
+}
+.yc-chip--active {
+  --background: #6b4b3a;
+  --color: #fff;
+}
+.descricao {
+  font-size: 16px;
+  color: #444;
+  margin: 16px;
+  text-align: center;
+  line-height: 1.4;
 }
