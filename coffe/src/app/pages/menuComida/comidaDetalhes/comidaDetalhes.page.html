@@ -1,0 +1,42 @@
+<ion-header>
+  <button (click)="voltar()" expand="block" fill="clear" shape="round" class="arrow">
+    <span class="material-symbols-outlined">arrow_back</span>
+  </button>
+</ion-header>
+
+<ion-content *ngIf="comida">
+  <ion-card class="container_imagem">
+    <img [src]="comida.strMealThumb" [alt]="comida.strMeal" />
+    <ion-card-header>
+      <ion-card-title>{{ comida.strMeal }}</ion-card-title>
+      <ion-card-subtitle>{{ comida.strCategory }} | {{ comida.strArea }}</ion-card-subtitle>
+    </ion-card-header>
+  </ion-card>
+
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Ingredientes</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-list>
+        <ion-item *ngFor="let item of ingredientes">
+          {{ item }}
+        </ion-item>
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Modo de Preparo</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <p style="white-space: pre-wrap;">{{ comida.strInstructions }}</p>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-button expand="block" color="primary" (click)="voltar()" class="ion-margin">
+    Voltar
+  </ion-button>
+
+</ion-content>
