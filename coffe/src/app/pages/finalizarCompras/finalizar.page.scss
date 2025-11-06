@@ -53,11 +53,13 @@ ion-item {
   --background: transparent !important;
 }
 
-ion-icon {
- --background: transparent;
-  --color: #fff;
-  margin-bottom: 10px;
+.icon-svg {
+  width: 20px;
+  height: 20px;
+  filter: invert(1); /* deixa branco, se for ícone preto */
+  margin-right: 8px;
 }
+
 
 ion-input {
   color: #fff !important;
