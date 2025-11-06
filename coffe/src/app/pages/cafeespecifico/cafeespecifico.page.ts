@@ -7,8 +7,8 @@ import { Router } from '@angular/router'; // 🆕 Import do Router
 
 @Component({
   selector: 'app-cafe-especifico',
-  templateUrl: './Cafeespecifico.page.html',
-  styleUrls: ['./Cafeespecifico.page.scss'],
+  templateUrl: './cafeespecifico.page.html',
+  styleUrls: ['./cafeespecifico.page.scss'],
   standalone: true,
   imports: [IonicModule, CommonModule, FormsModule, HttpClientModule]
 })

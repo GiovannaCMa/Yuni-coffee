@@ -1,0 +1,43 @@
+<ion-content [fullscreen]="true">
+
+  <div class="finalizar-container">
+
+    <!-- LOGO -->
+    <img src="../../assets/icon/logo.png" class="logo" />
+
+    <!-- TÍTULO -->
+    <ion-toolbar color="transparent" class="toolbar">
+      <ion-buttons slot="start">
+        <ion-back-button defaultHref="/menu"></ion-back-button>
+      </ion-buttons>
+      <ion-title>Finalizar pedido</ion-title>
+    </ion-toolbar>
+
+    <!-- MENSAGEM PRINCIPAL -->
+    <div class="mensagem">
+      Agora dirija-se ao caixa para que você possa pagar o seu pedido!
+    </div>
+
+    <!-- IMAGEM DO GATO -->
+    <img src="../../../assets/icon/image 2.png" class="gato-img" />
+
+    <!-- CAMPO DE COMANDA -->
+    <div class="mensagem">
+      Por favor, nos informe sua comanda:
+    </div>
+
+<ion-item lines="none" class="comanda-input">
+  <ion-icon name="pencil-outline" slot="start"></ion-icon>
+  <ion-input placeholder="Digite aqui" [(ngModel)]="comanda"></ion-input>
+</ion-item>
+
+
+    <ion-icon name="home-outline"></ion-icon>
+
+    <!-- BOTÃO -->
+    <ion-button expand="block" class="finalizar-button" (click)="finalizarPedido()">
+      Finalizar
+    </ion-button>
+
+  </div>
+</ion-content>

@@ -40,5 +40,9 @@ export const routes: Routes = [
 
     // 2. O componente que deve ser carregado
     loadComponent: () => import('./pages/menuComida/comidaDetalhes/comidaDetalhes.page').then(m => m.ComidaDetalhesPage)
-  }
+  },
+  {
+    path: 'finalizarCompras',
+    loadComponent: () => import('./pages/finalizarCompras/finalizar.page').then( m => m.FinalizarPedidoPage)
+  },
 ];

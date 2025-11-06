@@ -1,0 +1,73 @@
+ion-content {
+  --background: url("../../../assets/icon/fundo1.png") no-repeat center center /
+    cover;
+}
+
+.finalizar-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 15px;
+  gap: 10px;
+  color: #fff;
+}
+
+.logo {
+  width: 150px;
+  margin-top: 5px;
+}
+
+ion-toolbar {
+  --background: transparent;
+  --color: #fff;
+  margin-bottom: 10px;
+}
+
+.mensagem {
+  margin: 0;
+  background: #ffffff;
+  color: #4b2b17;
+  width: 90%;
+  padding: 12px 18px;
+  border-radius: 18px;
+  text-align: center;
+  font-size: 15px;
+  font-weight: 500;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+.gato-img {
+  width: 90%;
+  margin: 0;
+}
+
+.comanda-input {
+  width: 90%;
+  --background: #4b2b17 !important;
+  background: transparent;
+  border: 2px solid #fff;
+  border-radius: 12px;
+}
+
+ion-item {
+  --background: transparent !important;
+}
+
+ion-icon {
+ --background: transparent;
+  --color: #fff;
+  margin-bottom: 10px;
+}
+
+ion-input {
+  color: #fff !important;
+  font-size: 14px;
+  --placeholder-color: #ccc !important;
+}
+.finalizar-button {
+  width: 50%;
+  --background: #4b2b17 !important;
+  padding: 1px 1px;
+  border: 2px solid #fff;
+  border-radius: 12px;
+}
