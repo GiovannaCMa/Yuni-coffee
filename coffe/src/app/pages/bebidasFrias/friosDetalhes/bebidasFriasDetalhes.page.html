@@ -1,9 +1,3 @@
-<!-- <ion-header>
-  <ion-toolbar>
-    <ion-title>{{ drink?.strDrink }}</ion-title>
-  </ion-toolbar>
-</ion-header> -->
-
 <ion-header>
   <button (click)="voltar()" expand="block" fill="clear" shape="round" class="arrow">
     <img src="../../../../assets/icon/Seta.png" alt="seta" class="">
@@ -14,20 +8,58 @@
   <ion-card class="container_imagem">
     <img [src]="drink.strDrinkThumb" [alt]="drink.strDrink" />
 
-    <ion-chip class="yc-chip">
-      <ion-icon name="wine-outline"></ion-icon>
-      <ion-label> Fria</ion-label>
-    </ion-chip>
+    <div class="informacoes">
 
-    <p class="descricao">{{ descricao }}</p>
+      <ion-chip class="yc-chip yc-chip-avaliacao">
+        <ion-icon name="star-outline"></ion-icon>
+        <ion-label> {{ avaliacao.toFixed(1) }} </ion-label>
+      </ion-chip>
 
-    <ion-card-header>
-      <ion-card-title>{{ drink.strDrink }}</ion-card-title>
+      <ion-chip class="yc-chip">
+        <ion-icon name="wine-outline"></ion-icon>
+        <ion-label> Fria</ion-label>
+      </ion-chip>
+
+    </div>
+
+    <div class="titulos">
+        <ion-card-title>{{ drink.strDrink }}</ion-card-title>
+        <h2>Tamanho</h2>
+    </div>
+
+    <div class="tamanhos">
+      <ion-chip
+        class="yc-chip"
+        [ngClass]="{ 'ativo': tamanhoSelecionado === 'Pequeno' }">
+        <ion-icon name="wine-outline"></ion-icon>
+        <ion-label>Pequeno</ion-label>
+      </ion-chip>
+
+      <ion-chip
+        class="yc-chip"
+        [ngClass]="{ 'ativo': tamanhoSelecionado === 'Médio' }">
+        <ion-icon name="wine-outline"></ion-icon>
+        <ion-label>Médio</ion-label>
+      </ion-chip>
+
+      <ion-chip
+        class="yc-chip"
+        [ngClass]="{ 'ativo': tamanhoSelecionado === 'Grande' }">
+        <ion-icon name="wine-outline"></ion-icon>
+        <ion-label>Grande</ion-label>
+      </ion-chip>
+    </div>
+    <div class="descricao">
+     <p class="descricao">{{ descricao }}</p>
       <p>Preço: R$ {{ drink.preco }}</p>
-    </ion-card-header>
+    </div>
+
+
+
   </ion-card>
 
   <ion-button expand="block" color="primary" (click)="voltar()">
     Voltar
   </ion-button>
 </ion-content>
+
