@@ -7,7 +7,7 @@ export const routes: Routes = [
   },
   {
     path: 'cafeespecifico',
-    loadComponent: () => import('./pages/Cafeespecifico/Cafeespecifico.page').then(m => m.CafeespecificoPage)
+    loadComponent: () => import('./pages/cafeespecifico/cafeespecifico.page').then(m => m.CafeespecificoPage)
   },
   {
     path: 'bebidasFrias',
@@ -24,6 +24,21 @@ export const routes: Routes = [
   {
     path: 'cafedetalhes',
     loadComponent: () =>
-      import('./pages/Cafeespecifico/cafeDetalhe/cafeDetalhe.page').then(m => m.CafeDetalhePage )
+      import('./pages/cafeespecifico/cafeDetalhe/cafeDetalhe.page').then(m => m.CafeDetalhePage )
+  },
+  {
+    path: 'menuComida',
+    loadComponent: () => import('./pages/menuComida/menuComida.page').then( m => m.MenuComidaPage)
+  },
+  {
+    path: 'comidaDetalhes',
+    loadComponent: () => import('./pages/menuComida/comidaDetalhes/comidaDetalhes.page').then( m => m.ComidaDetalhesPage)
+  },
+  {
+    // 1. O caminho que deve ser ativado
+    path: 'comidaDetalhes/:id',
+
+    // 2. O componente que deve ser carregado
+    loadComponent: () => import('./pages/menuComida/comidaDetalhes/comidaDetalhes.page').then(m => m.ComidaDetalhesPage)
   }
 ];
