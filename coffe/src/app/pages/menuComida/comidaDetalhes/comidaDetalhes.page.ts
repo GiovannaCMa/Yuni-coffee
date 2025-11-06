@@ -19,28 +19,28 @@ export class ComidaDetalhesPage implements OnInit {
   descricaoSelecionada: any = null;
 
   // 💖 Descrições e avaliações personalizadas
-  descricaoPersonalizada: any = {
-    "Bread omelette": {
-      descricao: "Drink sem álcool, doce e frutado, feito com sucos de abacaxi, laranja e groselha. Refrescante e vibrante, perfeito para dias quentes.",
-      avaliacao: 4.5
-    },
-    "Brilho residual": {
-      descricao: "Refrescante e doce, com notas suaves de frutas cítricas 🍊",
-      avaliacao: 4.8
-    },
-    "Lemonade": {
-      descricao: "Clássico e equilibrado — o sabor azedinho do limão com um toque de doçura 🍋",
-      avaliacao: 5.0
-    },
-    "Alice Cocktail": {
-      descricao: "Drink sem álcool, doce e cremoso, preparado com suco de frutas e um toque suave de leite ou creme. De cor rosada e sabor envolvente, é refrescante e delicado, perfeito para quem busca uma bebida leve e charmosa.",
-      avaliacao: 4.7
-    },
-    "Aloha Fruit punch": {
-      descricao: "Drink sem álcool, tropical e vibrante, feito com uma mistura de sucos de laranja, abacaxi e groselha. Doce, frutado e colorido, traz o sabor do verão em cada gole — perfeito para momentos leves e cheios de energia.",
-      avaliacao: 4.5
-    }
-  };
+descricaoPersonalizada: any = {
+  "Bread omelette": {
+    descricao: "Pão dourado e fofinho recheado com omelete leve e temperada, perfeito para começar o dia com sabor e energia.",
+    avaliacao: 4.5
+  },
+  "Breakfast Potatoes": {
+    descricao: "Batatinhas douradas por fora e macias por dentro, temperadas com ervas e um toque de manteiga — o acompanhamento ideal para qualquer manhã.",
+    avaliacao: 4.6
+  },
+  "Fruit and Cream Cheese Breakfast Pastries": {
+    descricao: "Massa folhada delicada, recheada com cream cheese cremoso e frutas frescas — uma combinação irresistível de doçura e leveza.",
+    avaliacao: 4.9
+  },
+  "Apple & Blackberry Crumble": {
+    descricao: "Maçãs e amoras assadas sob uma cobertura crocante amanteigada — um clássico britânico que aquece o coração.",
+    avaliacao: 4.8
+  },
+  "Apple Frangipane Tart": {
+    descricao: "Tarte de maçã com recheio de creme de amêndoas e toque sutil de baunilha, equilibrando doçura e sofisticação em cada mordida.",
+    avaliacao: 4.7
+  }};
+
 
   constructor(
     private router: Router,
