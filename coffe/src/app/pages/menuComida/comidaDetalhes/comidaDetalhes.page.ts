@@ -1,80 +1,96 @@
 import { Component, OnInit } from '@angular/core';
 import { IonicModule } from '@ionic/angular';
 import { CommonModule, Location } from '@angular/common';
-import { Router, ActivatedRoute } from '@angular/router'; // ActivatedRoute já está importado
+import { Router, ActivatedRoute } from '@angular/router';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 
 @Component({
-  selector: 'app-comida-detalhes',
-  standalone: true,
-  imports: [IonicModule, CommonModule, HttpClientModule],
-  templateUrl: './comidaDetalhes.page.html',
-  styleUrls: ['./comidaDetalhes.page.scss']
+  selector: 'app-comida-detalhes',
+  standalone: true,
+  imports: [IonicModule, CommonModule, HttpClientModule],
+  templateUrl: './comidaDetalhes.page.html',
+  styleUrls: ['./comidaDetalhes.page.scss']
 })
 export class ComidaDetalhesPage implements OnInit {
 
-  comida: any;
-  ingredientes: string[] = [];
-  // Variável para guardar o preço vindo da URL
-  preco: string | null = null;
+  comida: any;
+  ingredientes: string[] = [];
+  preco: string | null = null;
+  descricaoSelecionada: any = null;
 
-  constructor(
-    private router: Router,
-    private route: ActivatedRoute, // Para ler o ID e o queryParam da URL
-    private http: HttpClient,
-    private location: Location
-  ) {}
+  // 💖 Descrições e avaliações personalizadas
+  descricaoPersonalizada: any = {
+    "Bread omelette": {
+      descricao: "Drink sem álcool, doce e frutado, feito com sucos de abacaxi, laranja e groselha. Refrescante e vibrante, perfeito para dias quentes.",
+      avaliacao: 4.5
+    },
+    "Brilho residual": {
+      descricao: "Refrescante e doce, com notas suaves de frutas cítricas 🍊",
+      avaliacao: 4.8
+    },
+    "Lemonade": {
+      descricao: "Clássico e equilibrado — o sabor azedinho do limão com um toque de doçura 🍋",
+      avaliacao: 5.0
+    },
+    "Alice Cocktail": {
+      descricao: "Drink sem álcool, doce e cremoso, preparado com suco de frutas e um toque suave de leite ou creme. De cor rosada e sabor envolvente, é refrescante e delicado, perfeito para quem busca uma bebida leve e charmosa.",
+      avaliacao: 4.7
+    },
+    "Aloha Fruit punch": {
+      descricao: "Drink sem álcool, tropical e vibrante, feito com uma mistura de sucos de laranja, abacaxi e groselha. Doce, frutado e colorido, traz o sabor do verão em cada gole — perfeito para momentos leves e cheios de energia.",
+      avaliacao: 4.5
+    }
+  };
 
-  ngOnInit() {
-    // Pega o 'id' que foi enviado pela URL
-    const id = this.route.snapshot.paramMap.get('id');
-   
-    // Pega o 'preco' dos query params
-    this.preco = this.route.snapshot.queryParamMap.get('preco');
-    // Agora você pode usar {{ preco }} ou {{ preco | currency: 'BRL' }} no seu HTML
+  constructor(
+    private router: Router,
+    private route: ActivatedRoute,
+    private http: HttpClient,
+    private location: Location
+  ) {}
 
-    if (!id) {
-      console.error('ID não encontrado!');
-      this.voltar();
-      return;
-    }
+  ngOnInit() {
+    const id = this.route.snapshot.paramMap.get('id');
+    this.preco = this.route.snapshot.queryParamMap.get('preco');
 
-    // Usa o ID para buscar os detalhes completos na API
-    const url = `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`;
+    if (!id) {
+      console.error('ID não encontrado!');
+      this.voltar();
+      return;
+    }
 
-    this.http.get(url).subscribe({
-      next: (res: any) => {
-        if (res.meals && res.meals.length > 0) {
-          this.comida = res.meals[0]; // Guarda o objeto completo
-          this.processarIngredientes(); // Chama a função para listar ingredientes
-        } else {
-          this.voltar();
-        }
-      },
-      error: (err) => {
-        console.error('Erro ao buscar detalhes da comida:', err);
-        this.voltar();
-      }
-    });
-  }
+    const url = `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`;
 
-  // Função para processar os ingredientes
-  processarIngredientes() {
-    if (!this.comida) return;
+    this.http.get(url).subscribe({
+      next: (res: any) => {
+        if (res.meals && res.meals.length > 0) {
+          this.comida = res.meals[0];
+          this.setDescricaoPersonalizada(); // ⚡ chama aqui
+        } else {
+          this.voltar();
+        }
+      },
+      error: (err) => {
+        console.error('Erro ao buscar detalhes da comida:', err);
+        this.voltar();
+      }
+    });
+  }
 
-    this.ingredientes = [];
-    for (let i = 1; i <= 20; i++) {
-      const ingrediente = this.comida[`strIngredient${i}`];
-      const medida = this.comida[`strMeasure${i}`];
 
-      if (ingrediente && ingrediente.trim()) {
-        this.ingredientes.push(`${medida} ${ingrediente}`);
-      }
-    }
-  }
 
-  // Função 'voltar()'
-  voltar() {
-    this.location.back(); // Simplesmente volta para a tela anterior
-  }
+  // ✨ Define descrição personalizada se existir
+  setDescricaoPersonalizada() {
+    const nome = this.comida?.strMeal;
+    if (nome && this.descricaoPersonalizada[nome]) {
+      this.descricaoSelecionada = this.descricaoPersonalizada[nome];
+    } else {
+      this.descricaoSelecionada = null;
+    }
+  }
+
+  // ⬅️ Voltar
+  voltar() {
+    this.location.back();
+  }
 }
