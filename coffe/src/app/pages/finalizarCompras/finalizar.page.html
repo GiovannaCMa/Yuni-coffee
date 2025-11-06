@@ -1,7 +1,5 @@
 <ion-content [fullscreen]="true">
-
   <div class="finalizar-container">
-
     <!-- LOGO -->
     <img src="../../assets/icon/logo.png" class="logo" />
 
@@ -22,22 +20,25 @@
     <img src="../../../assets/icon/image 2.png" class="gato-img" />
 
     <!-- CAMPO DE COMANDA -->
-    <div class="mensagem">
-      Por favor, nos informe sua comanda:
-    </div>
+    <div class="mensagem">Por favor, nos informe sua comanda:</div>
 
-<ion-item lines="none" class="comanda-input">
-   <img src="../../../assets/icon/pencil-outline.svg" class="icon-svg" alt="Caneta" slot="start" />
-  <ion-input placeholder="Digite aqui" [(ngModel)]="comanda"></ion-input>
-</ion-item>
-
+    <ion-item lines="none" class="comanda-input">
+      <img
+        src="../../../assets/icon/pencil-outline.svg"
+        class="icon-svg"
+        alt="Caneta"
+        slot="start"/>
+      <ion-input placeholder="Digite aqui" [(ngModel)]="comanda"></ion-input>
+    </ion-item>
 
     <ion-icon name="home-outline"></ion-icon>
 
     <!-- BOTÃO -->
-    <ion-button expand="block" class="finalizar-button" (click)="finalizarPedido()">
+    <ion-button
+      expand="block"
+      class="finalizar-button"
+      (click)="finalizarPedido()">
       Finalizar
     </ion-button>
-
   </div>
 </ion-content>
