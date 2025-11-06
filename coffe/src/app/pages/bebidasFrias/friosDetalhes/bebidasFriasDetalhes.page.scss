@@ -8,47 +8,118 @@ ion-content{
 background-color: vaa;
 }
 ion-header, ion-toolbar {
-  --background: #FFF4EF !important; /* ✅ cor de fundo do header */
+  --background: #FFF4EF !important;
   --ion-background-color: #FFF4EF !important;
-  background: #FFF4EF !important;  /* força o fundo mesmo em Shadow DOM */
-  box-shadow: none;                 /* remove a sombra padrão */
-  --border-width: 0;                /* remove divisória */
+  background: #FFF4EF !important;
+  box-shadow: none;
+  --border-width: 0;
 }
 
 .material-symbols-outlined {
   font-size: 28px;
-  color: var(--cor-detalhes); /* 💗 exemplo: rosa */
+  color: var(--cor-detalhes);
   vertical-align: middle;
   transition: color 0.2s ease;
   padding: 7px;
 }
-.arrow{
+
+
+.arrow {
   border: 2px solid var(--cor-detalhes);
   background-color: transparent;
-  border-radius: 50px;
+  border-radius: 50%;
   margin: 20px 10px 5px 40px;
+  width: 45px;
+  height: 45px;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
-img {
+
+.arrow img {
+  width: 30px;
+  margin: 0;
+}
+.container_imagem img {
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
-  width: 400px;
+  width: 300px;
   margin: 0 auto;
   display: block;
-  border-radius: 90px;
+  border-radius: 80px;
 }
 ion-card {
   box-shadow: none;
 }
 ion-content {
-  --background: #FFF4EF; /* muda o fundo do conteúdo */
+  --background: #FFF4EF;
 }
 ion-card {
   background-color: transparent;
 }
 ion-card-title{
   font-size: 30px;
-  font-family: "Sansation", sans-serif;
-  font-weight: 600;
+  font-family: "Momo Trust Display", sans-serif;
+  font-weight: 400;
 }
+.yc-chip {
+  border-radius: 18px;
+  --background: transparent;
+  --color: #6b4b3a;
+  border: 2.2px solid #e6d6cf;
+  flex: 0 0 auto;
+}
+.yc-chip--active {
+  --background: #6b4b3a;
+  --color: #fff;
+}
+.descricao {
+  font-size: 16px;
+  color: #444;
+  margin: 16px;
+  text-align: center;
+  line-height: 1.4;
+}
+.informacoes{
+  display: flex;
+  gap: 300px;
+  justify-content: center;
+  align-items: center;
+  margin: 15px;
+}
+ion-icon{
+  --color:#6b4b3a;
+}
+.yc-chip-avaliacao{
+  background-color: transparent;
+  border: none;
+}
+.titulos{
+  margin: 25px;
+  color: black;
+}
+.titulos h2{
+  font-family: "Sansation", sans-serif;
+  font-weight: 400;
+  color: black;
+}
+.tamanhos{
+  display: flex;
+  justify-content: space-around;
+}
+
+.yc-chip.ativo {
+  background-color: #6b4b3a;
+  color: #fff;
+  border-color: #6b4b3a;
+  transform: scale(1.05);
+  transition: 0.2s;
+
+}
+.yc-chip.ativo ion-icon{
+  color: #FFF4EF;
+}
+

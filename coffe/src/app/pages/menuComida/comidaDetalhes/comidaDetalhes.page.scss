@@ -1,0 +1,141 @@
+/* Usando as cores e fontes do seu design (marrom e bege) */
+:host {
+  --ion-background-color: #FDF8F3; // Um bege/branco suave de cafeteria
+  --cor-marrom-escuro: #4A2E20;
+  --cor-marrom-claro: #A1887F;
+  --cor-primaria: #8D5A3F; // Um marrom primário (ajuste se tiver)
+}
+
+ion-header {
+  ion-toolbar {
+    --background: transparent;
+  }
+  .btn-voltar {
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 50%;
+    width: 36px;
+    height: 36px;
+    margin-left: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    ion-icon {
+      font-size: 20px;
+      color: #333;
+    }
+  }
+}
+
+// Faz o conteúdo "vazar" para cima, atrás do header
+ion-content {
+  --background: var(--ion-background-color);
+}
+
+.hero-image-container {
+  width: 100%;
+  height: 300px;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    // Bordas arredondadas só embaixo, como no design de Cappuccino
+    border-radius: 0 0 30px 30px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+}
+
+.info-container {
+  padding: 24px;
+
+  .titulo {
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--cor-marrom-escuro);
+    margin-bottom: 24px;
+  }
+
+  .subtitulo {
+    font-size: 18px;
+    font-weight: 600;
+    color: #333;
+    margin-top: 20px;
+    margin-bottom: 10px;
+  }
+
+  .descricao {
+    font-size: 15px;
+    color: var(--cor-marrom-claro);
+    line-height: 1.5;
+  }
+}
+
+.ingredientes-lista {
+  background: transparent;
+  ion-item {
+    --background: transparent;
+    --padding-start: 0;
+    --inner-padding-end: 0;
+
+    ion-icon {
+      font-size: 10px;
+      color: var(--cor-primaria);
+      margin-right: 8px;
+    }
+    ion-label {
+      font-size: 15px;
+      color: var(--cor-marrom-claro);
+    }
+  }
+}
+
+// Footer
+ion-footer {
+  // Isso remove a linha feia do footer
+  &::before {
+    display: none;
+  }
+
+  .footer-toolbar {
+    --background: #FFFFFF;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 24px;
+    height: 90px;
+    border-radius: 24px 24px 0 0;
+    box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.08);
+  }
+}
+
+.preco-container {
+  display: flex;
+  flex-direction: column;
+
+  .label {
+    font-size: 14px;
+    color: #777;
+    font-weight: 500;
+  }
+  .valor {
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--cor-primaria);
+  }
+}
+
+.btn-carrinho {
+  background: var(--cor-marrom-escuro);
+  color: #FFF;
+  width: 60px;
+  height: 60px;
+  border-radius: 18px; // Arredondado como no design
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  ion-icon {
+    font-size: 28px;
+  }
+}

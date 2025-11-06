@@ -27,8 +27,18 @@ export const routes: Routes = [
       import('./pages/cafeespecifico/cafeDetalhe/cafeDetalhe.page').then(m => m.CafeDetalhePage )
   },
   {
-  path: 'finalizarCompras',
-  loadComponent: () =>
-    import('./pages/finalizarCompras/finalizar.page').then(m => m.FinalizarPedidoPage)
-},
+    path: 'menuComida',
+    loadComponent: () => import('./pages/menuComida/menuComida.page').then( m => m.MenuComidaPage)
+  },
+  {
+    path: 'comidaDetalhes',
+    loadComponent: () => import('./pages/menuComida/comidaDetalhes/comidaDetalhes.page').then( m => m.ComidaDetalhesPage)
+  },
+  {
+    // 1. O caminho que deve ser ativado
+    path: 'comidaDetalhes/:id',
+
+    // 2. O componente que deve ser carregado
+    loadComponent: () => import('./pages/menuComida/comidaDetalhes/comidaDetalhes.page').then(m => m.ComidaDetalhesPage)
+  }
 ];
