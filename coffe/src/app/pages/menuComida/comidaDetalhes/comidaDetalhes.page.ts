@@ -16,7 +16,8 @@ export class ComidaDetalhesPage implements OnInit {
   comida: any;
   preco: string | null = null;
   descricaoSelecionada: any = null;
-  porcaoSelecionada: string = ''; // 🍽️ adicionado campo de porção
+  porcaoSelecionada: string = '';
+  volumeSelecionado: string | null = null;
 
   // 💖 Descrições e avaliações personalizadas
   descricaoPersonalizada: any = {
@@ -51,7 +52,7 @@ export class ComidaDetalhesPage implements OnInit {
     "Apple Frangipan Tart": "medio"
   };
 
-  // 📦 Volumes padrão (mapeamento separado do volume selecionado)
+  // 📦 Volumes padrão
   volumeDefinido: any = {
     "Battenberg Cake": "250 g",
     "Blueberry & lemon friands": "300 g",
@@ -81,12 +82,12 @@ export class ComidaDetalhesPage implements OnInit {
         if (res.meals && res.meals.length > 0) {
           this.comida = res.meals[0];
 
-          // ⚡ Define porção automaticamente
           const nome = this.comida.strMeal;
           this.porcaoSelecionada = this.porcoesPadrao[nome] || '1 porção';
 
-          // ⚡ Define descrição personalizada
+          // ⚡ Define descrição e volume personalizados
           this.setDescricaoPersonalizada();
+          this.setVolumeSelecionado();
         } else {
           this.voltar();
         }
@@ -108,13 +109,15 @@ export class ComidaDetalhesPage implements OnInit {
     }
   }
 
+  // 📦 Define volume se existir
   setVolumeSelecionado() {
     const nome = this.comida?.strMeal;
     if (nome && this.volumeDefinido[nome]) {
       this.volumeSelecionado = this.volumeDefinido[nome];
     } else {
       this.volumeSelecionado = null;
-    }}
+    }
+  }
 
   // ⬅️ Voltar
   voltar() {

@@ -1,6 +1,6 @@
 <ion-header>
   <button (click)="voltar()" expand="block" fill="clear" shape="round" class="arrow">
-    <img src="../../../../assets/icon/Seta.png" alt="seta" class="">
+    <img src="../../../../assets/icon/Seta.png" alt="seta">
   </button>
 </ion-header>
 
@@ -8,6 +8,7 @@
   <ion-card class="comida-card">
     <img [src]="comida.strMealThumb" [alt]="comida.strMeal" class="imagem-comida" />
 
+    <!-- ⭐ Avaliação -->
     <div class="avaliacao">
       <ion-icon name="star-outline"></ion-icon>
       <span>{{ descricaoSelecionada?.avaliacao || '0.0' }}</span>
@@ -19,21 +20,15 @@
     <div class="secao">
       <h2>Porção</h2>
       <div class="opcoes">
-        <ion-chip
-          class="yc-chip"
-          [ngClass]="{ ativo: porcaoSelecionada === 'pequeno' }">
+        <ion-chip class="yc-chip" [ngClass]="{ ativo: porcaoSelecionada === 'pequeno' }">
           <ion-label>Individual</ion-label>
         </ion-chip>
 
-        <ion-chip
-          class="yc-chip"
-          [ngClass]="{ ativo: porcaoSelecionada === 'medio' }">
+        <ion-chip class="yc-chip" [ngClass]="{ ativo: porcaoSelecionada === 'medio' }">
           <ion-label>Dupla</ion-label>
         </ion-chip>
 
-        <ion-chip
-          class="yc-chip"
-          [ngClass]="{ ativo: porcaoSelecionada === 'grande' }">
+        <ion-chip class="yc-chip" [ngClass]="{ ativo: porcaoSelecionada === 'grande' }">
           <ion-label>Familiar</ion-label>
         </ion-chip>
       </div>
@@ -42,24 +37,23 @@
     <!-- 🥗 Descrição -->
     <div class="secao">
       <h2>Sobre</h2>
-      <p>{{ descricaoSelecionada?.descricao || comida.strInstructions }}</p>
+      <p *ngIf="descricaoSelecionada">
+        {{ descricaoSelecionada.descricao }}
+      </p>
+      <p *ngIf="!descricaoSelecionada">
+        Descrição indisponível no momento.
+      </p>
     </div>
-
-
 
     <!-- 💰 Preço -->
     <div class="preco">
       <h3>R$ {{ preco }}</h3>
     </div>
 
-    <div class="volume">
-      <h2>Sobre</h2>
-      <p>{{ volumeSelecionado?.volume || comida.strInstructions }}</p>
+    <!-- 📦 Volume -->
+    <div class="volume" *ngIf="volumeSelecionado">
+      <h2>Peso {{ volumeSelecionado }}</h2>
     </div>
 
-
-    <!-- (Botão de adicionar vem depois) -->
   </ion-card>
-
 </ion-content>
-
