@@ -14,7 +14,6 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 export class ComidaDetalhesPage implements OnInit {
 
   comida: any;
-  ingredientes: string[] = [];
   preco: string | null = null;
   descricaoSelecionada: any = null;
   porcaoSelecionada: string = ''; // 🍽️ adicionado campo de porção
@@ -26,7 +25,7 @@ export class ComidaDetalhesPage implements OnInit {
       avaliacao: 4.5
     },
     "Battenberg Cake": {
-      descricao: "Batatinhas douradas por fora e macias por dentro, temperadas com ervas e um toque de manteiga — o acompanhamento ideal para qualquer manhã.",
+      descricao: "Camadas fofinhas de bolo amanteigado nas cores rosa e amarela, envoltas em uma fina camada de marzipã. Um clássico britânico cheio de charme!",
       avaliacao: 4.6
     },
     "Fruit and Cream Cheese Breakfast Pastries": {
@@ -34,22 +33,28 @@ export class ComidaDetalhesPage implements OnInit {
       avaliacao: 4.9
     },
     "Blueberry & lemon friands": {
-      descricao: "Maçãs e amoras assadas sob uma cobertura crocante amanteigada — um clássico britânico que aquece o coração.",
+      descricao: "Bolinhos delicados com mirtilos suculentos e toque cítrico de limão, macios por dentro e levemente crocantes por fora.",
       avaliacao: 4.8
     },
     "Carrot Cake": {
-      descricao: "Tarte de maçã com recheio de creme de amêndoas e toque sutil de baunilha, equilibrando doçura e sofisticação em cada mordida.",
+      descricao: "Bolo fofinho de cenoura com especiarias e cobertura cremosa de cream cheese. Um clássico aconchegante com sabor de casa e cheirinho de canela.",
       avaliacao: 4.7
     }
   };
 
   // 🍛 Porções padrão
   porcoesPadrao: any = {
-    "Bread omelette": "pequeno",
-    "Breakfast Potatoes": "grande",
+    "Battenberg Cake": "pequeno",
+    "Blueberry & lemon friands": "grande",
     "Fruit and Cream Cheese Breakfast Pastries": "pequeno",
-    "Apple & Blackberry Crumble": "pequeno",
-    "Apple Frangipane Tart": "medio"
+    "Carrot Cake": "pequeno",
+    "Apple Frangipan Tart": "medio"
+  };
+
+  // 📦 Volumes padrão (mapeamento separado do volume selecionado)
+  volumeDefinido: any = {
+    "Battenberg Cake": "250 g",
+    "Blueberry & lemon friands": "300 g",
   };
 
   constructor(
@@ -102,6 +107,14 @@ export class ComidaDetalhesPage implements OnInit {
       this.descricaoSelecionada = null;
     }
   }
+
+  setVolumeSelecionado() {
+    const nome = this.comida?.strMeal;
+    if (nome && this.volumeDefinido[nome]) {
+      this.volumeSelecionado = this.volumeDefinido[nome];
+    } else {
+      this.volumeSelecionado = null;
+    }}
 
   // ⬅️ Voltar
   voltar() {
