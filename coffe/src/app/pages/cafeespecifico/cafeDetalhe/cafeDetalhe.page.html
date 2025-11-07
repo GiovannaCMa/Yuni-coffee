@@ -1,21 +1,65 @@
-
 <ion-header>
   <button (click)="voltar()" expand="block" fill="clear" shape="round" class="arrow">
     <span class="material-symbols-outlined">arrow_back</span>
   </button>
-
 </ion-header>
-
-
 
 <ion-content *ngIf="drink">
   <ion-card>
     <img [src]="drink.strDrinkThumb" [alt]="drink.strDrink" />
     <ion-card-header>
       <ion-card-title>{{ drink.strDrink }}</ion-card-title>
-      <p>Preço: R$ {{ drink.preco }}</p>
     </ion-card-header>
   </ion-card>
+
+  <!-- 🔹 Informações principais -->
+  <div class="informacoes">
+    <ion-chip class="yc-chip yc-chip-avaliacao">
+      <ion-icon name="star-outline"></ion-icon>
+      <ion-label>{{ avaliacao.toFixed(1) }}</ion-label>
+    </ion-chip>
+
+    <ion-chip class="yc-chip">
+      <ion-icon name="cafe-outline"></ion-icon>
+      <ion-label>Quente</ion-label>
+    </ion-chip>
+  </div>
+
+  <!-- 🔹 Título e tamanho -->
+  <div class="titulos">
+    
+    <h2>Tamanho</h2>
+  </div>
+
+  <!-- 🔹 Chips de tamanho -->
+  <div class="tamanhos">
+    <ion-chip
+      class="yc-chip"
+      [ngClass]="{ 'ativo': tamanhoSelecionado === 'Pequeno' }">
+      <ion-icon name="cafe-outline"></ion-icon>
+      <ion-label>Pequeno</ion-label>
+    </ion-chip>
+
+    <ion-chip
+      class="yc-chip"
+      [ngClass]="{ 'ativo': tamanhoSelecionado === 'Médio' }">
+      <ion-icon name="cafe-outline"></ion-icon>
+      <ion-label>Médio</ion-label>
+    </ion-chip>
+
+    <ion-chip
+      class="yc-chip"
+      [ngClass]="{ 'ativo': tamanhoSelecionado === 'Grande' }">
+      <ion-icon name="cafe-outline"></ion-icon>
+      <ion-label>Grande</ion-label>
+    </ion-chip>
+  </div>
+
+  <!-- 🔹 Descrição -->
+  <div class="descricao">
+    <p>{{ descricao }}</p>
+    <p>Preço: R$ {{ drink.preco }}</p>
+  </div>
 
   <ion-button expand="block" color="primary" (click)="voltar()">
     Voltar
