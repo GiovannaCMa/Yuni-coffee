@@ -16,10 +16,56 @@ import { catchError, map } from 'rxjs/operators';
 })
 export class MenuComidaPage implements OnInit {
   comidas: any[] = [];
+  categoriaAtiva: string = 'comidas';
+  favoritos: Set<string> = new Set();
+  homeAtivo: boolean = true;
+  cartAtivo: boolean = false;
 
   constructor(private http: HttpClient, private router: Router) {}
 
+  selecionarCategoria(categoria: string) {
+    this.categoriaAtiva = categoria;
+    
+    // Navega para a página correspondente
+    if (categoria === 'cafes') {
+      this.router.navigate(['/cafeespecifico']);
+    } else if (categoria === 'bebidas-frias') {
+      this.router.navigate(['/bebidasFrias']);
+    } else if (categoria === 'comidas') {
+      this.router.navigate(['/menuComida']);
+    }
+  }
+
+  toggleHome() {
+    if (this.homeAtivo) {
+      this.homeAtivo = false;
+    } else {
+      this.homeAtivo = true;
+      this.cartAtivo = false;
+    }
+  }
+
+  toggleCart() {
+    if (this.cartAtivo) {
+      this.cartAtivo = false;
+    } else {
+      this.cartAtivo = true;
+      this.homeAtivo = false;
+    }
+  }
+
+  isFavorito(comidaId: string): boolean {
+    return this.favoritos.has(comidaId);
+  }
+
   ngOnInit() {
+    // Carrega favoritos salvos do localStorage
+    const favoritosSalvos = localStorage.getItem('favoritosComidas');
+    if (favoritosSalvos) {
+      const ids = JSON.parse(favoritosSalvos);
+      this.favoritos = new Set(ids);
+    }
+
     const breakfastUrl = 'https://www.themealdb.com/api/json/v1/1/filter.php?c=Breakfast';
     const dessertUrl = 'https://www.themealdb.com/api/json/v1/1/filter.php?c=Dessert';
 
@@ -86,10 +132,35 @@ export class MenuComidaPage implements OnInit {
     );
   }
 
+  salvarFavoritos() {
+    localStorage.setItem(
+      'favoritosComidas',
+      JSON.stringify(Array.from(this.favoritos))
+    );
+  }
+
   // 🍽️ Abre página de detalhes
-  abrirDetalhe(comida: any) {
-    this.router.navigate(['/comidaDetalhes', comida.idMeal], {
-      queryParams: { preco: comida.preco }
-    });
+  abrirDetalhe(comida: any, event?: Event) {
+    if (event) {
+      event.stopPropagation();
+    }
+
+    // Toggle favorito: se já está favoritado, desmarca e não navega
+    if (this.favoritos.has(comida.idMeal)) {
+      this.favoritos.delete(comida.idMeal);
+      this.salvarFavoritos();
+      return; // Não navega se estiver desmarcando
+    }
+
+    // Marca como favorito antes de navegar
+    this.favoritos.add(comida.idMeal);
+    this.salvarFavoritos();
+
+    // Pequeno delay para mostrar a mudança de cor antes de navegar
+    setTimeout(() => {
+      this.router.navigate(['/comidaDetalhes', comida.idMeal], {
+        queryParams: { preco: comida.preco }
+      });
+    }, 150);
   }
 }
