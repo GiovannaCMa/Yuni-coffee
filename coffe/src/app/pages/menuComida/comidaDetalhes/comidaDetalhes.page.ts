@@ -21,11 +21,11 @@ export class ComidaDetalhesPage implements OnInit {
 
   // 💖 Descrições e avaliações personalizadas
   descricaoPersonalizada: any = {
-    "Bread omelette": {
+    "Apple Frangipan Tart": {
       descricao: "Pão dourado e fofinho recheado com omelete leve e temperada, perfeito para começar o dia com sabor e energia.",
       avaliacao: 4.5
     },
-    "Breakfast Potatoes": {
+    "Battenberg Cake": {
       descricao: "Batatinhas douradas por fora e macias por dentro, temperadas com ervas e um toque de manteiga — o acompanhamento ideal para qualquer manhã.",
       avaliacao: 4.6
     },
@@ -33,11 +33,11 @@ export class ComidaDetalhesPage implements OnInit {
       descricao: "Massa folhada delicada, recheada com cream cheese cremoso e frutas frescas — uma combinação irresistível de doçura e leveza.",
       avaliacao: 4.9
     },
-    "Apple & Blackberry Crumble": {
+    "Blueberry & lemon friands": {
       descricao: "Maçãs e amoras assadas sob uma cobertura crocante amanteigada — um clássico britânico que aquece o coração.",
       avaliacao: 4.8
     },
-    "Apple Frangipane Tart": {
+    "Carrot Cake": {
       descricao: "Tarte de maçã com recheio de creme de amêndoas e toque sutil de baunilha, equilibrando doçura e sofisticação em cada mordida.",
       avaliacao: 4.7
     }
