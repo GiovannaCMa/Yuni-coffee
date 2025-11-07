@@ -1,12 +1,7 @@
 <ion-header>
-  <ion-toolbar class="header">
-    <ion-buttons slot="start">
-      <ion-button fill="clear" (click)="voltar()">
-        <ion-icon name="arrow-back-outline"></ion-icon>
-      </ion-button>
-    </ion-buttons>
-    <ion-title>Yuni Coffee</ion-title>
-  </ion-toolbar>
+  <button (click)="voltar()" expand="block" fill="clear" shape="round" class="arrow">
+    <img src="../../../../assets/icon/Seta.png" alt="seta" class="">
+  </button>
 </ion-header>
 
 <ion-content *ngIf="comida" class="detalhes-content">
@@ -65,9 +60,6 @@
 
     <!-- (Botão de adicionar vem depois) -->
   </ion-card>
-    <ion-button expand="block" color="primary" (click)="voltar()">
-    Voltar
-  </ion-button>
 
 </ion-content>
 
