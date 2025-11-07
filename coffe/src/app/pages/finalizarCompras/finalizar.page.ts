@@ -24,7 +24,11 @@ export class FinalizarPedidoPage {
   constructor(private router: Router) {}
 
   finalizarPedido() {
-    // Aqui você pode salvar dados ou validar antes
-    this.router.navigate(['/pedido-concluido']);
+    // aqui você pode colocar qualquer lógica antes
+    console.log('Pedido finalizado!');
+    
+    // depois redireciona:
+    this.router.navigate(['/finalizar']);
   }
+
 }
