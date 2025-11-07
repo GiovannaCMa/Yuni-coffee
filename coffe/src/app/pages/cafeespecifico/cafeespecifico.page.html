@@ -1,22 +1,87 @@
+<div class="yc-page yc-mobile">
+  <ion-content class="yc-content">
+    <div class="yc-viewport">
+      <div class="yc-header-wrapper">
+        <div class="yc-logo">
+          <img
+            src="assets/icon/logo.png"
+            alt="Yuni Coffee Logo"
+            class="yc-logo-img"
+          />
+        </div>
+      </div>
+      <div class="yc-section">
+        <h2 class="yc-section-title">Categorias</h2>
+        <div class="yc-chips-scroll">
+          <div class="yc-chips">
+            <ion-chip
+              class="yc-chip"
+              [class.yc-chip--active]="categoriaAtiva === 'cafes'"
+              (click)="selecionarCategoria('cafes')"
+            >
+              <img
+                src="https://img.icons8.com/?size=100&id=109144&format=png&color=000000"
+                alt="Cafe"
+                [class.yc-chip-icon]="categoriaAtiva !== 'cafes'"
+                [class.yc-chip-icon--active]="categoriaAtiva === 'cafes'"
+              />
+              <ion-label>Cafés</ion-label>
+            </ion-chip>
+            <ion-chip
+              class="yc-chip"
+              [class.yc-chip--active]="categoriaAtiva === 'bebidas-frias'"
+              (click)="selecionarCategoria('bebidas-frias')"
+            >
+              <img
+                src="https://img.icons8.com/?size=100&id=xWhRTkdKWcGa&format=png&color=000000"
+                alt="Bebidas Frias"
+                [class.yc-chip-icon]="categoriaAtiva !== 'bebidas-frias'"
+                [class.yc-chip-icon--active]="categoriaAtiva === 'bebidas-frias'"
+              />
+              <ion-label>Bebidas Frias</ion-label>
+            </ion-chip>
+            <ion-chip
+              class="yc-chip"
+              [class.yc-chip--active]="categoriaAtiva === 'comidas'"
+              (click)="selecionarCategoria('comidas')"
+            >
+              <img
+                src="https://img.icons8.com/?size=100&id=A0cckjpbbd4K&format=png&color=000000"
+                alt="Comidas"
+                [class.yc-chip-icon]="categoriaAtiva !== 'comidas'"
+                [class.yc-chip-icon--active]="categoriaAtiva === 'comidas'"
+              />
+              <ion-label>Comidas</ion-label>
+            </ion-chip>
+          </div>
+        </div>
+      </div>
+
 <ion-header>
   <ion-toolbar>
     <ion-title>Café </ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-  <ion-grid>
-    <ion-row>
-      <ion-col size="6" *ngFor="let drink of drinks">
-        <!-- 🔹 troquei selecionarDrink(drink) por abrirDetalhe(drink) -->
-        <ion-card (click)="abrirDetalhe(drink)">
+<ion-grid class="yc-grid">
+  <ion-row>
+    <ion-col size="6" *ngFor="let drink of drinks" class="yc-col">
+      <div class="yc-card" (click)="abrirDetalhe(drink)">
+        <div class="yc-card-image">
           <img [src]="drink.strDrinkThumb" [alt]="drink.strDrink" />
-          <ion-card-header>
-            <ion-card-title>{{ drink.strDrink }}</ion-card-title>
-            <p>R$ {{ drink.preco }}</p>
-          </ion-card-header>
-        </ion-card>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
-</ion-content>
+        </div>
+        <div class="yc-card-body">
+          <div class="yc-card-title">{{ drink.strDrink }}</div>
+          <div class="yc-card-footer">
+            <span class="yc-price-text">R$ {{ drink.preco }}</span>
+            <div
+              class="yc-fav-circle"
+              [class.yc-fav-circle--active]="isFavorito(drink.idDrink)"
+            ></div>
+          </div>
+        </div>
+      </div>
+    </ion-col>
+  </ion-row>
+</ion-grid>
+
