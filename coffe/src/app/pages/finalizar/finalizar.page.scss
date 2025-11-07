@@ -1,0 +1,72 @@
+ion-content {
+  --background: url("../../../assets/icon/fundo1.png") no-repeat center center / cover;
+}
+
+/* Contêiner principal */
+.home-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  height: 100%;
+  padding: 40px 20px;
+}
+
+/* LOGOS (topo) */
+.logo-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 0;
+  margin: 0;
+  padding: 0;
+}
+
+/* Gato pequeno (em cima do logo) */
+.gato-topo {
+  width: 50%;
+  max-width: 250px;
+  filter: drop-shadow(0 0 8px rgba(0, 0, 0, 0.4));
+  margin: 0;
+  padding: 0;
+  display: block;
+  line-height: 0;
+}
+
+/* Logo */
+.logo {
+  width: 90%;
+  max-width: 250px;
+  filter: drop-shadow(0 0 8px rgba(0, 0, 0, 0.4));
+  margin: 0;
+  padding: 0;
+  display: block;
+  line-height: 0;
+}
+
+.gato-topo + .logo {
+  margin-top: -100px;
+}
+
+/* FRASE CENTRAL */
+.frase {
+  background: #4b2b17;
+  color: #fff;
+  border: 2px solid #fff;
+  border-radius: 12px;
+  padding: 15px 20px;
+  font-size: 16px;
+  font-weight: 600;
+  width: 85%;
+  text-align: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* Gato grande no rodapé */
+.gato-rodape {
+  width: 90%;
+  max-width: 280px;
+  margin-bottom: 10px;
+  filter: drop-shadow(0 0 8px rgba(0, 0, 0, 0.4));
+}
