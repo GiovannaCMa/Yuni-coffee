@@ -1,42 +1,73 @@
 <ion-header>
-  <button (click)="voltar()" expand="block" fill="clear" shape="round" class="arrow">
-    <span class="material-symbols-outlined">arrow_back</span>
-  </button>
+  <ion-toolbar class="header">
+    <ion-buttons slot="start">
+      <ion-button fill="clear" (click)="voltar()">
+        <ion-icon name="arrow-back-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>Yuni Coffee</ion-title>
+  </ion-toolbar>
 </ion-header>
 
-<ion-content *ngIf="comida">
-  <ion-card class="container_imagem">
-    <img [src]="comida.strMealThumb" [alt]="comida.strMeal" />
-    <ion-card-header>
-      <ion-card-title>{{ comida.strMeal }}</ion-card-title>
-      <ion-card-subtitle>{{ comida.strCategory }} | {{ comida.strArea }}</ion-card-subtitle>
-    </ion-card-header>
-  </ion-card>
+<ion-content *ngIf="comida" class="detalhes-content">
+  <ion-card class="comida-card">
+    <img [src]="comida.strMealThumb" [alt]="comida.strMeal" class="imagem-comida" />
 
-  <ion-card>
-    <ion-card-header>
-      <ion-card-title>Ingredientes</ion-card-title>
-    </ion-card-header>
-    <ion-card-content>
-      <ion-list>
-        <ion-item *ngFor="let item of ingredientes">
-          {{ item }}
-        </ion-item>
-      </ion-list>
-    </ion-card-content>
-  </ion-card>
+    <div class="avaliacao">
+      <ion-icon name="star-outline"></ion-icon>
+      <span>{{ descricaoSelecionada?.avaliacao || '0.0' }}</span>
+    </div>
 
-  <ion-card>
-    <ion-card-header>
-      <ion-card-title>Modo de Preparo</ion-card-title>
-    </ion-card-header>
-    <ion-card-content>
-      <p style="white-space: pre-wrap;">{{ comida.strInstructions }}</p>
-    </ion-card-content>
-  </ion-card>
+    <h1 class="titulo">{{ comida.strMeal }}</h1>
 
-  <ion-button expand="block" color="primary" (click)="voltar()" class="ion-margin">
-    Voltar
-  </ion-button>
+    <!-- 🍽️ Porção -->
+    <div class="secao">
+      <h2>Porção</h2>
+      <div class="opcoes">
+        <ion-chip
+          class="yc-chip"
+          [ngClass]="{ ativo: porcaoSelecionada === 'pequeno' }">
+          <ion-label>Individual</ion-label>
+        </ion-chip>
+
+        <ion-chip
+          class="yc-chip"
+          [ngClass]="{ ativo: porcaoSelecionada === 'medio' }">
+          <ion-label>Dupla</ion-label>
+        </ion-chip>
+
+        <ion-chip
+          class="yc-chip"
+          [ngClass]="{ ativo: porcaoSelecionada === 'grande' }">
+          <ion-label>Familiar</ion-label>
+        </ion-chip>
+      </div>
+    </div>
+
+    <!-- 🥗 Descrição -->
+    <div class="secao">
+      <h2>Sobre</h2>
+      <p>{{ descricaoSelecionada?.descricao || comida.strInstructions }}</p>
+    </div>
+
+    <!-- 🧂 Volume / Ingredientes -->
+    <div class="secao" *ngIf="ingredientes.length > 0">
+      <h2>Ingredientes</h2>
+      <ul>
+        <li *ngFor="let item of ingredientes">{{ item }}</li>
+      </ul>
+    </div>
+
+    <!-- 💰 Preço -->
+    <div class="preco">
+      <h3>R$ {{ preco }}</h3>
+    </div>
+
+    <!-- (Botão de adicionar vem depois) -->
+  </ion-card>
+    <ion-button expand="block" color="primary" (click)="voltar()">
+    Voltar
+  </ion-button>
 
 </ion-content>
+

@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { IonicModule } from '@ionic/angular';
-import { CommonModule, Location } from '@angular/common'; // Importa CommonModule e Location
-import { Router, ActivatedRoute } from '@angular/router'; // Importa Router e ActivatedRoute
-import { HttpClient, HttpClientModule } from '@angular/common/http'; // Importa HttpClient
+import { CommonModule, Location } from '@angular/common';
+import { Router, ActivatedRoute } from '@angular/router';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 
 @Component({
   selector: 'app-comida-detalhes',
@@ -15,18 +15,53 @@ export class ComidaDetalhesPage implements OnInit {
 
   comida: any;
   ingredientes: string[] = [];
-  // ⭐️ NENHUMA VARIÁVEL 'preco' AQUI ⭐️
+  preco: string | null = null;
+  descricaoSelecionada: any = null;
+  porcaoSelecionada: string = ''; // 🍽️ adicionado campo de porção
+
+  // 💖 Descrições e avaliações personalizadas
+  descricaoPersonalizada: any = {
+    "Apple Frangipan Tart": {
+      descricao: "Pão dourado e fofinho recheado com omelete leve e temperada, perfeito para começar o dia com sabor e energia.",
+      avaliacao: 4.5
+    },
+    "Battenberg Cake": {
+      descricao: "Batatinhas douradas por fora e macias por dentro, temperadas com ervas e um toque de manteiga — o acompanhamento ideal para qualquer manhã.",
+      avaliacao: 4.6
+    },
+    "Fruit and Cream Cheese Breakfast Pastries": {
+      descricao: "Massa folhada delicada, recheada com cream cheese cremoso e frutas frescas — uma combinação irresistível de doçura e leveza.",
+      avaliacao: 4.9
+    },
+    "Blueberry & lemon friands": {
+      descricao: "Maçãs e amoras assadas sob uma cobertura crocante amanteigada — um clássico britânico que aquece o coração.",
+      avaliacao: 4.8
+    },
+    "Carrot Cake": {
+      descricao: "Tarte de maçã com recheio de creme de amêndoas e toque sutil de baunilha, equilibrando doçura e sofisticação em cada mordida.",
+      avaliacao: 4.7
+    }
+  };
+
+  // 🍛 Porções padrão
+  porcoesPadrao: any = {
+    "Bread omelette": "pequeno",
+    "Breakfast Potatoes": "grande",
+    "Fruit and Cream Cheese Breakfast Pastries": "pequeno",
+    "Apple & Blackberry Crumble": "pequeno",
+    "Apple Frangipane Tart": "medio"
+  };
 
   constructor(
     private router: Router,
-    private route: ActivatedRoute, // Para ler o ID da URL
-    private http: HttpClient,      // Para fazer a chamada à API
-    private location: Location     // Para o botão 'voltar'
+    private route: ActivatedRoute,
+    private http: HttpClient,
+    private location: Location
   ) {}
 
   ngOnInit() {
-    // Pega o 'id' que foi enviado pela URL
     const id = this.route.snapshot.paramMap.get('id');
+    this.preco = this.route.snapshot.queryParamMap.get('preco');
 
     if (!id) {
       console.error('ID não encontrado!');
@@ -34,14 +69,19 @@ export class ComidaDetalhesPage implements OnInit {
       return;
     }
 
-    // Usa o ID para buscar os detalhes completos na API
     const url = `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`;
 
     this.http.get(url).subscribe({
       next: (res: any) => {
         if (res.meals && res.meals.length > 0) {
-          this.comida = res.meals[0]; // Guarda o objeto completo
-          this.processarIngredientes(); // Chama a função para listar ingredientes
+          this.comida = res.meals[0];
+
+          // ⚡ Define porção automaticamente
+          const nome = this.comida.strMeal;
+          this.porcaoSelecionada = this.porcoesPadrao[nome] || '1 porção';
+
+          // ⚡ Define descrição personalizada
+          this.setDescricaoPersonalizada();
         } else {
           this.voltar();
         }
@@ -53,23 +93,18 @@ export class ComidaDetalhesPage implements OnInit {
     });
   }
 
-  // Função para processar os ingredientes
-  processarIngredientes() {
-    if (!this.comida) return;
-
-    this.ingredientes = [];
-    for (let i = 1; i <= 20; i++) {
-      const ingrediente = this.comida[`strIngredient${i}`];
-      const medida = this.comida[`strMeasure${i}`];
-
-      if (ingrediente && ingrediente.trim()) {
-        this.ingredientes.push(`${medida} ${ingrediente}`);
-      }
+  // ✨ Define descrição personalizada se existir
+  setDescricaoPersonalizada() {
+    const nome = this.comida?.strMeal;
+    if (nome && this.descricaoPersonalizada[nome]) {
+      this.descricaoSelecionada = this.descricaoPersonalizada[nome];
+    } else {
+      this.descricaoSelecionada = null;
     }
   }
 
-  // Função 'voltar()'
+  // ⬅️ Voltar
   voltar() {
-    this.location.back(); // Simplesmente volta para a tela anterior
+    this.location.back();
   }
 }
