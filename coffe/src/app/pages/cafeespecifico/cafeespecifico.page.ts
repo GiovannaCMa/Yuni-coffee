@@ -10,45 +10,49 @@ import { Router } from '@angular/router'; // 🆕 Import do Router
   templateUrl: './cafeespecifico.page.html',
   styleUrls: ['./cafeespecifico.page.scss'],
   standalone: true,
-  imports: [IonicModule, CommonModule, FormsModule, HttpClientModule]
+  imports: [IonicModule, CommonModule, FormsModule, HttpClientModule],
 })
-export class CafeespecificoPage  implements OnInit {
+export class CafeespecificoPage implements OnInit {
   categoriaAtiva: string = 'cafes'; // Valor inicial
   drinks: any[] = [];
   favoritos: Set<string> = new Set();
-   homeAtivo: boolean = true; // Home começa ativo
-    cartAtivo: boolean = false;
+  homeAtivo: boolean = true; // Home começa ativo
+  cartAtivo: boolean = false;
 
   // 🆕 Adicionando o Router aqui
   constructor(private http: HttpClient, private router: Router) {}
 
   ngOnInit() {
-    
     this.http
       .get('https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=Coffee')
       .subscribe({
         next: (res: any) => {
           const todosDrinks = res.drinks;
-          
 
           const proibidos = [
-             
-            'frappé', 'frappe', 'egg cream', 'just a moonmint',
-            'microwave hot cocoa', 'masala chai', 'la',
-            'melya', 'yo', 'coke'
+            'frappé',
+            'frappe',
+            'egg cream',
+            'just a moonmint',
+            'microwave hot cocoa',
+            'masala chai',
+            'la',
+            'melya',
+            'yo',
+            'coke',
           ];
 
           this.drinks = todosDrinks
             .filter((drink: any) => {
               const nome = (drink.strDrink || '').toLowerCase();
-              return !proibidos.some(p => nome.includes(p));
+              return !proibidos.some((p) => nome.includes(p));
             })
             .map((drink: any, index: number) => ({
               ...drink,
-              preco: (8 + index * 1.5).toFixed(2) //valor do drink
+              preco: (8 + index * 1.5).toFixed(2), //valor do drink
             }));
         },
-        error: (err) => console.error('Erro ao consumir API:', err)
+        error: (err) => console.error('Erro ao consumir API:', err),
       });
   }
 
@@ -56,11 +60,10 @@ export class CafeespecificoPage  implements OnInit {
     this.categoriaAtiva = categoria;
   }
 
-
-   isFavorito(drinkId: string): boolean {
+  isFavorito(drinkId: string): boolean {
     return this.favoritos.has(drinkId);
   }
-   salvarFavoritos() {
+  salvarFavoritos() {
     localStorage.setItem(
       'favoritosBebidasFrias',
       JSON.stringify(Array.from(this.favoritos))
