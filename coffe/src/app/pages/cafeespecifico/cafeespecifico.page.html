@@ -75,9 +75,16 @@
           <div class="yc-card-footer">
             <span class="yc-price-text">R$ {{ drink.preco }}</span>
             <div
-              class="yc-fav-circle"
-              [class.yc-fav-circle--active]="isFavorito(drink.idDrink)"
-            ></div>
+                    class="yc-fav-circle"
+                    [class.yc-fav-circle--active]="isFavorito(drink.idDrink)"
+                  >
+                    <img
+                      src="https://img.icons8.com/?size=100&id=z1kveclFfFDd&format=png&color=000000"
+                      alt="Icon"
+                      class="yc-fav-icon"
+                      [class.yc-fav-icon--active]="isFavorito(drink.idDrink)"
+                    />
+                  </div>
           </div>
         </div>
       </div>
@@ -85,3 +92,34 @@
   </ion-row>
 </ion-grid>
 
+  <div class="yc-footer-wrapper-desktop">
+        <div class="yc-bottom-desktop">
+          <button
+            class="yc-bottom-btn-desktop yc-bottom-btn-desktop--home"
+            [class.yc-bottom-btn-desktop--active]="homeAtivo"
+            (click)="toggleHome()"
+          >
+            <img
+              src="https://img.icons8.com/?size=100&id=84005&format=png&color=000000"
+              alt="Home"
+              class="yc-bottom-icon-desktop"
+              [class.yc-bottom-icon-desktop--active]="homeAtivo"
+            />
+          </button>
+          <button
+            class="yc-bottom-btn-desktop"
+            [class.yc-bottom-btn-desktop--active]="cartAtivo"
+            (click)="toggleCart()"
+          >
+            <img
+              src="https://img.icons8.com/?size=100&id=59997&format=png&color=000000"
+              alt="Cart"
+              class="yc-bottom-icon-desktop"
+              [class.yc-bottom-icon-desktop--active]="cartAtivo"
+            />
+          </button>
+        </div>
+      </div>
+    </div>
+  </ion-content>
+</div>

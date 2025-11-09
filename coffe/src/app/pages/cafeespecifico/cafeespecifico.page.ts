@@ -74,4 +74,26 @@ export class CafeespecificoPage implements OnInit {
     localStorage.setItem('drinkSelecionado', JSON.stringify(drink));
     this.router.navigate(['/cafedetalhes']); // vai pra página de detalhes
   }
+   ionViewWillEnter() {
+    this.categoriaAtiva = 'bebidas-frias';
+  }
+
+  toggleHome() {
+    if (this.homeAtivo) {
+      this.homeAtivo = false;
+    } else {
+      this.homeAtivo = true;
+      this.cartAtivo = false;
+    }
+  }
+
+  toggleCart() {
+    if (this.cartAtivo) {
+      this.cartAtivo = false;
+    } else {
+      this.cartAtivo = true;
+      this.homeAtivo = false;
+    }
+  }
+
 }
