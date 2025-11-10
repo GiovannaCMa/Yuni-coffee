@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonContent, IonHeader, IonTitle, IonToolbar } from '@ionic/angular/standalone';
+import { IonContent, IonHeader, IonTitle, IonToolbar,} from '@ionic/angular/standalone';
 import { NomeClientePipe } from '../../pipes/nome-cliente-pipe';
 
 
@@ -10,7 +10,8 @@ import { NomeClientePipe } from '../../pipes/nome-cliente-pipe';
   templateUrl: './finalizar.page.html',
   styleUrls: ['./finalizar.page.scss'],
   standalone: true,
-  imports: [IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule,NomeClientePipe]
+
+  imports: [IonContent, CommonModule, FormsModule,NomeClientePipe,IonHeader, IonToolbar, IonTitle,]
 })
 export class FinalizarPage implements OnInit {
 
@@ -23,5 +24,4 @@ export class FinalizarPage implements OnInit {
     }
 
   }
-
 }

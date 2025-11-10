@@ -1,13 +1,9 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import {
-  IonContent, IonButton, IonInput, IonItem, IonIcon,
-  IonHeader, IonToolbar, IonTitle, IonButtons, IonBackButton
-} from '@ionic/angular/standalone';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { NomeClientePipe } from '../../pipes/nome-cliente-pipe';
-
+import { IonicModule } from '@ionic/angular';
 
 @Component({
   selector: 'app-finalizar-pedido',
@@ -15,25 +11,20 @@ import { NomeClientePipe } from '../../pipes/nome-cliente-pipe';
   styleUrls: ['./finalizar.page.scss'],
   standalone: true,
   imports: [
-    IonContent, IonButton, IonInput, IonItem, IonIcon,
-    IonHeader, IonToolbar, IonTitle, IonButtons, IonBackButton,
-    CommonModule, FormsModule,NomeClientePipe,
+    CommonModule, FormsModule,NomeClientePipe,IonicModule,
   ]
+
 })
-export class FinalizarPedidoPage {
+export class FinalizarPage {
   comanda: string = '';
 
   constructor(private router: Router) {}
   
   finalizarPedido() {
+
       // Salva o valor no Local Storage
     localStorage.setItem('comanda', this.comanda);
-
-    // aqui você pode colocar qualquer lógica antes
-    console.log('Pedido finalizado!');
-    
-    // depois redireciona:
     this.router.navigate(['/finalizar']);
   }
-
 }
+

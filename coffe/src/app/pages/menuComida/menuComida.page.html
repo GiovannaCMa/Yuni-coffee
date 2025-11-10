@@ -60,7 +60,8 @@
 
       <ion-grid class="yc-grid">
         <ion-row>
-          <ion-col size="6" *ngFor="let comida of comidas" class="yc-col">
+          @for (comida of comidas; track comida.idMeal) {
+          <ion-col size="6" class="yc-col">
             <div class="yc-card" (click)="abrirDetalhe(comida)">
               <div class="yc-card-image">
                 <img [src]="comida.strDrinkThumb" [alt]="comida.strDrink" />
@@ -72,6 +73,7 @@
                   <div
                     class="yc-fav-circle"
                     [class.yc-fav-circle--active]="isFavorito(comida.idMeal)"
+                    (click)="abrirDetalhe(comida, $event)"
                   >
                     <img
                       src="https://img.icons8.com/?size=100&id=z1kveclFfFDd&format=png&color=000000"
@@ -84,6 +86,7 @@
               </div>
             </div>
           </ion-col>
+          }
         </ion-row>
       </ion-grid>
 
@@ -179,11 +182,8 @@
 
       <div class="yc-grid-desktop">
         <div class="yc-cards-container-desktop">
-          <div
-            class="yc-card-desktop"
-            *ngFor="let comida of comidas"
-            (click)="abrirDetalhe(comida)"
-          >
+          @for (comida of comidas; track comida.idMeal) {
+          <div class="yc-card-desktop" (click)="abrirDetalhe(comida)">
             <div class="yc-card-image-desktop">
               <img [src]="comida.strDrinkThumb" [alt]="comida.strDrink" />
             </div>
@@ -205,6 +205,7 @@
               </div>
             </div>
           </div>
+          }
         </div>
       </div>
 

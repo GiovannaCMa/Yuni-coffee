@@ -14,13 +14,11 @@ import { cafeOutline, snowOutline, starOutline, wineOutline } from 'ionicons/ico
   styleUrls: ['./cafeDetalhe.page.scss']
 })
 export class CafeDetalhePage implements OnInit {
- 
   drink: any;
-  descricao: string = '';
-  avaliacao: number = 0;
-  tamanhoSelecionado: string = ''; // 🔹 tamanho automático
+  descricao = '';
+  avaliacao = 0;
+  tamanhoSelecionado = '';
 
-  // 💖 Descrições e avaliações personalizadas
   descricaoPersonalizada: any = {
     "Cafe Savoy": {
       descricao: "Café cremoso com toque suave de leite vaporizado e sabor adocicado. Ideal para momentos de pausa e aconchego ☕",
@@ -38,15 +36,15 @@ export class CafeDetalhePage implements OnInit {
       descricao: "Combinação perfeita de café espresso doce e sofisticado.",
       avaliacao: 4.5
     },
-     "Coffee-Vodka": {
+    "Coffee-Vodka": {
       descricao: "Combinação perfeita de café forte e vodka doce e sofisticado.",
       avaliacao: 4.8
     },
-      "Danbooka ": {
-      descricao: "Combinação perfeita de café espresso doce e sofisticado.",
+    "Danbooka": {
+      descricao: "Café espresso suave e equilibrado, ideal para quem gosta de sabores intensos sem perder a leveza.",
       avaliacao: 4.7
-
-  }};
+    }
+  };
 
   constructor(private router: Router, private http: HttpClient) {
     addIcons({ cafeOutline, wineOutline, snowOutline, starOutline });
@@ -57,35 +55,30 @@ export class CafeDetalhePage implements OnInit {
     if (dados) {
       this.drink = JSON.parse(dados);
 
-      // 🔸 Tamanhos padrão
       const tamanhosPadrao: any = {
         "Cafe Savoy": "Médio",
         "Irish Coffee": "Pequeno",
         "Espresso Martini": "Médio",
-        "Coffee Liqueur":"Grande",
-        "Coffee-Vodka":"Grande",
-        "Danbooka ":"Médio"
+        "Coffee Liqueur": "Grande",
+        "Coffee-Vodka": "Grande",
+        "Danbooka": "Médio"
       };
 
-      // Define tamanho automático
       this.tamanhoSelecionado = tamanhosPadrao[this.drink.strDrink] || 'Médio';
 
-      // 🔹 Busca informações adicionais da API
-      this.http
-        .get(`https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${this.drink.idDrink}`)
-        .subscribe((res: any) => {
-          const detalhe = res.drinks[0];
-
-          // Verifica se o drink tem descrição personalizada
-          const detalheCustom = this.descricaoPersonalizada[this.drink.strDrink];
-          if (detalheCustom) {
-            this.descricao = detalheCustom.descricao;
-            this.avaliacao = detalheCustom.avaliacao;
-          } else {
-            this.descricao = detalhe.strInstructions;
+      const detalheCustom = this.descricaoPersonalizada[this.drink.strDrink];
+      if (detalheCustom) {
+        this.descricao = detalheCustom.descricao;
+        this.avaliacao = detalheCustom.avaliacao;
+      } else {
+        this.http
+          .get(`https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${this.drink.idDrink}`)
+          .subscribe((res: any) => {
+            const detalhe = res.drinks[0];
+            this.descricao = detalhe.strInstructions || 'Sem descrição disponível.';
             this.avaliacao = 0;
-          }
-        });
+          });
+      }
     } else {
       this.router.navigate(['/cafeespecifico']);
     }
@@ -95,4 +88,3 @@ export class CafeDetalhePage implements OnInit {
     this.router.navigate(['/cafeespecifico']);
   }
 }
-

@@ -1,0 +1,35 @@
+<ion-content [fullscreen]="true">
+  <div class="carrinho-container">
+    <!-- LOGO -->
+    <img src="../../assets/icon/logo.png" class="logo" />
+
+    <!-- TÍTULO -->
+    <ion-toolbar color="transparent" class="toolbar">
+      <ion-buttons slot="start">
+        <ion-back-button defaultHref="/menu"></ion-back-button>
+      </ion-buttons>
+      <ion-title>Carrinho</ion-title>
+    </ion-toolbar>
+
+    <div class="itens">
+      <ion-item *ngFor="let item of itens">
+        <img [src]="item.imagem" class="produto-img" />
+        <ion-label>
+          <h2>{{ item.nome }}</h2>
+          <p>R$ {{ item.preco | number:'1.2-2' }}</p>
+          <p>Qtd: {{ item.quantidade }}</p>
+        </ion-label>
+        <ion-button fill="clear" color="danger" (click)="removerItem(item.id)"
+          >Remover</ion-button
+        >
+      </ion-item>
+    </div>
+
+    <div class="rodape">
+      <div class="total">Total: R$ {{ total | number:'1.2-2' }}</div>
+      <ion-button expand="block" class="continuar" (click)="continuar()"
+        >Continuar</ion-button
+      >
+    </div>
+  </div>
+</ion-content>
