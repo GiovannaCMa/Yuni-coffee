@@ -23,6 +23,13 @@ export class CafeespecificoPage implements OnInit {
   constructor(private http: HttpClient, private router: Router) {}
 
   ngOnInit() {
+    // Carrega favoritos salvos do localStorage
+    const favoritosSalvos = localStorage.getItem('favoritosCafes');
+    if (favoritosSalvos) {
+      const ids = JSON.parse(favoritosSalvos);
+      this.favoritos = new Set(ids);
+    }
+
     this.http
       .get('https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=Coffee')
       .subscribe({
@@ -57,7 +64,20 @@ export class CafeespecificoPage implements OnInit {
   }
 
   selecionarCategoria(categoria: string) {
+    console.log('Categoria selecionada:', categoria);
     this.categoriaAtiva = categoria;
+
+    if (categoria === 'cafes') {
+      this.router.navigate(['/cafeespecifico']);
+    } else if (categoria === 'bebidas-frias') {
+      console.log('Navegando para bebidasFrias...');
+      this.router.navigate(['/bebidasFrias']).then(
+        () => console.log('Navegação bem-sucedida'),
+        (err) => console.error('Erro na navegação:', err)
+      );
+    } else if (categoria === 'comidas') {
+      this.router.navigate(['/menuComida']);
+    }
   }
 
   isFavorito(drinkId: string): boolean {
@@ -65,17 +85,35 @@ export class CafeespecificoPage implements OnInit {
   }
   salvarFavoritos() {
     localStorage.setItem(
-      'favoritosBebidasFrias',
+      'favoritosCafes',
       JSON.stringify(Array.from(this.favoritos))
     );
   }
 
-  abrirDetalhe(drink: any) {
+  abrirDetalhe(drink: any, event?: Event) {
+    if (event) {
+      event.stopPropagation();
+    }
+
+    // Toggle favorito: se já está favoritado, desmarca e não navega
+    if (this.favoritos.has(drink.idDrink)) {
+      this.favoritos.delete(drink.idDrink);
+      this.salvarFavoritos();
+      return; // Não navega se estiver desmarcando
+    }
+
+    // Marca como favorito antes de navegar
+    this.favoritos.add(drink.idDrink);
+    this.salvarFavoritos();
     localStorage.setItem('drinkSelecionado', JSON.stringify(drink));
-    this.router.navigate(['/cafedetalhes']); // vai pra página de detalhes
+
+    // Pequeno delay para mostrar a mudança de cor antes de navegar
+    setTimeout(() => {
+      this.router.navigate(['/cafedetalhes']); // vai pra página de detalhes
+    }, 150);
   }
-   ionViewWillEnter() {
-    this.categoriaAtiva = 'bebidas-frias';
+  ionViewWillEnter() {
+    this.categoriaAtiva = 'cafes';
   }
 
   toggleHome() {
@@ -95,5 +133,4 @@ export class CafeespecificoPage implements OnInit {
       this.homeAtivo = false;
     }
   }
-
 }

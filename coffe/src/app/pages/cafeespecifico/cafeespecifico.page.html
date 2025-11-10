@@ -1,3 +1,4 @@
+<!-- Versão Mobile -->
 <div class="yc-page yc-mobile">
   <ion-content class="yc-content">
     <div class="yc-viewport">
@@ -57,26 +58,21 @@
         </div>
       </div>
 
-<ion-header>
-  <ion-toolbar>
-    <ion-title>Café </ion-title>
-  </ion-toolbar>
-</ion-header>
-
-<ion-grid class="yc-grid">
-  <ion-row>
-    <ion-col size="6" *ngFor="let drink of drinks" class="yc-col">
-      <div class="yc-card" (click)="abrirDetalhe(drink)">
-        <div class="yc-card-image">
-          <img [src]="drink.strDrinkThumb" [alt]="drink.strDrink" />
-        </div>
-        <div class="yc-card-body">
-          <div class="yc-card-title">{{ drink.strDrink }}</div>
-          <div class="yc-card-footer">
-            <span class="yc-price-text">R$ {{ drink.preco }}</span>
-            <div
+      <ion-grid class="yc-grid">
+        <ion-row>
+          <ion-col size="6" *ngFor="let drink of drinks" class="yc-col">
+            <div class="yc-card" (click)="abrirDetalhe(drink)">
+              <div class="yc-card-image">
+                <img [src]="drink.strDrinkThumb" [alt]="drink.strDrink" />
+              </div>
+              <div class="yc-card-body">
+                <div class="yc-card-title">{{ drink.strDrink }}</div>
+                <div class="yc-card-footer">
+                  <span class="yc-price-text">R$ {{ drink.preco }}</span>
+                  <div
                     class="yc-fav-circle"
                     [class.yc-fav-circle--active]="isFavorito(drink.idDrink)"
+                    (click)="abrirDetalhe(drink, $event)"
                   >
                     <img
                       src="https://img.icons8.com/?size=100&id=z1kveclFfFDd&format=png&color=000000"
@@ -85,14 +81,135 @@
                       [class.yc-fav-icon--active]="isFavorito(drink.idDrink)"
                     />
                   </div>
+                </div>
+              </div>
+            </div>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+
+      <div class="yc-footer-wrapper">
+        <div class="yc-bottom">
+          <button
+            class="yc-bottom-btn yc-bottom-btn--home"
+            [class.yc-bottom-btn--active]="homeAtivo"
+            (click)="toggleHome()"
+          >
+            <img
+              src="https://img.icons8.com/?size=100&id=84005&format=png&color=000000"
+              alt="Home"
+              class="yc-bottom-icon"
+              [class.yc-bottom-icon--active]="homeAtivo"
+            />
+          </button>
+          <button
+            class="yc-bottom-btn"
+            [class.yc-bottom-btn--active]="cartAtivo"
+            (click)="toggleCart()"
+          >
+            <img
+              src="https://img.icons8.com/?size=100&id=59997&format=png&color=000000"
+              alt="Cart"
+              class="yc-bottom-icon"
+              [class.yc-bottom-icon--active]="cartAtivo"
+            />
+          </button>
+        </div>
+      </div>
+    </div>
+  </ion-content>
+</div>
+
+<!-- Versão Desktop -->
+<div class="yc-page-desktop yc-desktop">
+  <ion-content class="yc-content-desktop">
+    <div class="yc-viewport-desktop">
+      <div class="yc-header-wrapper-desktop">
+        <div class="yc-logo-desktop">
+          <img
+            src="assets/icon/logo.png"
+            alt="Yuni Coffee Logo"
+            class="yc-logo-img-desktop"
+          />
+        </div>
+      </div>
+      <div class="yc-section-desktop">
+        <h2 class="yc-section-title-desktop">Categorias</h2>
+        <div class="yc-chips-desktop">
+          <ion-chip
+            class="yc-chip-desktop"
+            [class.yc-chip-desktop--active]="categoriaAtiva === 'cafes'"
+            (click)="selecionarCategoria('cafes')"
+          >
+            <img
+              src="https://img.icons8.com/?size=100&id=109144&format=png&color=000000"
+              alt="Cafe"
+              [class.yc-chip-icon-desktop]="categoriaAtiva !== 'cafes'"
+              [class.yc-chip-icon-desktop--active]="categoriaAtiva === 'cafes'"
+            />
+            <ion-label>Cafés</ion-label>
+          </ion-chip>
+          <ion-chip
+            class="yc-chip-desktop"
+            [class.yc-chip-desktop--active]="categoriaAtiva === 'bebidas-frias'"
+            (click)="selecionarCategoria('bebidas-frias')"
+          >
+            <img
+              src="https://img.icons8.com/?size=100&id=xWhRTkdKWcGa&format=png&color=000000"
+              alt="Bebidas Frias"
+              [class.yc-chip-icon-desktop]="categoriaAtiva !== 'bebidas-frias'"
+              [class.yc-chip-icon-desktop--active]="categoriaAtiva === 'bebidas-frias'"
+            />
+            <ion-label>Bebidas Frias</ion-label>
+          </ion-chip>
+          <ion-chip
+            class="yc-chip-desktop"
+            [class.yc-chip-desktop--active]="categoriaAtiva === 'comidas'"
+            (click)="selecionarCategoria('comidas')"
+          >
+            <img
+              src="https://img.icons8.com/?size=100&id=A0cckjpbbd4K&format=png&color=000000"
+              alt="Comidas"
+              [class.yc-chip-icon-desktop]="categoriaAtiva !== 'comidas'"
+              [class.yc-chip-icon-desktop--active]="categoriaAtiva === 'comidas'"
+            />
+            <ion-label>Comidas</ion-label>
+          </ion-chip>
+        </div>
+      </div>
+
+      <div class="yc-grid-desktop">
+        <div class="yc-cards-container-desktop">
+          <div
+            class="yc-card-desktop"
+            *ngFor="let drink of drinks"
+            (click)="abrirDetalhe(drink)"
+          >
+            <div class="yc-card-image-desktop">
+              <img [src]="drink.strDrinkThumb" [alt]="drink.strDrink" />
+            </div>
+            <div class="yc-card-body-desktop">
+              <div class="yc-card-title-desktop">{{ drink.strDrink }}</div>
+              <div class="yc-card-footer-desktop">
+                <span class="yc-price-text-desktop">R$ {{ drink.preco }}</span>
+                <div
+                  class="yc-fav-circle-desktop"
+                  [class.yc-fav-circle-desktop--active]="isFavorito(drink.idDrink)"
+                >
+                  <img
+                    src="https://img.icons8.com/?size=100&id=z1kveclFfFDd&format=png&color=000000"
+                    alt="Icon"
+                    class="yc-fav-icon-desktop"
+                    [class.yc-fav-icon-desktop--active]="isFavorito(drink.idDrink)"
+                  />
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
-    </ion-col>
-  </ion-row>
-</ion-grid>
 
-  <div class="yc-footer-wrapper-desktop">
+      <div class="yc-footer-wrapper-desktop">
         <div class="yc-bottom-desktop">
           <button
             class="yc-bottom-btn-desktop yc-bottom-btn-desktop--home"
