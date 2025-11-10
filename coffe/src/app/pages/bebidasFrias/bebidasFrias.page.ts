@@ -24,6 +24,18 @@ export class BebidasFriasPage implements OnInit {
 
   selecionarCategoria(categoria: string) {
     this.categoriaAtiva = categoria;
+
+    if (categoria === 'cafes') {
+      this.router.navigate(['/cafeespecifico']);
+    } else if (categoria === 'bebidas-frias') {
+      this.router.navigate(['/bebidasFrias']);
+    } else if (categoria === 'comidas') {
+      this.router.navigate(['/menuComida']);
+    }
+  }
+
+  ionViewWillEnter() {
+    this.categoriaAtiva = 'bebidas-frias';
   }
 
   toggleHome() {
