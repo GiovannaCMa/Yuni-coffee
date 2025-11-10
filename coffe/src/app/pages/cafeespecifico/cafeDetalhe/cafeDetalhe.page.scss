@@ -1,28 +1,21 @@
-@import url('https://fonts.googleapis.com/css2?family=Sansation:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Sansation:wght@400;700&display=swap');
 
-:host{
-  --cor-detalhes:#9E887C;
+:host {
+  --cor-detalhes: #9E887C;
   --cor-fundo: #FFF4EF;
 }
-ion-content{
-background-color: vaa;
+
+.detalhes-content {
+  --background: var(--cor-fundo);
+  display: flex;
+  justify-content: center;
+  padding: 16px;
 }
-ion-header, ion-toolbar {
-  --background: #FFF4EF !important;
-  --ion-background-color: #FFF4EF !important;
-  background: #FFF4EF !important;
+
+ion-header {
+  background-color: var(--cor-fundo);
   box-shadow: none;
-  --border-width: 0;
 }
-
-.material-symbols-outlined {
-  font-size: 28px;
-  color: var(--cor-detalhes);
-  vertical-align: middle;
-  transition: color 0.2s ease;
-  padding: 7px;
-}
-
 
 .arrow {
   border: 2px solid var(--cor-detalhes);
@@ -31,95 +24,76 @@ ion-header, ion-toolbar {
   margin: 20px 10px 5px 40px;
   width: 45px;
   height: 45px;
-  padding: 0;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-.arrow img {
-  width: 30px;
-  margin: 0;
+.material-symbols-outlined {
+  font-size: 26px;
+  color: var(--cor-detalhes);
 }
-.container_imagem img {
+
+.bebida-card {
+  background: #fff;
+  border-radius: 24px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+  padding-bottom: 24px;
+}
+
+.imagem-bebida {
+  width: 100%;
+  height: 300px;
+  object-fit: cover;
+  border-bottom: 3px solid #e0c7b7;
+}
+
+.avaliacao {
   display: flex;
-  flex-direction: column;
   align-items: center;
-  text-align: center;
-  width: 300px;
-  margin: 0 auto;
-  display: block;
-  border-radius: 80px;
-}
-ion-card {
-  box-shadow: none;
-}
-ion-content {
-  --background: #FFF4EF;
-}
-ion-card {
-  background-color: transparent;
-}
-ion-card-title{
-  font-size: 30px;
-  font-family: "Momo Trust Display", sans-serif;
-  font-weight: 400;
-  color: #6b4b3a;
-}
-.yc-chip {
-  border-radius: 18px;
-  --background: transparent;
-  --color: #6b4b3a;
-  border: 2.2px solid #e6d6cf;
-  flex: 0 0 auto;
-}
-.yc-chip--active {
-  --background: #6b4b3a;
-  --color: #fff;
-}
-.descricao {
+  justify-content: flex-end;
+  padding: 8px 16px;
+  color: #c7a17a;
   font-size: 16px;
-  color: #444;
-  margin: 16px;
-  text-align: center;
-  line-height: 1.4;
+
+  ion-icon {
+    margin-right: 4px;
+  }
 }
-.informacoes{
+
+.titulo {
+  text-align: left;
+  font-size: 24px;
+  font-weight: 700;
+  margin: 8px 16px;
+  color: #4b2e2b;
+}
+
+.secao {
+  margin: 12px 16px;
+
+  h2 {
+    font-size: 18px;
+    color: #7a5c50;
+    margin-bottom: 6px;
+  }
+
+  p {
+    font-size: 15px;
+    color: #5c4a43;
+    line-height: 1.4;
+  }
+}
+.botao-preco{
+  padding: 20px;
+  border-radius: 50px;
+  background:#4b2e2b;
+  color: #fff;
+   transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+.preco{
   display: flex;
-  gap: 10px;
   justify-content: center;
   align-items: center;
-  margin: 15px;
-}
-ion-icon{
-  --color:#6b4b3a;
-}
-.yc-chip-avaliacao{
-  background-color: transparent;
-  border: none;
-}
-.titulos{
-  margin: 25px;
-  color: black;
-}
-.titulos h2{
-  font-family: "Sansation", sans-serif;
-  font-weight: 400;
-  color: black;
-}
-.tamanhos{
-  display: flex;
-  justify-content: space-around;
-}
-
-.yc-chip.ativo {
-  background-color: #6b4b3a;
-  color: #fff;
-  border-color: #6b4b3a;
-  transform: scale(1.05);
-  transition: 0.2s;
-
-}
-.yc-chip.ativo ion-icon{
-  color: #FFF4EF;
 }
