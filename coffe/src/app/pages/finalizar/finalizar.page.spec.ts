@@ -5,7 +5,11 @@ describe('FinalizarPage', () => {
   let component: FinalizarPage;
   let fixture: ComponentFixture<FinalizarPage>;
 
-  beforeEach(() => {
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      imports: [FinalizarPage] // usa imports, não declarations
+    }).compileComponents();
+
     fixture = TestBed.createComponent(FinalizarPage);
     component = fixture.componentInstance;
     fixture.detectChanges();
@@ -15,3 +19,4 @@ describe('FinalizarPage', () => {
     expect(component).toBeTruthy();
   });
 });
+
