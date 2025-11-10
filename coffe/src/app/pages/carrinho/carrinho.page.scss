@@ -1,0 +1,110 @@
+ion-content {
+  --background: url("../../../assets/icon/fundo1.png") no-repeat center center /
+    cover;
+}
+
+.carrinho-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 15px;
+  gap: 10px;
+  color: #fff;
+}
+
+.logo {
+  width: 150px;
+  margin-top: 5px;
+}
+
+ion-toolbar {
+  --background: transparent;
+  --color: #fff;
+  margin-bottom: 10px;
+}
+
+
+
+/* ITENS DO CARRINHO */
+.itens {
+  width: 90%;
+  margin-top: 20px;
+}
+
+ion-item {
+  --background: #fff;
+  border-radius: 16px;
+  margin-bottom: 15px;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+  padding: 10px;
+  display: flex;
+  align-items: center;
+}
+
+.produto-img {
+  width: 60px;
+  height: 60px;
+  border-radius: 10px;
+  object-fit: cover;
+  margin-right: 15px;
+}
+
+ion-label h2 {
+  font-weight: 600;
+  color: #4a2e1f;
+  font-size: 1.1rem;
+  margin: 0;
+}
+
+ion-label p {
+  margin: 3px 0;
+  color: #7a5a40;
+  font-size: 0.9rem;
+}
+
+/* BOTÃO REMOVER */
+ion-button[color="danger"] {
+  --color: #b85c38;
+  font-size: 0.85rem;
+  text-transform: none;
+}
+
+/* RODAPÉ */
+.rodape {
+  position: fixed;
+  bottom: 0;
+  background-color: #fff;
+  width: 100%;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+  box-shadow: 0 -3px 6px rgba(0, 0, 0, 0.1);
+  padding: 15px 25px 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.total {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #4a2e1f;
+  width: 100%;
+  text-align: right;
+}
+
+.continuar {
+  --background: #d4a574;
+  --border-radius: 25px;
+  --color: #fff;
+  --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  width: 90%;
+  font-size: 1rem;
+  font-weight: 600;
+  text-transform: none;
+  margin-top: 10px;
+}
+
+.continuar:disabled {
+  opacity: 0.5;
+}

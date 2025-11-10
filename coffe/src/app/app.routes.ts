@@ -70,4 +70,8 @@ export const routes: Routes = [
     loadComponent: () =>
       import('./pages/finalizar/finalizar.page').then((m) => m.FinalizarPage),
   },
+  {
+    path: 'carrinho',
+    loadComponent: () => import('./pages/carrinho/carrinho.page').then( m => m.CarrinhoPage)
+  },
 ];
