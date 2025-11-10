@@ -5,6 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { Router } from '@angular/router'; // 🆕 Import do Router
 
+
 @Component({
   selector: 'app-cafe-especifico',
   templateUrl: './cafeespecifico.page.html',
@@ -12,6 +13,7 @@ import { Router } from '@angular/router'; // 🆕 Import do Router
   standalone: true,
   imports: [IonicModule, CommonModule, FormsModule, HttpClientModule],
 })
+
 export class CafeespecificoPage implements OnInit {
   categoriaAtiva: string = 'cafes'; // Valor inicial
   drinks: any[] = [];
@@ -28,7 +30,7 @@ export class CafeespecificoPage implements OnInit {
       .subscribe({
         next: (res: any) => {
           const todosDrinks = res.drinks;
-
+         
           const proibidos = [
             'frappé',
             'frappe',
@@ -41,6 +43,8 @@ export class CafeespecificoPage implements OnInit {
             'yo',
             'coke',
           ];
+
+          
 
           this.drinks = todosDrinks
             .filter((drink: any) => {
@@ -58,8 +62,16 @@ export class CafeespecificoPage implements OnInit {
 
   selecionarCategoria(categoria: string) {
     this.categoriaAtiva = categoria;
-  }
 
+    if (categoria === 'cafes') {
+      this.router.navigate(['/cafeespecifico']);
+    } else if (categoria === 'bebidas-frias') {
+      this.router.navigate(['/bebidasFrias']);
+    } else if (categoria === 'comidas') {
+      this.router.navigate(['/menuComida']);
+    }
+  }
+  
   isFavorito(drinkId: string): boolean {
     return this.favoritos.has(drinkId);
   }
@@ -75,7 +87,7 @@ export class CafeespecificoPage implements OnInit {
     this.router.navigate(['/cafedetalhes']); // vai pra página de detalhes
   }
    ionViewWillEnter() {
-    this.categoriaAtiva = 'bebidas-frias';
+    this.categoriaAtiva = 'cafes';
   }
 
   toggleHome() {
