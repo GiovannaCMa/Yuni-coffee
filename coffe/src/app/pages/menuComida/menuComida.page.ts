@@ -20,6 +20,11 @@ import {
 })
 export class MenuComidaPage implements OnInit {
   comidas: any[] = [];
+  // Paginação
+  comidasPagina: any[] = [];
+  pageSize = 12; // mostra 12 itens por página
+  currentPage = 1;
+  totalPages = 1;
   categoriaAtiva: string = 'comidas';
   favoritos: Set<string> = new Set();
   homeAtivo: boolean = true;
@@ -94,9 +99,12 @@ export class MenuComidaPage implements OnInit {
 
     const idsRemover = [
       '52895',
+      '53120',
+      '52118',
       '52896',
       '52891',
       '52964',
+      '53118',
       '52967',
       '53114',
       '53111',
@@ -180,6 +188,8 @@ export class MenuComidaPage implements OnInit {
           }
         });
         this.comidas = Array.from(comidasUnicasMap.values());
+        // Atualiza paginação sempre que a lista muda
+        this.updatePagina();
       },
       error: (err) => console.error('Erro ao consumir APIs de comidas:', err),
     });
@@ -251,5 +261,36 @@ export class MenuComidaPage implements OnInit {
       imagem: comida.strDrinkThumb,
     };
     this.carrinhoService.adicionar(item);
+  }
+
+  // ---------- Paginação simples (12 por página) ----------
+  private updatePagina() {
+    this.totalPages = Math.max(1, Math.ceil(this.comidas.length / this.pageSize));
+    if (this.currentPage > this.totalPages) {
+      this.currentPage = this.totalPages;
+    }
+    const start = (this.currentPage - 1) * this.pageSize;
+    this.comidasPagina = this.comidas.slice(start, start + this.pageSize);
+  }
+
+  nextPage() {
+    if (this.currentPage < this.totalPages) {
+      this.currentPage++;
+      this.updatePagina();
+    }
+  }
+
+  prevPage() {
+    if (this.currentPage > 1) {
+      this.currentPage--;
+      this.updatePagina();
+    }
+  }
+
+  goToPage(n: number) {
+    if (n >= 1 && n <= this.totalPages) {
+      this.currentPage = n;
+      this.updatePagina();
+    }
   }
 }
