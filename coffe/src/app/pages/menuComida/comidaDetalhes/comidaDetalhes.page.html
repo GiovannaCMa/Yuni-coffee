@@ -51,11 +51,14 @@
       <h2>Peso {{ volumeSelecionado }}</h2>
     </div>
 
-    <!-- 💰 Preço -->
-    <div class="preco">
-      <button class="botao-preco" (click)="adicionarAoCarrinho()">
+    <div class="botoes">
+      <button class="botao-preco">
         Preço: R$ {{ preco }}
       </button>
+      <button class="botao-carrinho" (click)="adicionarAoCarrinho()">
+        <ion-icon name="cart-outline"></ion-icon>
+      </button>
     </div>
+
   </ion-card>
 </ion-content>

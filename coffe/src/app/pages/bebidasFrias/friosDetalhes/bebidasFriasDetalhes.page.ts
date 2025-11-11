@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { addIcons } from 'ionicons';
-import { starOutline } from 'ionicons/icons';
+import { starOutline,cartOutline } from 'ionicons/icons';
 import {
   CarrinhoService,
   ItemCarrinho,
@@ -55,7 +55,7 @@ export class BebidasFriasDetalhesPage implements OnInit {
     private http: HttpClient,
     private carrinhoService: CarrinhoService
   ) {
-    addIcons({ starOutline });
+    addIcons({ starOutline,cartOutline });
   }
 
   ngOnInit() {

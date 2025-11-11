@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { IonicModule } from '@ionic/angular';
 import { CommonModule, Location } from '@angular/common';
 import { Router, ActivatedRoute } from '@angular/router';
+import { starOutline,cartOutline } from 'ionicons/icons';
+import { addIcons } from 'ionicons';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import {
   CarrinhoService,
@@ -67,7 +69,9 @@ export class ComidaDetalhesPage implements OnInit {
     private http: HttpClient,
     private location: Location,
     private carrinhoService: CarrinhoService
-  ) {}
+  ) {
+    addIcons({ starOutline,cartOutline });
+  }
 
   ngOnInit() {
     const id = this.route.snapshot.paramMap.get('id');

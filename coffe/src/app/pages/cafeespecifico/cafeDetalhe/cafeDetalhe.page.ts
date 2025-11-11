@@ -9,6 +9,7 @@ import {
   snowOutline,
   starOutline,
   wineOutline,
+  cartOutline
 } from 'ionicons/icons';
 import {
   CarrinhoService,
@@ -67,7 +68,7 @@ export class CafeDetalhePage implements OnInit {
     private http: HttpClient,
     private carrinhoService: CarrinhoService
   ) {
-    addIcons({ cafeOutline, wineOutline, snowOutline, starOutline });
+    addIcons({ cafeOutline, wineOutline, snowOutline, starOutline,cartOutline });
   }
 
   ngOnInit() {

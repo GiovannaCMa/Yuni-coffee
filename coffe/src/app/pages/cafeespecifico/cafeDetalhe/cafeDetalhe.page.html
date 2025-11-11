@@ -54,15 +54,17 @@
     </div>
 
     <!-- 💰 Botão de preço -->
-    <div class="preco">
-      <button
-        expand="block"
-        fill="solid"
-        class="botao-preco"
-        (click)="adicionarAoCarrinho()"
-      >
-        Preço: R$ {{ drink.preco }}
-      </button>
-    </div>
+
+      <div class="botoes">
+        <button class="botao-preco">
+          Preço: R$ {{ drink.preco }}
+        </button>
+
+        <button class="botao-carrinho" (click)="adicionarAoCarrinho()">
+          <ion-icon name="cart-outline"></ion-icon>
+        </button>
+      </div>
+
+
   </ion-card>
 </ion-content>

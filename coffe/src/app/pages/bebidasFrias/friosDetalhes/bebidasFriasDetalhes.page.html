@@ -44,11 +44,18 @@
     <div class="secao">
       <h2>Sobre</h2>
       <p>{{ descricao }}</p>
-      <div class="preco">
-        <button class="botao-preco" (click)="adicionarAoCarrinho()">
+
+      <div class="botoes">
+        <button class="botao-preco">
           Preço: R$ {{ drink.preco }}
         </button>
+
+        <button class="botao-carrinho" (click)="adicionarAoCarrinho()">
+          <ion-icon name="cart-outline"></ion-icon>
+        </button>
       </div>
+
     </div>
+
   </ion-card>
 </ion-content>
