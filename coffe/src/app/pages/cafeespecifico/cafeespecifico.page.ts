@@ -126,11 +126,6 @@ export class CafeespecificoPage implements OnInit {
   }
 
   toggleCart() {
-    if (this.cartAtivo) {
-      this.cartAtivo = false;
-    } else {
-      this.cartAtivo = true;
-      this.homeAtivo = false;
-    }
+    this.router.navigate(['/carrinho']);
   }
 }

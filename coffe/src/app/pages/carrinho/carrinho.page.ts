@@ -1,23 +1,53 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { IonContent, IonItem, IonLabel, IonButton, IonToolbar, IonTitle, IonButtons, IonBackButton } from '@ionic/angular/standalone';
-import { CarrinhoService, ItemCarrinho } from 'src/app/services/carrinho.service';
+import { Location } from '@angular/common';
+import {
+  IonContent,
+  IonButton,
+  IonToolbar,
+  IonTitle,
+  IonButtons,
+  IonIcon,
+} from '@ionic/angular/standalone';
+import { addIcons } from 'ionicons';
+import { arrowBack } from 'ionicons/icons';
+import {
+  CarrinhoService,
+  ItemCarrinho,
+} from 'src/app/services/carrinho.service';
 
 @Component({
   selector: 'app-carrinho',
   templateUrl: './carrinho.page.html',
   styleUrls: ['./carrinho.page.scss'],
   standalone: true,
-  imports: [CommonModule, IonContent, IonItem, IonLabel, IonButton, IonToolbar, IonTitle, IonButtons, IonBackButton]
+  imports: [
+    CommonModule,
+    IonContent,
+    IonButton,
+    IonToolbar,
+    IonTitle,
+    IonButtons,
+    IonIcon,
+  ],
 })
 export class CarrinhoPage implements OnInit {
   itens: ItemCarrinho[] = [];
   total = 0;
 
-  constructor(private carrinhoService: CarrinhoService) {}
+  constructor(
+    private carrinhoService: CarrinhoService,
+    private location: Location
+  ) {
+    addIcons({ arrowBack });
+  }
+
+  voltar() {
+    this.location.back();
+  }
 
   ngOnInit() {
-    this.carrinhoService.getCarrinho().subscribe(itens => {
+    this.carrinhoService.getCarrinho().subscribe((itens) => {
       this.itens = itens;
       this.total = this.carrinhoService.getTotal();
     });
@@ -25,6 +55,14 @@ export class CarrinhoPage implements OnInit {
 
   removerItem(id: number) {
     this.carrinhoService.remover(id);
+  }
+
+  aumentarQuantidade(id: number) {
+    this.carrinhoService.aumentarQuantidade(id);
+  }
+
+  diminuirQuantidade(id: number) {
+    this.carrinhoService.diminuirQuantidade(id);
   }
 
   continuar() {

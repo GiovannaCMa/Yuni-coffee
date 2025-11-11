@@ -10,7 +10,7 @@ export interface ItemCarrinho {
 }
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class CarrinhoService {
   private carrinho: ItemCarrinho[] = [];
@@ -29,7 +29,7 @@ export class CarrinhoService {
   }
 
   adicionar(item: ItemCarrinho) {
-    const existente = this.carrinho.find(p => p.id === item.id);
+    const existente = this.carrinho.find((p) => p.id === item.id);
     if (existente) {
       existente.quantidade += item.quantidade;
     } else {
@@ -39,8 +39,26 @@ export class CarrinhoService {
   }
 
   remover(id: number) {
-    this.carrinho = this.carrinho.filter(p => p.id !== id);
+    this.carrinho = this.carrinho.filter((p) => p.id !== id);
     this.atualizarStorage();
+  }
+
+  aumentarQuantidade(id: number) {
+    const item = this.carrinho.find((p) => p.id === id);
+    if (item) {
+      item.quantidade += 1;
+      this.atualizarStorage();
+    }
+  }
+
+  diminuirQuantidade(id: number) {
+    const item = this.carrinho.find((p) => p.id === id);
+    if (item && item.quantidade > 1) {
+      item.quantidade -= 1;
+      this.atualizarStorage();
+    } else if (item && item.quantidade === 1) {
+      this.remover(id);
+    }
   }
 
   limpar() {

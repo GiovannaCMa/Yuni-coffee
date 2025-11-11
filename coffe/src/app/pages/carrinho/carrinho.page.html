@@ -1,35 +1,140 @@
-<ion-content [fullscreen]="true">
-  <div class="carrinho-container">
-    <!-- LOGO -->
-    <img src="../../assets/icon/logo.png" class="logo" />
+<!-- Versão Mobile -->
+<div class="carrinho-mobile">
+  <ion-content [fullscreen]="true" class="carrinho-content">
+    <div class="overlay-mobile"></div>
+    <div class="carrinho-container">
+      <!-- Logo centralizado -->
+      <div class="logo-section">
+        <div class="logo-wrapper">
+          <img src="assets/icon/logo.png" class="logo" alt="Yuni Coffee" />
+        </div>
+      </div>
 
-    <!-- TÍTULO -->
-    <ion-toolbar color="transparent" class="toolbar">
-      <ion-buttons slot="start">
-        <ion-back-button defaultHref="/menu"></ion-back-button>
-      </ion-buttons>
-      <ion-title>Carrinho</ion-title>
-    </ion-toolbar>
+      <!-- Barra de navegação -->
+      <div class="toolbar-section">
+        <button class="back-button" (click)="voltar()">
+          <ion-icon name="arrow-back"></ion-icon>
+        </button>
+        <h2 class="toolbar-title">Carrinho</h2>
+      </div>
 
-    <div class="itens">
-      <ion-item *ngFor="let item of itens">
-        <img [src]="item.imagem" class="produto-img" />
-        <ion-label>
-          <h2>{{ item.nome }}</h2>
-          <p>R$ {{ item.preco | number:'1.2-2' }}</p>
-          <p>Qtd: {{ item.quantidade }}</p>
-        </ion-label>
-        <ion-button fill="clear" color="danger" (click)="removerItem(item.id)"
-          >Remover</ion-button
+      <!-- Lista de itens -->
+      <div class="itens-container">
+        @for (item of itens; track item.id) {
+        <div class="item-card">
+          <img [src]="item.imagem" class="produto-img" [alt]="item.nome" />
+          <div class="item-info">
+            <h2 class="item-nome">{{ item.nome }}</h2>
+            <p class="item-preco">R$ {{ item.preco | number:'1.2-2' }}</p>
+            <div class="quantidade-control">
+              <button class="qty-btn" (click)="diminuirQuantidade(item.id)">
+                -
+              </button>
+              <span class="qty-value">{{ item.quantidade }}</span>
+              <button class="qty-btn" (click)="aumentarQuantidade(item.id)">
+                +
+              </button>
+            </div>
+          </div>
+        </div>
+        }
+      </div>
+
+      <!-- Ilustração de gato (decorativa) -->
+      <div class="cat-illustration"></div>
+
+      <!-- Rodapé com total e botão -->
+      <div class="rodape">
+        <div class="total-section">
+          <span class="total-label">Total</span>
+          <span class="total-value">R$ {{ total | number:'1.2-2' }}</span>
+        </div>
+        <div class="divider"></div>
+        <ion-button expand="block" class="continuar" (click)="continuar()">
+          Continuar
+        </ion-button>
+      </div>
+    </div>
+  </ion-content>
+</div>
+
+<!-- Versão Desktop -->
+<div class="carrinho-desktop">
+  <ion-content class="carrinho-content-desktop">
+    <div class="overlay-desktop"></div>
+    <div class="carrinho-container-desktop">
+      <!-- Logo centralizado -->
+      <div class="logo-section-desktop">
+        <div class="logo-wrapper-desktop">
+          <img
+            src="assets/icon/logo.png"
+            class="logo-desktop"
+            alt="Yuni Coffee"
+          />
+        </div>
+      </div>
+
+      <!-- Barra de navegação -->
+      <ion-toolbar color="transparent" class="toolbar-desktop">
+        <ion-buttons slot="start">
+          <button class="back-button-desktop" (click)="voltar()">
+            <ion-icon name="arrow-back"></ion-icon>
+          </button>
+        </ion-buttons>
+        <ion-title>Carrinho</ion-title>
+      </ion-toolbar>
+
+      <!-- Lista de itens -->
+      <div class="itens-container-desktop">
+        @for (item of itens; track item.id) {
+        <div class="item-card-desktop">
+          <img
+            [src]="item.imagem"
+            class="produto-img-desktop"
+            [alt]="item.nome"
+          />
+          <div class="item-info-desktop">
+            <h2 class="item-nome-desktop">{{ item.nome }}</h2>
+            <p class="item-preco-desktop">
+              R$ {{ item.preco | number:'1.2-2' }}
+            </p>
+            <div class="quantidade-control-desktop">
+              <button
+                class="qty-btn-desktop"
+                (click)="diminuirQuantidade(item.id)"
+              >
+                -
+              </button>
+              <span class="qty-value-desktop">{{ item.quantidade }}</span>
+              <button
+                class="qty-btn-desktop"
+                (click)="aumentarQuantidade(item.id)"
+              >
+                +
+              </button>
+            </div>
+          </div>
+        </div>
+        }
+      </div>
+
+      <!-- Rodapé com total e botão -->
+      <div class="rodape-desktop">
+        <div class="total-section-desktop">
+          <span class="total-label-desktop">Total</span>
+          <span class="total-value-desktop"
+            >R$ {{ total | number:'1.2-2' }}</span
+          >
+        </div>
+        <div class="divider-desktop"></div>
+        <ion-button
+          expand="block"
+          class="continuar-desktop"
+          (click)="continuar()"
         >
-      </ion-item>
+          Continuar
+        </ion-button>
+      </div>
     </div>
-
-    <div class="rodape">
-      <div class="total">Total: R$ {{ total | number:'1.2-2' }}</div>
-      <ion-button expand="block" class="continuar" (click)="continuar()"
-        >Continuar</ion-button
-      >
-    </div>
-  </div>
-</ion-content>
+  </ion-content>
+</div>
