@@ -6,7 +6,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class NomeClientePipe implements PipeTransform {
   transform(value: string): string {
-    if (!value) return 'Comando: (não informado)';
-    return `Cliente: ${value.toUpperCase()}`; // coloca em caixa alta
+    if (!value) return 'Comanda: (não informado)';
+    return `Comando: ${value.toUpperCase()}`; // coloca em caixa alta
   }
 }
