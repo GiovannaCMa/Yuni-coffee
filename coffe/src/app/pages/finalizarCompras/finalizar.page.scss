@@ -37,11 +37,18 @@ ion-toolbar {
 }
 
 .gato-img {
-  width: 80%;
-  margin: 0;
+   pointer-events: none; /* impede o gato de bloquear cliques */
+
+  position: absolute;
+  top: 54%; /* centralizado verticalmente */
+  left: 50%; /* centralizado horizontalmente */
+  transform: translate(-50%, -50%); /* centralização perfeita */
+  width: 400px; /* ajuste conforme o tamanho do seu gato */
+  z-index: 10; /* garante que fique por cima dos outros elementos */
 }
 
 .comanda-input {
+  margin-top: 180px; /* empurra para baixo, para o gato não sobrepor */
   width: 90%;
   --background: #4b2b17 !important;
   background: transparent;
