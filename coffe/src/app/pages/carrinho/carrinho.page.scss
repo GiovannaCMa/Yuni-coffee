@@ -327,6 +327,27 @@ ion-content {
   line-height: 1.4;
 }
 
+/* Gato acima do rodapé - Mobile */
+.gato-carrinho-wrapper {
+  position: fixed;
+  bottom: 31px;
+  left: 50%;
+  transform: translateX(calc(-50% - 15px));
+  z-index: 11;
+  width: 100%;
+  max-width: 430px;
+  display: flex;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.gato-carrinho {
+  width: 250px;
+  height: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.3));
+}
+
 /* Rodapé */
 .carrinho-mobile .rodape {
   position: fixed;
@@ -658,6 +679,27 @@ ion-content {
   color: #3b2a20;
   min-width: 30px;
   text-align: center;
+}
+
+/* Gato acima do rodapé - Desktop */
+.gato-carrinho-wrapper-desktop {
+  position: fixed;
+  bottom: 31px;
+  left: 50%;
+  transform: translateX(calc(-50% - 20px));
+  z-index: 11;
+  width: 100%;
+  max-width: 1200px;
+  display: flex;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.gato-carrinho-desktop {
+  width: 300px;
+  height: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.3));
 }
 
 .rodape-desktop {
