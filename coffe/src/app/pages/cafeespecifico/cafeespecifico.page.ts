@@ -16,6 +16,7 @@ import { Router } from '@angular/router'; // 🆕 Import do Router
 export class CafeespecificoPage implements OnInit {
   categoriaAtiva: string = 'cafes'; // Valor inicial
   drinks: any[] = [];
+  cartCount: number = 0;
   favoritos: Set<string> = new Set();
   homeAtivo: boolean = true; // Home começa ativo
   cartAtivo: boolean = false;

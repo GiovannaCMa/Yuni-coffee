@@ -112,6 +112,7 @@
               class="yc-bottom-icon"
               [class.yc-bottom-icon--active]="cartAtivo"
             />
+            <span class="yc-badge" *ngIf="cartCount > 0">{{ cartCount }}</span>
           </button>
         </div>
       </div>
@@ -194,6 +195,7 @@
                 <div
                   class="yc-fav-circle-desktop"
                   [class.yc-fav-circle-desktop--active]="isFavorito(drink.idDrink)"
+                  (click)="abrirDetalhe(drink, $event)"
                 >
                   <img
                     src="https://img.icons8.com/?size=100&id=z1kveclFfFDd&format=png&color=000000"
@@ -233,6 +235,9 @@
               class="yc-bottom-icon-desktop"
               [class.yc-bottom-icon-desktop--active]="cartAtivo"
             />
+            <span class="yc-badge-desktop" *ngIf="cartCount > 0"
+              >{{ cartCount }}</span
+            >
           </button>
         </div>
       </div>

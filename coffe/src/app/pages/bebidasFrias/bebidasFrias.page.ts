@@ -4,6 +4,10 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { Router } from '@angular/router'; // 🆕 Import do Router
+import {
+  CarrinhoService,
+  ItemCarrinho,
+} from 'src/app/services/carrinho.service';
 
 @Component({
   selector: 'app-bebidas-frias',
@@ -18,9 +22,14 @@ export class BebidasFriasPage implements OnInit {
   favoritos: Set<string> = new Set(); // Rastreia itens favoritados
   homeAtivo: boolean = true; // Home começa ativo
   cartAtivo: boolean = false; // Carrinho começa inativo
+  cartCount: number = 0;
 
   // 🆕 Adicionando o Router aqui
-  constructor(private http: HttpClient, private router: Router) {}
+  constructor(
+    private http: HttpClient,
+    private router: Router,
+    private carrinhoService: CarrinhoService
+  ) {}
 
   selecionarCategoria(categoria: string) {
     this.categoriaAtiva = categoria;
@@ -48,12 +57,8 @@ export class BebidasFriasPage implements OnInit {
   }
 
   toggleCart() {
-    if (this.cartAtivo) {
-      this.cartAtivo = false;
-    } else {
-      this.cartAtivo = true;
-      this.homeAtivo = false;
-    }
+    localStorage.setItem('lastFrom', '/bebidasFrias');
+    this.router.navigate(['/carrinho']);
   }
 
   isFavorito(drinkId: string): boolean {
@@ -61,12 +66,32 @@ export class BebidasFriasPage implements OnInit {
   }
 
   ngOnInit() {
-    // Carrega favoritos salvos do localStorage
+    // Carrega favoritos salvos do localStorage primeiro
     const favoritosSalvos = localStorage.getItem('favoritosBebidasFrias');
     if (favoritosSalvos) {
       const ids = JSON.parse(favoritosSalvos);
       this.favoritos = new Set(ids);
     }
+
+    // Assina o carrinho para atualizar o badge e sincronizar favoritos
+    this.carrinhoService.getCarrinho().subscribe((itens) => {
+      this.cartCount = itens.reduce((sum, i) => sum + i.quantidade, 0);
+
+      // Sincroniza favoritos: remove favoritos que não estão mais no carrinho
+      const idsNoCarrinho = new Set(itens.map((i) => i.id.toString()));
+      let favoritosAtualizados = false;
+
+      this.favoritos.forEach((favoritoId) => {
+        if (!idsNoCarrinho.has(favoritoId)) {
+          this.favoritos.delete(favoritoId);
+          favoritosAtualizados = true;
+        }
+      });
+
+      if (favoritosAtualizados) {
+        this.salvarFavoritos();
+      }
+    });
 
     this.http
       .get(
@@ -117,23 +142,48 @@ export class BebidasFriasPage implements OnInit {
   abrirDetalhe(drink: any, event?: Event) {
     if (event) {
       event.stopPropagation();
-    }
 
-    // Toggle favorito: se já está favoritado, desmarca e não navega
-    if (this.favoritos.has(drink.idDrink)) {
-      this.favoritos.delete(drink.idDrink);
+      // Toggle favorito: se já está favoritado, desmarca e remove do carrinho
+      if (this.favoritos.has(drink.idDrink)) {
+        this.favoritos.delete(drink.idDrink);
+        this.salvarFavoritos();
+        // Remove do carrinho
+        this.carrinhoService.remover(parseInt(drink.idDrink));
+        return; // Não navega se estiver desmarcando
+      }
+
+      // Marca como favorito e adiciona ao carrinho
+      this.favoritos.add(drink.idDrink);
       this.salvarFavoritos();
-      return; // Não navega se estiver desmarcando
+
+      // Adiciona ao carrinho
+      const item: ItemCarrinho = {
+        id: parseInt(drink.idDrink),
+        nome: drink.strDrink,
+        preco: parseFloat(drink.preco),
+        quantidade: 1,
+        imagem: drink.strDrinkThumb,
+      };
+      this.carrinhoService.adicionar(item);
+      return; // Não navega quando clica na patinha
     }
 
-    // Marca como favorito antes de navegar
-    this.favoritos.add(drink.idDrink);
-    this.salvarFavoritos();
+    // Se não foi clicado na patinha, apenas navega para detalhes
     localStorage.setItem('drinkSelecionado', JSON.stringify(drink));
+    this.router.navigate(['/bebidasFriasDetalhes']);
+  }
 
-    // Pequeno delay para mostrar a mudança de cor antes de navegar
-    setTimeout(() => {
-      this.router.navigate(['/bebidasFriasDetalhes']); // vai pra página de detalhes
-    }, 150);
+  adicionarAoCarrinho(drink: any, event?: Event) {
+    if (event) {
+      event.stopPropagation();
+    }
+    const item: ItemCarrinho = {
+      id: parseInt(drink.idDrink),
+      nome: drink.strDrink,
+      preco: parseFloat(drink.preco),
+      quantidade: 1,
+      imagem: drink.strDrinkThumb,
+    };
+    this.carrinhoService.adicionar(item);
   }
 }

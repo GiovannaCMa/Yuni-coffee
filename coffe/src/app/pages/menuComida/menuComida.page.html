@@ -60,7 +60,7 @@
 
       <ion-grid class="yc-grid">
         <ion-row>
-          @for (comida of comidas; track comida.idMeal) {
+          @for (comida of comidasPagina; track comida.idMeal) {
           <ion-col size="6" class="yc-col">
             <div class="yc-card" (click)="abrirDetalhe(comida)">
               <div class="yc-card-image">
@@ -90,6 +90,8 @@
         </ion-row>
       </ion-grid>
 
+     
+
       <div class="yc-footer-wrapper">
         <div class="yc-bottom">
           <button
@@ -115,6 +117,7 @@
               class="yc-bottom-icon"
               [class.yc-bottom-icon--active]="cartAtivo"
             />
+            <span class="yc-badge" *ngIf="cartCount > 0">{{ cartCount }}</span>
           </button>
         </div>
       </div>
@@ -182,7 +185,7 @@
 
       <div class="yc-grid-desktop">
         <div class="yc-cards-container-desktop">
-          @for (comida of comidas; track comida.idMeal) {
+          @for (comida of comidasPagina; track comida.idMeal) {
           <div class="yc-card-desktop" (click)="abrirDetalhe(comida)">
             <div class="yc-card-image-desktop">
               <img [src]="comida.strDrinkThumb" [alt]="comida.strDrink" />
@@ -194,6 +197,7 @@
                 <div
                   class="yc-fav-circle-desktop"
                   [class.yc-fav-circle-desktop--active]="isFavorito(comida.idMeal)"
+                  (click)="abrirDetalhe(comida, $event)"
                 >
                   <img
                     src="https://img.icons8.com/?size=100&id=z1kveclFfFDd&format=png&color=000000"
@@ -208,6 +212,7 @@
           }
         </div>
       </div>
+
 
       <div class="yc-footer-wrapper-desktop">
         <div class="yc-bottom-desktop">
@@ -234,6 +239,9 @@
               class="yc-bottom-icon-desktop"
               [class.yc-bottom-icon-desktop--active]="cartAtivo"
             />
+            <span class="yc-badge-desktop" *ngIf="cartCount > 0"
+              >{{ cartCount }}</span
+            >
           </button>
         </div>
       </div>

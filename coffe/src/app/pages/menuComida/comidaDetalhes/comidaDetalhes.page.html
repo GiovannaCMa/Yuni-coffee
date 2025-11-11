@@ -1,12 +1,22 @@
 <ion-header>
-  <button (click)="voltar()" expand="block" fill="clear" shape="round" class="arrow">
-    <img src="../../../../assets/icon/Seta.png" alt="seta">
+  <button
+    (click)="voltar()"
+    expand="block"
+    fill="clear"
+    shape="round"
+    class="arrow"
+  >
+    <img src="../../../../assets/icon/Seta.png" alt="seta" />
   </button>
 </ion-header>
 
 <ion-content *ngIf="comida" class="detalhes-content">
   <ion-card class="comida-card">
-    <img [src]="comida.strMealThumb" [alt]="comida.strMeal" class="imagem-comida" />
+    <img
+      [src]="comida.strMealThumb"
+      [alt]="comida.strMeal"
+      class="imagem-comida"
+    />
 
     <!-- ⭐ Avaliação -->
     <div class="avaliacao">
@@ -17,42 +27,41 @@
     <h1 class="titulo">{{ comida.strMeal }}</h1>
 
     <!-- 🍽️ Porção -->
-    <div class="secao">
-      <h2>Porção</h2>
-      <div class="opcoes">
-        <ion-chip class="yc-chip" [ngClass]="{ ativo: porcaoSelecionada === 'pequeno' }">
-          <ion-label>Individual</ion-label>
+    <div class="opcoes">
+      @for (tamanho of tamanhos; track $index) {
+        <ion-chip
+          class="yc-chip"
+          [ngClass]="{ ativo: tamanhoSelecionado === tamanho }"
+          (click)="selecionarTamanho(tamanho)"
+        >
+          <ion-label>{{ tamanho }}</ion-label>
         </ion-chip>
-
-        <ion-chip class="yc-chip" [ngClass]="{ ativo: porcaoSelecionada === 'medio' }">
-          <ion-label>Dupla</ion-label>
-        </ion-chip>
-
-        <ion-chip class="yc-chip" [ngClass]="{ ativo: porcaoSelecionada === 'grande' }">
-          <ion-label>Familiar</ion-label>
-        </ion-chip>
-      </div>
+      }
     </div>
 
     <!-- 🥗 Descrição -->
     <div class="secao">
       <h2>Sobre</h2>
-      <p *ngIf="descricaoSelecionada">
-        {{ descricaoSelecionada.descricao }}
-      </p>
-      <p *ngIf="!descricaoSelecionada">
-        Descrição indisponível no momento.
-      </p>
-    </div>
-
-    <!-- 💰 Preço -->
-    <div class="preco">
-      <h3>R$ {{ preco }}</h3>
+      <p *ngIf="descricaoSelecionada">{{ descricaoSelecionada.descricao }}</p>
+      <p *ngIf="!descricaoSelecionada">Descrição indisponível no momento.</p>
     </div>
 
     <!-- 📦 Volume -->
     <div class="volume" *ngIf="volumeSelecionado">
       <h2>Peso {{ volumeSelecionado }}</h2>
+    </div>
+
+    <div class="botoes">
+      <button class="botao-preco">
+        Preço: R$ {{ preco }}
+      </button>
+      <button
+        class="botao-carrinho"
+        [ngClass]="{ 'botao-carrinho--active': estaNoCarrinho }"
+        (click)="adicionarAoCarrinho()"
+      >
+        <ion-icon name="cart-outline"></ion-icon>
+      </button>
     </div>
 
   </ion-card>
