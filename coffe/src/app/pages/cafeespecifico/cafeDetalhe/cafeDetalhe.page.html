@@ -60,7 +60,11 @@
           Preço: R$ {{ drink.preco }}
         </button>
 
-        <button class="botao-carrinho" (click)="adicionarAoCarrinho()">
+        <button
+          class="botao-carrinho"
+          [ngClass]="{ 'botao-carrinho--active': estaNoCarrinho }"
+          (click)="adicionarAoCarrinho()"
+        >
           <ion-icon name="cart-outline"></ion-icon>
         </button>
       </div>

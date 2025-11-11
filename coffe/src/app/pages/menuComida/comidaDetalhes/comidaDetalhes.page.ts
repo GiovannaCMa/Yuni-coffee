@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { IonicModule } from '@ionic/angular';
 import { CommonModule, Location } from '@angular/common';
 import { Router, ActivatedRoute } from '@angular/router';
-import { starOutline,cartOutline } from 'ionicons/icons';
+import { starOutline, cartOutline } from 'ionicons/icons';
 import { addIcons } from 'ionicons';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import {
@@ -24,6 +24,7 @@ export class ComidaDetalhesPage implements OnInit {
   volumeSelecionado: string | null = null;
   tamanhoSelecionado: string = '';
   tamanhos = ['Pequeno', 'Médio', 'Grande'];
+  estaNoCarrinho: boolean = false;
 
   // 🍰 Descrições e avaliações personalizadas
   descricaoPersonalizada: any = {
@@ -70,7 +71,7 @@ export class ComidaDetalhesPage implements OnInit {
     private location: Location,
     private carrinhoService: CarrinhoService
   ) {
-    addIcons({ starOutline,cartOutline });
+    addIcons({ starOutline, cartOutline });
   }
 
   ngOnInit() {
@@ -103,6 +104,13 @@ export class ComidaDetalhesPage implements OnInit {
           // ⚡ Define descrição e volume
           this.setDescricaoPersonalizada();
           this.setVolumeSelecionado();
+
+          // Verifica se o item está no carrinho
+          this.carrinhoService.getCarrinho().subscribe((itens) => {
+            this.estaNoCarrinho = itens.some(
+              (item) => item.id === parseInt(this.comida.idMeal)
+            );
+          });
         } else {
           this.voltar();
         }
@@ -140,14 +148,22 @@ export class ComidaDetalhesPage implements OnInit {
   adicionarAoCarrinho() {
     if (!this.comida || !this.preco) return;
 
-    const item: ItemCarrinho = {
-      id: parseInt(this.comida.idMeal),
-      nome: this.comida.strMeal,
-      preco: parseFloat(this.preco),
-      quantidade: 1,
-      imagem: this.comida.strMealThumb,
-    };
+    const itemId = parseInt(this.comida.idMeal);
 
-    this.carrinhoService.adicionar(item);
+    // Toggle: se já está no carrinho, remove; se não está, adiciona
+    if (this.estaNoCarrinho) {
+      this.carrinhoService.remover(itemId);
+      this.estaNoCarrinho = false;
+    } else {
+      const item: ItemCarrinho = {
+        id: itemId,
+        nome: this.comida.strMeal,
+        preco: parseFloat(this.preco),
+        quantidade: 1,
+        imagem: this.comida.strMealThumb,
+      };
+      this.carrinhoService.adicionar(item);
+      this.estaNoCarrinho = true;
+    }
   }
 }

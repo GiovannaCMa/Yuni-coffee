@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { addIcons } from 'ionicons';
-import { starOutline,cartOutline } from 'ionicons/icons';
+import { starOutline, cartOutline } from 'ionicons/icons';
 import {
   CarrinhoService,
   ItemCarrinho,
@@ -23,10 +23,12 @@ export class BebidasFriasDetalhesPage implements OnInit {
   avaliacao: number = 0;
   tamanhoSelecionado: string = '';
   tamanhos = ['Pequeno', 'Médio', 'Grande'];
+  estaNoCarrinho: boolean = false;
 
   descricaoPersonalizada: any = {
     Afterglow: {
-      descricao:'Drink sem álcool, doce e frutado, feito com sucos de abacaxi, laranja e groselha. Refrescante e vibrante, perfeito para dias quentes.',
+      descricao:
+        'Drink sem álcool, doce e frutado, feito com sucos de abacaxi, laranja e groselha. Refrescante e vibrante, perfeito para dias quentes.',
       avaliacao: 4.5,
     },
     'Brilho residual': {
@@ -55,7 +57,7 @@ export class BebidasFriasDetalhesPage implements OnInit {
     private http: HttpClient,
     private carrinhoService: CarrinhoService
   ) {
-    addIcons({ starOutline,cartOutline });
+    addIcons({ starOutline, cartOutline });
   }
 
   ngOnInit() {
@@ -89,6 +91,13 @@ export class BebidasFriasDetalhesPage implements OnInit {
             this.avaliacao = 0;
           });
       }
+
+      // Verifica se o item está no carrinho
+      this.carrinhoService.getCarrinho().subscribe((itens) => {
+        this.estaNoCarrinho = itens.some(
+          (item) => item.id === parseInt(this.drink.idDrink)
+        );
+      });
     } else {
       this.router.navigate(['/bebidasFrias']);
     }
@@ -106,14 +115,22 @@ export class BebidasFriasDetalhesPage implements OnInit {
   adicionarAoCarrinho() {
     if (!this.drink) return;
 
-    const item: ItemCarrinho = {
-      id: parseInt(this.drink.idDrink),
-      nome: this.drink.strDrink,
-      preco: parseFloat(this.drink.preco),
-      quantidade: 1,
-      imagem: this.drink.strDrinkThumb,
-    };
+    const itemId = parseInt(this.drink.idDrink);
 
-    this.carrinhoService.adicionar(item);
+    // Toggle: se já está no carrinho, remove; se não está, adiciona
+    if (this.estaNoCarrinho) {
+      this.carrinhoService.remover(itemId);
+      this.estaNoCarrinho = false;
+    } else {
+      const item: ItemCarrinho = {
+        id: itemId,
+        nome: this.drink.strDrink,
+        preco: parseFloat(this.drink.preco),
+        quantidade: 1,
+        imagem: this.drink.strDrinkThumb,
+      };
+      this.carrinhoService.adicionar(item);
+      this.estaNoCarrinho = true;
+    }
   }
 }

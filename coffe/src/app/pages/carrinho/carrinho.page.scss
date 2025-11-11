@@ -272,6 +272,61 @@ ion-content {
   pointer-events: none;
 }
 
+/* Mensagem de carrinho vazio - Mobile */
+.mensagem-vazio-container {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: #fff5f1;
+  border-radius: 20px;
+  padding: 24px 32px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+  z-index: 2000;
+  max-width: 320px;
+  width: 90%;
+  text-align: center;
+  border: 2px solid #d4c4b8;
+  position: relative;
+}
+
+.fechar-mensagem {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: transparent;
+  border: none;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  border-radius: 50%;
+  transition: background-color 0.2s ease;
+
+  ion-icon {
+    font-size: 20px;
+    color: #6b4b3a;
+  }
+
+  &:hover {
+    background: rgba(107, 75, 58, 0.1);
+  }
+
+  &:active {
+    background: rgba(107, 75, 58, 0.2);
+  }
+}
+
+.mensagem-vazio-texto {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+  color: #4b2e2b;
+  line-height: 1.4;
+}
+
 /* Rodapé */
 .carrinho-mobile .rodape {
   position: fixed;
@@ -677,4 +732,59 @@ ion-content {
 
 .continuar-desktop:hover {
   --background: #f5ede8;
+}
+
+/* Mensagem de carrinho vazio - Desktop */
+.mensagem-vazio-container-desktop {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: #fff5f1;
+  border-radius: 24px;
+  padding: 32px 40px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+  z-index: 2000;
+  max-width: 400px;
+  width: auto;
+  text-align: center;
+  border: 2px solid #d4c4b8;
+  position: relative;
+}
+
+.fechar-mensagem-desktop {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: transparent;
+  border: none;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  border-radius: 50%;
+  transition: background-color 0.2s ease;
+
+  ion-icon {
+    font-size: 22px;
+    color: #6b4b3a;
+  }
+
+  &:hover {
+    background: rgba(107, 75, 58, 0.1);
+  }
+
+  &:active {
+    background: rgba(107, 75, 58, 0.2);
+  }
+}
+
+.mensagem-vazio-texto-desktop {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 600;
+  color: #4b2e2b;
+  line-height: 1.4;
 }

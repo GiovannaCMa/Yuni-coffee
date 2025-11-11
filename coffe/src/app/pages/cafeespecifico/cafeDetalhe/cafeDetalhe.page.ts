@@ -9,7 +9,7 @@ import {
   snowOutline,
   starOutline,
   wineOutline,
-  cartOutline
+  cartOutline,
 } from 'ionicons/icons';
 import {
   CarrinhoService,
@@ -29,7 +29,7 @@ export class CafeDetalhePage implements OnInit {
   avaliacao = 0;
   tamanhoSelecionado = '';
   tamanhos = ['Pequeno', 'Médio', 'Grande'];
-
+  estaNoCarrinho: boolean = false;
 
   descricaoPersonalizada: any = {
     'Cafe Savoy': {
@@ -68,7 +68,13 @@ export class CafeDetalhePage implements OnInit {
     private http: HttpClient,
     private carrinhoService: CarrinhoService
   ) {
-    addIcons({ cafeOutline, wineOutline, snowOutline, starOutline,cartOutline });
+    addIcons({
+      cafeOutline,
+      wineOutline,
+      snowOutline,
+      starOutline,
+      cartOutline,
+    });
   }
 
   ngOnInit() {
@@ -103,6 +109,13 @@ export class CafeDetalhePage implements OnInit {
             this.avaliacao = 0;
           });
       }
+
+      // Verifica se o item está no carrinho
+      this.carrinhoService.getCarrinho().subscribe((itens) => {
+        this.estaNoCarrinho = itens.some(
+          (item) => item.id === parseInt(this.drink.idDrink)
+        );
+      });
     } else {
       this.router.navigate(['/cafeespecifico']);
     }
@@ -111,22 +124,28 @@ export class CafeDetalhePage implements OnInit {
   voltar() {
     this.router.navigate(['/cafeespecifico']);
   }
-    selecionarTamanho(tamanho: string) {
-      this.tamanhoSelecionado = tamanho;
-    }
+  selecionarTamanho(tamanho: string) {
+    this.tamanhoSelecionado = tamanho;
+  }
   adicionarAoCarrinho() {
     if (!this.drink) return;
 
-    const item: ItemCarrinho = {
-      id: parseInt(this.drink.idDrink),
-      nome: this.drink.strDrink,
-      preco: parseFloat(this.drink.preco),
-      quantidade: 1,
-      imagem: this.drink.strDrinkThumb,
-    };
+    const itemId = parseInt(this.drink.idDrink);
 
-    this.carrinhoService.adicionar(item);
-    // Opcional: navegar para o carrinho ou mostrar mensagem de sucesso
-    // this.router.navigate(['/carrinho']);
+    // Toggle: se já está no carrinho, remove; se não está, adiciona
+    if (this.estaNoCarrinho) {
+      this.carrinhoService.remover(itemId);
+      this.estaNoCarrinho = false;
+    } else {
+      const item: ItemCarrinho = {
+        id: itemId,
+        nome: this.drink.strDrink,
+        preco: parseFloat(this.drink.preco),
+        quantidade: 1,
+        imagem: this.drink.strDrinkThumb,
+      };
+      this.carrinhoService.adicionar(item);
+      this.estaNoCarrinho = true;
+    }
   }
 }
