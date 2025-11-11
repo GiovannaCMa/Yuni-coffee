@@ -56,6 +56,9 @@ export class ComidaDetalhesPage implements OnInit {
   volumeDefinido: any = {
     "Battenberg Cake": "250 g",
     "Blueberry & lemon friands": "300 g",
+    "Fruit and Cream Breakfast Pastries": "200 g",
+    "Carrot Cake": "350 g",
+    "Apple Frangipan Tart": "400 g"
   };
 
   constructor(
