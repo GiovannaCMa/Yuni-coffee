@@ -62,7 +62,7 @@ export const routes: Routes = [
     path: 'finalizarCompras',
     loadComponent: () =>
       import('./pages/finalizarCompras/finalizar.page').then(
-        (m) => m.FinalizarPedidoPage
+        (m) => m.FinalizarPage
       ),
   },
   {

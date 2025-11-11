@@ -17,4 +17,6 @@ export class HomePage {
   irParaCafeEspecifico() {
     this.router.navigate(['/cafeespecifico']);
   }
+  slogan: string = 'Café quentinho, coração leve';
+
 }

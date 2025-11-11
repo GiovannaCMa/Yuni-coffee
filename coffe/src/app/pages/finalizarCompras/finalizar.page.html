@@ -30,6 +30,15 @@
         slot="start"/>
       <ion-input placeholder="Digite aqui" [(ngModel)]="comanda"></ion-input>
     </ion-item>
+ @if (+comanda > 10) {
+  <ion-text color="danger">
+    ❌ Não existe essa comanda.
+  </ion-text>
+} @else {
+  <ion-text color="success">
+    ✅ Comanda válida.
+  </ion-text>
+}
 
     <ion-icon name="home-outline"></ion-icon>
 
