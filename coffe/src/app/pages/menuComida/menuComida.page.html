@@ -60,7 +60,7 @@
 
       <ion-grid class="yc-grid">
         <ion-row>
-          @for (comida of comidas; track comida.idMeal) {
+          @for (comida of comidasPagina; track comida.idMeal) {
           <ion-col size="6" class="yc-col">
             <div class="yc-card" (click)="abrirDetalhe(comida)">
               <div class="yc-card-image">
@@ -89,6 +89,8 @@
           }
         </ion-row>
       </ion-grid>
+
+     
 
       <div class="yc-footer-wrapper">
         <div class="yc-bottom">
@@ -182,7 +184,7 @@
 
       <div class="yc-grid-desktop">
         <div class="yc-cards-container-desktop">
-          @for (comida of comidas; track comida.idMeal) {
+          @for (comida of comidasPagina; track comida.idMeal) {
           <div class="yc-card-desktop" (click)="abrirDetalhe(comida)">
             <div class="yc-card-image-desktop">
               <img [src]="comida.strDrinkThumb" [alt]="comida.strDrink" />
@@ -208,6 +210,7 @@
           }
         </div>
       </div>
+
 
       <div class="yc-footer-wrapper-desktop">
         <div class="yc-bottom-desktop">
