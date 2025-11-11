@@ -45,7 +45,13 @@ export class CarrinhoPage implements OnInit {
   }
 
   voltar() {
-    this.router.navigate(['/bebidasFrias']);
+    const lastFrom = localStorage.getItem('lastFrom');
+    if (lastFrom) {
+      this.router.navigate([lastFrom]);
+    } else {
+      // Fallback: volta para a página anterior no histórico
+      this.location.back();
+    }
   }
 
   ngOnInit() {

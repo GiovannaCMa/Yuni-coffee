@@ -65,7 +65,8 @@ ion-content {
   pointer-events: none;
   text-align: center;
   box-sizing: border-box;
-  background: transparent;
+  background: #553b2e;
+  height: 90px;
 }
 
 .logo-wrapper {
@@ -99,7 +100,7 @@ ion-content {
 
 /* Toolbar - Posicionado como a seção de categorias */
 .carrinho-mobile .toolbar-section {
-  padding: 0px 20px 8px;
+  padding: 12px 20px 12px;
   position: fixed;
   top: 90px;
   left: 0;
@@ -112,7 +113,10 @@ ion-content {
   align-items: center;
   gap: 12px;
   pointer-events: none;
-  background: transparent;
+  background: #553b2e;
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
 
 .carrinho-mobile .toolbar-title {
@@ -167,7 +171,7 @@ ion-content {
   flex-direction: column;
   gap: 15px;
   margin-bottom: 40px;
-  margin-top: 150px;
+  margin-top: 180px;
   position: relative;
   z-index: 2;
 }

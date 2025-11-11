@@ -69,17 +69,32 @@ export class MenuComidaPage implements OnInit {
   }
 
   ngOnInit() {
-    // Assina o carrinho para atualizar o badge
-    this.carrinhoService.getCarrinho().subscribe((itens) => {
-      this.cartCount = itens.reduce((sum, i) => sum + i.quantidade, 0);
-    });
-
-    // Carrega favoritos salvos do localStorage
+    // Carrega favoritos salvos do localStorage primeiro
     const favoritosSalvos = localStorage.getItem('favoritosComidas');
     if (favoritosSalvos) {
       const ids = JSON.parse(favoritosSalvos);
       this.favoritos = new Set(ids);
     }
+
+    // Assina o carrinho para atualizar o badge e sincronizar favoritos
+    this.carrinhoService.getCarrinho().subscribe((itens) => {
+      this.cartCount = itens.reduce((sum, i) => sum + i.quantidade, 0);
+
+      // Sincroniza favoritos: remove favoritos que não estão mais no carrinho
+      const idsNoCarrinho = new Set(itens.map((i) => i.id.toString()));
+      let favoritosAtualizados = false;
+
+      this.favoritos.forEach((favoritoId) => {
+        if (!idsNoCarrinho.has(favoritoId)) {
+          this.favoritos.delete(favoritoId);
+          favoritosAtualizados = true;
+        }
+      });
+
+      if (favoritosAtualizados) {
+        this.salvarFavoritos();
+      }
+    });
 
     const breakfastUrl =
       'https://www.themealdb.com/api/json/v1/1/filter.php?c=Breakfast';
@@ -265,7 +280,10 @@ export class MenuComidaPage implements OnInit {
 
   // ---------- Paginação simples (12 por página) ----------
   private updatePagina() {
-    this.totalPages = Math.max(1, Math.ceil(this.comidas.length / this.pageSize));
+    this.totalPages = Math.max(
+      1,
+      Math.ceil(this.comidas.length / this.pageSize)
+    );
     if (this.currentPage > this.totalPages) {
       this.currentPage = this.totalPages;
     }
