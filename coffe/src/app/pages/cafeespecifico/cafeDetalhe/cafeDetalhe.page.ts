@@ -27,6 +27,8 @@ export class CafeDetalhePage implements OnInit {
   descricao = '';
   avaliacao = 0;
   tamanhoSelecionado = '';
+  tamanhos = ['Pequeno', 'Médio', 'Grande'];
+
 
   descricaoPersonalizada: any = {
     'Cafe Savoy': {
@@ -108,7 +110,9 @@ export class CafeDetalhePage implements OnInit {
   voltar() {
     this.router.navigate(['/cafeespecifico']);
   }
-
+    selecionarTamanho(tamanho: string) {
+      this.tamanhoSelecionado = tamanho;
+    }
   adicionarAoCarrinho() {
     if (!this.drink) return;
 

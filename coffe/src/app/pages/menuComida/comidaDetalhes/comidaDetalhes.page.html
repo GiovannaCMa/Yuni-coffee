@@ -27,30 +27,16 @@
     <h1 class="titulo">{{ comida.strMeal }}</h1>
 
     <!-- 🍽️ Porção -->
-    <div class="secao">
-      <h2>Porção</h2>
-      <div class="opcoes">
+    <div class="opcoes">
+      @for (tamanho of tamanhos; track $index) {
         <ion-chip
           class="yc-chip"
-          [ngClass]="{ ativo: porcaoSelecionada === 'pequeno' }"
+          [ngClass]="{ ativo: tamanhoSelecionado === tamanho }"
+          (click)="selecionarTamanho(tamanho)"
         >
-          <ion-label>Individual</ion-label>
+          <ion-label>{{ tamanho }}</ion-label>
         </ion-chip>
-
-        <ion-chip
-          class="yc-chip"
-          [ngClass]="{ ativo: porcaoSelecionada === 'medio' }"
-        >
-          <ion-label>Dupla</ion-label>
-        </ion-chip>
-
-        <ion-chip
-          class="yc-chip"
-          [ngClass]="{ ativo: porcaoSelecionada === 'grande' }"
-        >
-          <ion-label>Familiar</ion-label>
-        </ion-chip>
-      </div>
+      }
     </div>
 
     <!-- 🥗 Descrição -->

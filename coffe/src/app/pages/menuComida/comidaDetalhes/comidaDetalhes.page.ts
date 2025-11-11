@@ -19,10 +19,11 @@ export class ComidaDetalhesPage implements OnInit {
   comida: any;
   preco: string | null = null;
   descricaoSelecionada: any = null;
-  porcaoSelecionada: string = '';
   volumeSelecionado: string | null = null;
+  tamanhoSelecionado: string = '';
+  tamanhos = ['Pequeno', 'Médio', 'Grande'];
 
-  // 💖 Descrições e avaliações personalizadas
+  // 🍰 Descrições e avaliações personalizadas
   descricaoPersonalizada: any = {
     'Apple Frangipan Tart': {
       descricao:
@@ -49,15 +50,6 @@ export class ComidaDetalhesPage implements OnInit {
         'Bolo fofinho de cenoura com especiarias e cobertura cremosa de cream cheese. Um clássico aconchegante com sabor de casa e cheirinho de canela.',
       avaliacao: 4.7,
     },
-  };
-
-  // 🍛 Porções padrão
-  porcoesPadrao: any = {
-    'Battenberg Cake': 'pequeno',
-    'Blueberry & lemon friands': 'grande',
-    'Fruit and Cream Cheese Breakfast Pastries': 'pequeno',
-    'Carrot Cake': 'pequeno',
-    'Apple Frangipan Tart': 'medio',
   };
 
   // 📦 Volumes padrão
@@ -88,16 +80,23 @@ export class ComidaDetalhesPage implements OnInit {
     }
 
     const url = `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`;
-
     this.http.get(url).subscribe({
       next: (res: any) => {
         if (res.meals && res.meals.length > 0) {
           this.comida = res.meals[0];
 
-          const nome = this.comida.strMeal;
-          this.porcaoSelecionada = this.porcoesPadrao[nome] || '1 porção';
+          // 🍽️ Define tamanho padrão automaticamente
+          const tamanhosPadrao: any = {
+            'Apple Frangipan Tart': 'Médio',
+            'Battenberg Cake': 'Pequeno',
+            'Fruit and Cream Cheese Breakfast Pastries': 'Pequeno',
+            'Blueberry & lemon friands': 'Grande',
+            'Carrot Cake': 'Médio',
+          };
+          this.tamanhoSelecionado =
+            tamanhosPadrao[this.comida.strMeal] || 'Médio';
 
-          // ⚡ Define descrição e volume personalizados
+          // ⚡ Define descrição e volume
           this.setDescricaoPersonalizada();
           this.setVolumeSelecionado();
         } else {
@@ -111,24 +110,16 @@ export class ComidaDetalhesPage implements OnInit {
     });
   }
 
-  // ✨ Define descrição personalizada se existir
+  // ✨ Define descrição personalizada
   setDescricaoPersonalizada() {
     const nome = this.comida?.strMeal;
-    if (nome && this.descricaoPersonalizada[nome]) {
-      this.descricaoSelecionada = this.descricaoPersonalizada[nome];
-    } else {
-      this.descricaoSelecionada = null;
-    }
+    this.descricaoSelecionada = this.descricaoPersonalizada[nome] || null;
   }
 
   // 📦 Define volume se existir
   setVolumeSelecionado() {
     const nome = this.comida?.strMeal;
-    if (nome && this.volumeDefinido[nome]) {
-      this.volumeSelecionado = this.volumeDefinido[nome];
-    } else {
-      this.volumeSelecionado = null;
-    }
+    this.volumeSelecionado = this.volumeDefinido[nome] || null;
   }
 
   // ⬅️ Voltar
@@ -136,6 +127,12 @@ export class ComidaDetalhesPage implements OnInit {
     this.location.back();
   }
 
+  // 🧩 Selecionar tamanho (ao clicar)
+  selecionarTamanho(tamanho: string) {
+    this.tamanhoSelecionado = tamanho;
+  }
+
+  // 🛒 Adicionar ao carrinho
   adicionarAoCarrinho() {
     if (!this.comida || !this.preco) return;
 
@@ -148,7 +145,5 @@ export class ComidaDetalhesPage implements OnInit {
     };
 
     this.carrinhoService.adicionar(item);
-    // Opcional: navegar para o carrinho ou mostrar mensagem de sucesso
-    // this.router.navigate(['/carrinho']);
   }
 }

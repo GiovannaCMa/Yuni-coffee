@@ -97,3 +97,20 @@ ion-header {
   justify-content: center;
   align-items: center;
 }
+.yc-chip {
+  background: #f2f2f2;
+  color: #333;
+  transition: all 0.2s ease-in-out;
+  cursor: pointer;
+
+  &:hover {
+    transform: translateY(-2px);
+  }
+
+  &.ativo {
+    background: #6f4e37; /* cor de café */
+    color: #fff;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.3);
+    transform: translateY(-3px);
+  }
+}

@@ -22,11 +22,11 @@ export class BebidasFriasDetalhesPage implements OnInit {
   descricao: string = '';
   avaliacao: number = 0;
   tamanhoSelecionado: string = '';
+  tamanhos = ['Pequeno', 'Médio', 'Grande'];
 
   descricaoPersonalizada: any = {
     Afterglow: {
-      descricao:
-        'Drink sem álcool, doce e frutado, feito com sucos de abacaxi, laranja e groselha. Refrescante e vibrante, perfeito para dias quentes.',
+      descricao:'Drink sem álcool, doce e frutado, feito com sucos de abacaxi, laranja e groselha. Refrescante e vibrante, perfeito para dias quentes.',
       avaliacao: 4.5,
     },
     'Brilho residual': {
@@ -98,6 +98,11 @@ export class BebidasFriasDetalhesPage implements OnInit {
     this.router.navigate(['/bebidasFrias']);
   }
 
+  // ✅ novo método para o @for
+  selecionarTamanho(tamanho: string) {
+    this.tamanhoSelecionado = tamanho;
+  }
+
   adicionarAoCarrinho() {
     if (!this.drink) return;
 
@@ -110,7 +115,5 @@ export class BebidasFriasDetalhesPage implements OnInit {
     };
 
     this.carrinhoService.adicionar(item);
-    // Opcional: navegar para o carrinho ou mostrar mensagem de sucesso
-    // this.router.navigate(['/carrinho']);
   }
 }

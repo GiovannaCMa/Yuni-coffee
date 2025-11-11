@@ -35,30 +35,16 @@
     </div>
 
     <!-- 🔹 Tamanho -->
-    <div class="secao">
-      <h2>Tamanho</h2>
-      <div class="opcoes">
+    <div class="opcoes">
+      @for (tamanho of tamanhos; track $index) {
         <ion-chip
           class="yc-chip"
-          [ngClass]="{ ativo: tamanhoSelecionado === 'Pequeno' }"
+          [ngClass]="{ ativo: tamanhoSelecionado === tamanho }"
+          (click)="selecionarTamanho(tamanho)"
         >
-          <ion-label>Pequeno</ion-label>
+          <ion-label>{{ tamanho }}</ion-label>
         </ion-chip>
-
-        <ion-chip
-          class="yc-chip"
-          [ngClass]="{ ativo: tamanhoSelecionado === 'Médio' }"
-        >
-          <ion-label>Médio</ion-label>
-        </ion-chip>
-
-        <ion-chip
-          class="yc-chip"
-          [ngClass]="{ ativo: tamanhoSelecionado === 'Grande' }"
-        >
-          <ion-label>Grande</ion-label>
-        </ion-chip>
-      </div>
+      }
     </div>
 
     <!-- ☕ Descrição -->
