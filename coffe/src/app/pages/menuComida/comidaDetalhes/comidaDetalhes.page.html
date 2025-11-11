@@ -1,12 +1,22 @@
 <ion-header>
-  <button (click)="voltar()" expand="block" fill="clear" shape="round" class="arrow">
-    <img src="../../../../assets/icon/Seta.png" alt="seta">
+  <button
+    (click)="voltar()"
+    expand="block"
+    fill="clear"
+    shape="round"
+    class="arrow"
+  >
+    <img src="../../../../assets/icon/Seta.png" alt="seta" />
   </button>
 </ion-header>
 
 <ion-content *ngIf="comida" class="detalhes-content">
   <ion-card class="comida-card">
-    <img [src]="comida.strMealThumb" [alt]="comida.strMeal" class="imagem-comida" />
+    <img
+      [src]="comida.strMealThumb"
+      [alt]="comida.strMeal"
+      class="imagem-comida"
+    />
 
     <!-- ⭐ Avaliação -->
     <div class="avaliacao">
@@ -20,15 +30,24 @@
     <div class="secao">
       <h2>Porção</h2>
       <div class="opcoes">
-        <ion-chip class="yc-chip" [ngClass]="{ ativo: porcaoSelecionada === 'pequeno' }">
+        <ion-chip
+          class="yc-chip"
+          [ngClass]="{ ativo: porcaoSelecionada === 'pequeno' }"
+        >
           <ion-label>Individual</ion-label>
         </ion-chip>
 
-        <ion-chip class="yc-chip" [ngClass]="{ ativo: porcaoSelecionada === 'medio' }">
+        <ion-chip
+          class="yc-chip"
+          [ngClass]="{ ativo: porcaoSelecionada === 'medio' }"
+        >
           <ion-label>Dupla</ion-label>
         </ion-chip>
 
-        <ion-chip class="yc-chip" [ngClass]="{ ativo: porcaoSelecionada === 'grande' }">
+        <ion-chip
+          class="yc-chip"
+          [ngClass]="{ ativo: porcaoSelecionada === 'grande' }"
+        >
           <ion-label>Familiar</ion-label>
         </ion-chip>
       </div>
@@ -37,12 +56,8 @@
     <!-- 🥗 Descrição -->
     <div class="secao">
       <h2>Sobre</h2>
-      <p *ngIf="descricaoSelecionada">
-        {{ descricaoSelecionada.descricao }}
-      </p>
-      <p *ngIf="!descricaoSelecionada">
-        Descrição indisponível no momento.
-      </p>
+      <p *ngIf="descricaoSelecionada">{{ descricaoSelecionada.descricao }}</p>
+      <p *ngIf="!descricaoSelecionada">Descrição indisponível no momento.</p>
     </div>
 
     <!-- 📦 Volume -->
@@ -52,8 +67,9 @@
 
     <!-- 💰 Preço -->
     <div class="preco">
-      <h3>R$ {{ preco }}</h3>
+      <button class="botao-preco" (click)="adicionarAoCarrinho()">
+        Preço: R$ {{ preco }}
+      </button>
     </div>
-
   </ion-card>
 </ion-content>

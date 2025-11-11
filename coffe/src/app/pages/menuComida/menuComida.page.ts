@@ -6,6 +6,10 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { forkJoin, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
+import {
+  CarrinhoService,
+  ItemCarrinho,
+} from 'src/app/services/carrinho.service';
 
 @Component({
   selector: 'app-menu-comida',
@@ -20,8 +24,13 @@ export class MenuComidaPage implements OnInit {
   favoritos: Set<string> = new Set();
   homeAtivo: boolean = true;
   cartAtivo: boolean = false;
+  cartCount: number = 0;
 
-  constructor(private http: HttpClient, private router: Router) {}
+  constructor(
+    private http: HttpClient,
+    private router: Router,
+    private carrinhoService: CarrinhoService
+  ) {}
 
   selecionarCategoria(categoria: string) {
     this.categoriaAtiva = categoria;
@@ -46,6 +55,7 @@ export class MenuComidaPage implements OnInit {
   }
 
   toggleCart() {
+    localStorage.setItem('lastFrom', '/menuComida');
     this.router.navigate(['/carrinho']);
   }
 
@@ -54,6 +64,11 @@ export class MenuComidaPage implements OnInit {
   }
 
   ngOnInit() {
+    // Assina o carrinho para atualizar o badge
+    this.carrinhoService.getCarrinho().subscribe((itens) => {
+      this.cartCount = itens.reduce((sum, i) => sum + i.quantidade, 0);
+    });
+
     // Carrega favoritos salvos do localStorage
     const favoritosSalvos = localStorage.getItem('favoritosComidas');
     if (favoritosSalvos) {
@@ -192,24 +207,49 @@ export class MenuComidaPage implements OnInit {
   abrirDetalhe(comida: any, event?: Event) {
     if (event) {
       event.stopPropagation();
-    }
 
-    // Toggle favorito: se já está favoritado, desmarca e não navega
-    if (this.favoritos.has(comida.idMeal)) {
-      this.favoritos.delete(comida.idMeal);
+      // Toggle favorito: se já está favoritado, desmarca e remove do carrinho
+      if (this.favoritos.has(comida.idMeal)) {
+        this.favoritos.delete(comida.idMeal);
+        this.salvarFavoritos();
+        // Remove do carrinho
+        this.carrinhoService.remover(parseInt(comida.idMeal));
+        return; // Não navega se estiver desmarcando
+      }
+
+      // Marca como favorito e adiciona ao carrinho
+      this.favoritos.add(comida.idMeal);
       this.salvarFavoritos();
-      return; // Não navega se estiver desmarcando
+
+      // Adiciona ao carrinho
+      const item: ItemCarrinho = {
+        id: parseInt(comida.idMeal),
+        nome: comida.strDrink,
+        preco: parseFloat(comida.preco),
+        quantidade: 1,
+        imagem: comida.strDrinkThumb,
+      };
+      this.carrinhoService.adicionar(item);
+      return; // Não navega quando clica na patinha
     }
 
-    // Marca como favorito antes de navegar
-    this.favoritos.add(comida.idMeal);
-    this.salvarFavoritos();
+    // Se não foi clicado na patinha, apenas navega para detalhes
+    this.router.navigate(['/comidaDetalhes', comida.idMeal], {
+      queryParams: { preco: comida.preco },
+    });
+  }
 
-    // Pequeno delay para mostrar a mudança de cor antes de navegar
-    setTimeout(() => {
-      this.router.navigate(['/comidaDetalhes', comida.idMeal], {
-        queryParams: { preco: comida.preco },
-      });
-    }, 150);
+  adicionarAoCarrinho(comida: any, event?: Event) {
+    if (event) {
+      event.stopPropagation();
+    }
+    const item: ItemCarrinho = {
+      id: parseInt(comida.idMeal),
+      nome: comida.strDrink,
+      preco: parseFloat(comida.preco),
+      quantidade: 1,
+      imagem: comida.strDrinkThumb,
+    };
+    this.carrinhoService.adicionar(item);
   }
 }

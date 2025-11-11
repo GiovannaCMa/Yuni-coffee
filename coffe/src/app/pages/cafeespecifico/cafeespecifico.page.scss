@@ -284,6 +284,41 @@ ion-content::part(scroll) {
   filter: brightness(0) invert(1);
 }
 
+/* Badge do carrinho */
+.yc-bottom-btn,
+.yc-bottom-btn-desktop {
+  position: relative;
+}
+.yc-badge {
+  position: absolute;
+  top: -6px;
+  right: -2px;
+  min-width: 16px;
+  height: 16px;
+  padding: 0 4px;
+  border-radius: 999px;
+  background: #6b4b3a;
+  color: #fff;
+  font-size: 10px;
+  line-height: 16px;
+  text-align: center;
+  font-weight: 700;
+}
+.yc-badge-desktop {
+  position: absolute;
+  top: -8px;
+  right: -6px;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 5px;
+  border-radius: 999px;
+  background: #6b4b3a;
+  color: #fff;
+  font-size: 11px;
+  line-height: 18px;
+  text-align: center;
+  font-weight: 700;
+}
 ion-content {
   border-bottom: none !important;
   box-shadow: none !important;

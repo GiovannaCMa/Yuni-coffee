@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Location } from '@angular/common';
+import { Router } from '@angular/router';
 import {
   IonContent,
   IonButton,
@@ -37,13 +38,14 @@ export class CarrinhoPage implements OnInit {
 
   constructor(
     private carrinhoService: CarrinhoService,
-    private location: Location
+    private location: Location,
+    private router: Router
   ) {
     addIcons({ arrowBack });
   }
 
   voltar() {
-    this.location.back();
+    this.router.navigate(['/bebidasFrias']);
   }
 
   ngOnInit() {
@@ -66,6 +68,6 @@ export class CarrinhoPage implements OnInit {
   }
 
   continuar() {
-    console.log('Ir para Finalizar');
+    this.router.navigate(['/finalizarCompras']);
   }
 }

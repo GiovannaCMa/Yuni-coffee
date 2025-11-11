@@ -3,16 +3,19 @@ import { IonicModule } from '@ionic/angular';
 import { CommonModule, Location } from '@angular/common';
 import { Router, ActivatedRoute } from '@angular/router';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
+import {
+  CarrinhoService,
+  ItemCarrinho,
+} from 'src/app/services/carrinho.service';
 
 @Component({
   selector: 'app-comida-detalhes',
   standalone: true,
   imports: [IonicModule, CommonModule, HttpClientModule],
   templateUrl: './comidaDetalhes.page.html',
-  styleUrls: ['./comidaDetalhes.page.scss']
+  styleUrls: ['./comidaDetalhes.page.scss'],
 })
 export class ComidaDetalhesPage implements OnInit {
-
   comida: any;
   preco: string | null = null;
   descricaoSelecionada: any = null;
@@ -21,48 +24,54 @@ export class ComidaDetalhesPage implements OnInit {
 
   // 💖 Descrições e avaliações personalizadas
   descricaoPersonalizada: any = {
-    "Apple Frangipan Tart": {
-      descricao: "Pão dourado e fofinho recheado com omelete leve e temperada, perfeito para começar o dia com sabor e energia.",
-      avaliacao: 4.5
+    'Apple Frangipan Tart': {
+      descricao:
+        'Pão dourado e fofinho recheado com omelete leve e temperada, perfeito para começar o dia com sabor e energia.',
+      avaliacao: 4.5,
     },
-    "Battenberg Cake": {
-      descricao: "Camadas fofinhas de bolo amanteigado nas cores rosa e amarela, envoltas em uma fina camada de marzipã. Um clássico britânico cheio de charme!",
-      avaliacao: 4.6
+    'Battenberg Cake': {
+      descricao:
+        'Camadas fofinhas de bolo amanteigado nas cores rosa e amarela, envoltas em uma fina camada de marzipã. Um clássico britânico cheio de charme!',
+      avaliacao: 4.6,
     },
-    "Fruit and Cream Cheese Breakfast Pastries": {
-      descricao: "Massa folhada delicada, recheada com cream cheese cremoso e frutas frescas — uma combinação irresistível de doçura e leveza.",
-      avaliacao: 4.9
+    'Fruit and Cream Cheese Breakfast Pastries': {
+      descricao:
+        'Massa folhada delicada, recheada com cream cheese cremoso e frutas frescas — uma combinação irresistível de doçura e leveza.',
+      avaliacao: 4.9,
     },
-    "Blueberry & lemon friands": {
-      descricao: "Bolinhos delicados com mirtilos suculentos e toque cítrico de limão, macios por dentro e levemente crocantes por fora.",
-      avaliacao: 4.8
+    'Blueberry & lemon friands': {
+      descricao:
+        'Bolinhos delicados com mirtilos suculentos e toque cítrico de limão, macios por dentro e levemente crocantes por fora.',
+      avaliacao: 4.8,
     },
-    "Carrot Cake": {
-      descricao: "Bolo fofinho de cenoura com especiarias e cobertura cremosa de cream cheese. Um clássico aconchegante com sabor de casa e cheirinho de canela.",
-      avaliacao: 4.7
-    }
+    'Carrot Cake': {
+      descricao:
+        'Bolo fofinho de cenoura com especiarias e cobertura cremosa de cream cheese. Um clássico aconchegante com sabor de casa e cheirinho de canela.',
+      avaliacao: 4.7,
+    },
   };
 
   // 🍛 Porções padrão
   porcoesPadrao: any = {
-    "Battenberg Cake": "pequeno",
-    "Blueberry & lemon friands": "grande",
-    "Fruit and Cream Cheese Breakfast Pastries": "pequeno",
-    "Carrot Cake": "pequeno",
-    "Apple Frangipan Tart": "medio"
+    'Battenberg Cake': 'pequeno',
+    'Blueberry & lemon friands': 'grande',
+    'Fruit and Cream Cheese Breakfast Pastries': 'pequeno',
+    'Carrot Cake': 'pequeno',
+    'Apple Frangipan Tart': 'medio',
   };
 
   // 📦 Volumes padrão
   volumeDefinido: any = {
-    "Battenberg Cake": "250 g",
-    "Blueberry & lemon friands": "300 g",
+    'Battenberg Cake': '250 g',
+    'Blueberry & lemon friands': '300 g',
   };
 
   constructor(
     private router: Router,
     private route: ActivatedRoute,
     private http: HttpClient,
-    private location: Location
+    private location: Location,
+    private carrinhoService: CarrinhoService
   ) {}
 
   ngOnInit() {
@@ -95,7 +104,7 @@ export class ComidaDetalhesPage implements OnInit {
       error: (err) => {
         console.error('Erro ao buscar detalhes da comida:', err);
         this.voltar();
-      }
+      },
     });
   }
 
@@ -122,5 +131,21 @@ export class ComidaDetalhesPage implements OnInit {
   // ⬅️ Voltar
   voltar() {
     this.location.back();
+  }
+
+  adicionarAoCarrinho() {
+    if (!this.comida || !this.preco) return;
+
+    const item: ItemCarrinho = {
+      id: parseInt(this.comida.idMeal),
+      nome: this.comida.strMeal,
+      preco: parseFloat(this.preco),
+      quantidade: 1,
+      imagem: this.comida.strMealThumb,
+    };
+
+    this.carrinhoService.adicionar(item);
+    // Opcional: navegar para o carrinho ou mostrar mensagem de sucesso
+    // this.router.navigate(['/carrinho']);
   }
 }

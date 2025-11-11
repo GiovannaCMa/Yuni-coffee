@@ -5,13 +5,17 @@ import { Router } from '@angular/router';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { addIcons } from 'ionicons';
 import { starOutline } from 'ionicons/icons';
+import {
+  CarrinhoService,
+  ItemCarrinho,
+} from 'src/app/services/carrinho.service';
 
 @Component({
   selector: 'app-bebidas-frias-detalhes',
   standalone: true,
   imports: [IonicModule, CommonModule, HttpClientModule],
   templateUrl: './bebidasFriasDetalhes.page.html',
-  styleUrls: ['./bebidasFriasDetalhes.page.scss']
+  styleUrls: ['./bebidasFriasDetalhes.page.scss'],
 })
 export class BebidasFriasDetalhesPage implements OnInit {
   drink: any;
@@ -20,29 +24,37 @@ export class BebidasFriasDetalhesPage implements OnInit {
   tamanhoSelecionado: string = '';
 
   descricaoPersonalizada: any = {
-    "Afterglow": {
-      descricao: "Drink sem álcool, doce e frutado, feito com sucos de abacaxi, laranja e groselha. Refrescante e vibrante, perfeito para dias quentes.",
-      avaliacao: 4.5
+    Afterglow: {
+      descricao:
+        'Drink sem álcool, doce e frutado, feito com sucos de abacaxi, laranja e groselha. Refrescante e vibrante, perfeito para dias quentes.',
+      avaliacao: 4.5,
     },
-    "Brilho residual": {
-      descricao: "Refrescante e doce, com notas suaves de frutas cítricas.",
-      avaliacao: 4.8
+    'Brilho residual': {
+      descricao: 'Refrescante e doce, com notas suaves de frutas cítricas.',
+      avaliacao: 4.8,
     },
-    "Lemonade": {
-      descricao: "Clássico e equilibrado — o sabor azedinho do limão com um toque de doçura.",
-      avaliacao: 5.0
+    Lemonade: {
+      descricao:
+        'Clássico e equilibrado — o sabor azedinho do limão com um toque de doçura.',
+      avaliacao: 5.0,
     },
-    "Alice Cocktail": {
-      descricao: "Drink sem álcool, doce e cremoso, com suco de frutas e um toque de creme. Refrescante e leve.",
-      avaliacao: 4.7
+    'Alice Cocktail': {
+      descricao:
+        'Drink sem álcool, doce e cremoso, com suco de frutas e um toque de creme. Refrescante e leve.',
+      avaliacao: 4.7,
     },
-    "Aloha Fruit punch": {
-      descricao: "Tropical e vibrante, feito com sucos de laranja, abacaxi e groselha. O sabor do verão em cada gole.",
-      avaliacao: 4.5
-    }
+    'Aloha Fruit punch': {
+      descricao:
+        'Tropical e vibrante, feito com sucos de laranja, abacaxi e groselha. O sabor do verão em cada gole.',
+      avaliacao: 4.5,
+    },
   };
 
-  constructor(private router: Router, private http: HttpClient) {
+  constructor(
+    private router: Router,
+    private http: HttpClient,
+    private carrinhoService: CarrinhoService
+  ) {
     addIcons({ starOutline });
   }
 
@@ -52,11 +64,11 @@ export class BebidasFriasDetalhesPage implements OnInit {
       this.drink = JSON.parse(dados);
 
       const tamanhosPadrao: any = {
-        "Afterglow": "Médio",
-        "Brilho residual": "Médio",
-        "Lemonade": "Grande",
-        "Alice Cocktail": "Médio",
-        "Aloha Fruit punch": "Grande"
+        Afterglow: 'Médio',
+        'Brilho residual': 'Médio',
+        Lemonade: 'Grande',
+        'Alice Cocktail': 'Médio',
+        'Aloha Fruit punch': 'Grande',
       };
 
       this.tamanhoSelecionado = tamanhosPadrao[this.drink.strDrink] || 'Médio';
@@ -67,10 +79,13 @@ export class BebidasFriasDetalhesPage implements OnInit {
         this.avaliacao = detalheCustom.avaliacao;
       } else {
         this.http
-          .get(`https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${this.drink.idDrink}`)
+          .get(
+            `https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${this.drink.idDrink}`
+          )
           .subscribe((res: any) => {
             const detalhe = res.drinks[0];
-            this.descricao = detalhe.strInstructions || 'Sem descrição disponível.';
+            this.descricao =
+              detalhe.strInstructions || 'Sem descrição disponível.';
             this.avaliacao = 0;
           });
       }
@@ -81,5 +96,21 @@ export class BebidasFriasDetalhesPage implements OnInit {
 
   voltar() {
     this.router.navigate(['/bebidasFrias']);
+  }
+
+  adicionarAoCarrinho() {
+    if (!this.drink) return;
+
+    const item: ItemCarrinho = {
+      id: parseInt(this.drink.idDrink),
+      nome: this.drink.strDrink,
+      preco: parseFloat(this.drink.preco),
+      quantidade: 1,
+      imagem: this.drink.strDrinkThumb,
+    };
+
+    this.carrinhoService.adicionar(item);
+    // Opcional: navegar para o carrinho ou mostrar mensagem de sucesso
+    // this.router.navigate(['/carrinho']);
   }
 }

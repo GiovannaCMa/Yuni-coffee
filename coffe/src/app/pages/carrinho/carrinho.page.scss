@@ -59,7 +59,8 @@ ion-content {
   left: 0;
   right: 0;
   z-index: 105;
-  width: 430px;
+  width: 100%;
+  max-width: 430px;
   margin: 0 auto;
   pointer-events: none;
   text-align: center;
@@ -104,7 +105,8 @@ ion-content {
   left: 0;
   right: 0;
   z-index: 100;
-  width: 430px;
+  width: 100%;
+  max-width: 430px;
   margin: 0 auto;
   display: flex;
   align-items: center;
@@ -407,7 +409,7 @@ ion-content {
 .carrinho-container-desktop {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 40px 60px 200px;
+  padding: 200px 60px 200px;
   min-height: 100vh;
   position: relative;
   z-index: 2;
@@ -418,8 +420,12 @@ ion-content {
   align-items: center;
   justify-content: center;
   padding: 60px 0 8px;
-  position: relative;
-  z-index: 2;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 105;
+  background: transparent;
 }
 
 .logo-wrapper-desktop {
@@ -455,8 +461,11 @@ ion-content {
   --color: #fff;
   padding: 0;
   margin-bottom: 30px;
-  position: relative;
-  z-index: 2;
+  position: fixed;
+  top: 120px;
+  left: 0;
+  right: 0;
+  z-index: 100;
 }
 
 .toolbar-desktop ion-title {

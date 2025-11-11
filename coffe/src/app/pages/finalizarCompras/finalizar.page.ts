@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { NomeClientePipe } from '../../pipes/nome-cliente-pipe';
 import { IonicModule } from '@ionic/angular';
 
 @Component({
@@ -10,21 +9,16 @@ import { IonicModule } from '@ionic/angular';
   templateUrl: './finalizar.page.html',
   styleUrls: ['./finalizar.page.scss'],
   standalone: true,
-  imports: [
-    CommonModule, FormsModule,NomeClientePipe,IonicModule,
-  ]
-
+  imports: [CommonModule, FormsModule, IonicModule],
 })
 export class FinalizarPage {
   comanda: string = '';
 
   constructor(private router: Router) {}
-  
-  finalizarPedido() {
 
-      // Salva o valor no Local Storage
+  finalizarPedido() {
+    // Salva o valor no Local Storage
     localStorage.setItem('comanda', this.comanda);
     this.router.navigate(['/finalizar']);
   }
 }
-

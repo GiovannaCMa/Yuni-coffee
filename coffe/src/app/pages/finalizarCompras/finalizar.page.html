@@ -6,7 +6,7 @@
     <!-- TÍTULO -->
     <ion-toolbar color="transparent" class="toolbar">
       <ion-buttons slot="start">
-        <ion-back-button defaultHref="/menu"></ion-back-button>
+        <ion-back-button defaultHref="/carrinho"></ion-back-button>
       </ion-buttons>
       <ion-title>Finalizar pedido</ion-title>
     </ion-toolbar>
@@ -27,7 +27,8 @@
         src="../../../assets/icon/pencil-outline.svg"
         class="icon-svg"
         alt="Caneta"
-        slot="start"/>
+        slot="start"
+      />
       <ion-input placeholder="Digite aqui" [(ngModel)]="comanda"></ion-input>
     </ion-item>
 
@@ -37,7 +38,8 @@
     <ion-button
       expand="block"
       class="finalizar-button"
-      (click)="finalizarPedido()">
+      (click)="finalizarPedido()"
+    >
       Finalizar
     </ion-button>
   </div>

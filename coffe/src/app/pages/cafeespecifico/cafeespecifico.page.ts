@@ -4,7 +4,10 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { Router } from '@angular/router'; // 🆕 Import do Router
-
+import {
+  CarrinhoService,
+  ItemCarrinho,
+} from 'src/app/services/carrinho.service';
 
 @Component({
   selector: 'app-cafe-especifico',
@@ -13,18 +16,27 @@ import { Router } from '@angular/router'; // 🆕 Import do Router
   standalone: true,
   imports: [IonicModule, CommonModule, FormsModule, HttpClientModule],
 })
-
 export class CafeespecificoPage implements OnInit {
   categoriaAtiva: string = 'cafes'; // Valor inicial
   drinks: any[] = [];
   favoritos: Set<string> = new Set();
   homeAtivo: boolean = true; // Home começa ativo
   cartAtivo: boolean = false;
+  cartCount: number = 0;
 
   // 🆕 Adicionando o Router aqui
-  constructor(private http: HttpClient, private router: Router) {}
+  constructor(
+    private http: HttpClient,
+    private router: Router,
+    private carrinhoService: CarrinhoService
+  ) {}
 
   ngOnInit() {
+    // Assina o carrinho para atualizar o badge
+    this.carrinhoService.getCarrinho().subscribe((itens) => {
+      this.cartCount = itens.reduce((sum, i) => sum + i.quantidade, 0);
+    });
+
     // Carrega favoritos salvos do localStorage
     const favoritosSalvos = localStorage.getItem('favoritosCafes');
     if (favoritosSalvos) {
@@ -37,7 +49,7 @@ export class CafeespecificoPage implements OnInit {
       .subscribe({
         next: (res: any) => {
           const todosDrinks = res.drinks;
-         
+
           const proibidos = [
             'frappé',
             'frappe',
@@ -50,8 +62,6 @@ export class CafeespecificoPage implements OnInit {
             'yo',
             'coke',
           ];
-
-          
 
           this.drinks = todosDrinks
             .filter((drink: any) => {
@@ -71,7 +81,6 @@ export class CafeespecificoPage implements OnInit {
     console.log('Categoria selecionada:', categoria);
     this.categoriaAtiva = categoria;
 
-
     if (categoria === 'cafes') {
       this.router.navigate(['/cafeespecifico']);
     } else if (categoria === 'bebidas-frias') {
@@ -85,8 +94,6 @@ export class CafeespecificoPage implements OnInit {
     }
   }
 
- 
-  
   isFavorito(drinkId: string): boolean {
     return this.favoritos.has(drinkId);
   }
@@ -100,26 +107,51 @@ export class CafeespecificoPage implements OnInit {
   abrirDetalhe(drink: any, event?: Event) {
     if (event) {
       event.stopPropagation();
-    }
 
-    // Toggle favorito: se já está favoritado, desmarca e não navega
-    if (this.favoritos.has(drink.idDrink)) {
-      this.favoritos.delete(drink.idDrink);
+      // Toggle favorito: se já está favoritado, desmarca e remove do carrinho
+      if (this.favoritos.has(drink.idDrink)) {
+        this.favoritos.delete(drink.idDrink);
+        this.salvarFavoritos();
+        // Remove do carrinho
+        this.carrinhoService.remover(parseInt(drink.idDrink));
+        return; // Não navega se estiver desmarcando
+      }
+
+      // Marca como favorito e adiciona ao carrinho
+      this.favoritos.add(drink.idDrink);
       this.salvarFavoritos();
-      return; // Não navega se estiver desmarcando
+
+      // Adiciona ao carrinho
+      const item: ItemCarrinho = {
+        id: parseInt(drink.idDrink),
+        nome: drink.strDrink,
+        preco: parseFloat(drink.preco),
+        quantidade: 1,
+        imagem: drink.strDrinkThumb,
+      };
+      this.carrinhoService.adicionar(item);
+      return; // Não navega quando clica na patinha
     }
 
-    // Marca como favorito antes de navegar
-    this.favoritos.add(drink.idDrink);
-    this.salvarFavoritos();
+    // Se não foi clicado na patinha, apenas navega para detalhes
     localStorage.setItem('drinkSelecionado', JSON.stringify(drink));
-
-    // Pequeno delay para mostrar a mudança de cor antes de navegar
-    setTimeout(() => {
-      this.router.navigate(['/cafedetalhes']); // vai pra página de detalhes
-    }, 150);
+    this.router.navigate(['/cafedetalhes']);
   }
-   ionViewWillEnter() {
+
+  adicionarAoCarrinho(drink: any, event?: Event) {
+    if (event) {
+      event.stopPropagation();
+    }
+    const item: ItemCarrinho = {
+      id: parseInt(drink.idDrink),
+      nome: drink.strDrink,
+      preco: parseFloat(drink.preco),
+      quantidade: 1,
+      imagem: drink.strDrinkThumb,
+    };
+    this.carrinhoService.adicionar(item);
+  }
+  ionViewWillEnter() {
     this.categoriaAtiva = 'cafes';
   }
 
@@ -133,6 +165,7 @@ export class CafeespecificoPage implements OnInit {
   }
 
   toggleCart() {
+    localStorage.setItem('lastFrom', '/cafeespecifico');
     this.router.navigate(['/carrinho']);
   }
 }

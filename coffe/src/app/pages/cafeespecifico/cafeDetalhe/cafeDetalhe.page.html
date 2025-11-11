@@ -1,12 +1,22 @@
 <ion-header>
-  <button (click)="voltar()" expand="block" fill="clear" shape="round" class="arrow">
+  <button
+    (click)="voltar()"
+    expand="block"
+    fill="clear"
+    shape="round"
+    class="arrow"
+  >
     <span class="material-symbols-outlined">arrow_back</span>
   </button>
 </ion-header>
 
 <ion-content *ngIf="drink" class="detalhes-content">
   <ion-card class="bebida-card">
-    <img [src]="drink.strDrinkThumb" [alt]="drink.strDrink" class="imagem-bebida" />
+    <img
+      [src]="drink.strDrinkThumb"
+      [alt]="drink.strDrink"
+      class="imagem-bebida"
+    />
 
     <!-- ⭐ Avaliação -->
     <div class="avaliacao">
@@ -28,15 +38,24 @@
     <div class="secao">
       <h2>Tamanho</h2>
       <div class="opcoes">
-        <ion-chip class="yc-chip" [ngClass]="{ ativo: tamanhoSelecionado === 'Pequeno' }">
+        <ion-chip
+          class="yc-chip"
+          [ngClass]="{ ativo: tamanhoSelecionado === 'Pequeno' }"
+        >
           <ion-label>Pequeno</ion-label>
         </ion-chip>
 
-        <ion-chip class="yc-chip" [ngClass]="{ ativo: tamanhoSelecionado === 'Médio' }">
+        <ion-chip
+          class="yc-chip"
+          [ngClass]="{ ativo: tamanhoSelecionado === 'Médio' }"
+        >
           <ion-label>Médio</ion-label>
         </ion-chip>
 
-        <ion-chip class="yc-chip" [ngClass]="{ ativo: tamanhoSelecionado === 'Grande' }">
+        <ion-chip
+          class="yc-chip"
+          [ngClass]="{ ativo: tamanhoSelecionado === 'Grande' }"
+        >
           <ion-label>Grande</ion-label>
         </ion-chip>
       </div>
@@ -50,7 +69,12 @@
 
     <!-- 💰 Botão de preço -->
     <div class="preco">
-      <button expand="block" fill="solid" class="botao-preco">
+      <button
+        expand="block"
+        fill="solid"
+        class="botao-preco"
+        (click)="adicionarAoCarrinho()"
+      >
         Preço: R$ {{ drink.preco }}
       </button>
     </div>
