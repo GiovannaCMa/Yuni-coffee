@@ -116,11 +116,20 @@ export class BebidasFriasDetalhesPage implements OnInit {
     if (!this.drink) return;
 
     const itemId = parseInt(this.drink.idDrink);
+    const drinkId = this.drink.idDrink;
 
     // Toggle: se já está no carrinho, remove; se não está, adiciona
     if (this.estaNoCarrinho) {
       this.carrinhoService.remover(itemId);
       this.estaNoCarrinho = false;
+      
+      // Remove dos favoritos
+      const favoritosSalvos = localStorage.getItem('favoritosBebidasFrias');
+      if (favoritosSalvos) {
+        const favoritos = new Set(JSON.parse(favoritosSalvos));
+        favoritos.delete(drinkId);
+        localStorage.setItem('favoritosBebidasFrias', JSON.stringify(Array.from(favoritos)));
+      }
     } else {
       const item: ItemCarrinho = {
         id: itemId,
@@ -131,6 +140,12 @@ export class BebidasFriasDetalhesPage implements OnInit {
       };
       this.carrinhoService.adicionar(item);
       this.estaNoCarrinho = true;
+      
+      // Adiciona aos favoritos
+      const favoritosSalvos = localStorage.getItem('favoritosBebidasFrias');
+      const favoritos = favoritosSalvos ? new Set(JSON.parse(favoritosSalvos)) : new Set();
+      favoritos.add(drinkId);
+      localStorage.setItem('favoritosBebidasFrias', JSON.stringify(Array.from(favoritos)));
     }
   }
 }

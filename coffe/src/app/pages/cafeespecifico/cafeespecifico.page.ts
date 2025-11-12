@@ -4,6 +4,10 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { Router } from '@angular/router'; // 🆕 Import do Router
+import {
+  CarrinhoService,
+  ItemCarrinho,
+} from 'src/app/services/carrinho.service';
 
 @Component({
   selector: 'app-cafe-especifico',
@@ -21,8 +25,12 @@ export class CafeespecificoPage implements OnInit {
   homeAtivo: boolean = true; // Home começa ativo
   cartAtivo: boolean = false;
 
-  // 🆕 Adicionando o Router aqui
-  constructor(private http: HttpClient, private router: Router) {}
+  // 🆕 Adicionando o Router e CarrinhoService aqui
+  constructor(
+    private http: HttpClient,
+    private router: Router,
+    private carrinhoService: CarrinhoService
+  ) {}
 
   ngOnInit() {
     // Carrega favoritos salvos do localStorage
@@ -31,6 +39,35 @@ export class CafeespecificoPage implements OnInit {
       const ids = JSON.parse(favoritosSalvos);
       this.favoritos = new Set(ids);
     }
+
+    // Assina o carrinho para atualizar o badge e sincronizar favoritos
+    this.carrinhoService.getCarrinho().subscribe((itens) => {
+      this.cartCount = itens.reduce((sum, i) => sum + i.quantidade, 0);
+
+      // Sincroniza favoritos: adiciona itens do carrinho aos favoritos e remove favoritos que não estão no carrinho
+      const idsNoCarrinho = new Set(itens.map((i) => i.id.toString()));
+      let favoritosAtualizados = false;
+
+      // Adiciona itens do carrinho aos favoritos se não estiverem
+      idsNoCarrinho.forEach((id) => {
+        if (!this.favoritos.has(id)) {
+          this.favoritos.add(id);
+          favoritosAtualizados = true;
+        }
+      });
+
+      // Remove favoritos que não estão no carrinho
+      this.favoritos.forEach((favoritoId) => {
+        if (!idsNoCarrinho.has(favoritoId)) {
+          this.favoritos.delete(favoritoId);
+          favoritosAtualizados = true;
+        }
+      });
+
+      if (favoritosAtualizados) {
+        this.salvarFavoritos();
+      }
+    });
 
     this.http
       .get('https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=Coffee')
@@ -100,24 +137,35 @@ export class CafeespecificoPage implements OnInit {
   abrirDetalhe(drink: any, event?: Event) {
     if (event) {
       event.stopPropagation();
-    }
 
-    // Toggle favorito: se já está favoritado, desmarca e não navega
-    if (this.favoritos.has(drink.idDrink)) {
-      this.favoritos.delete(drink.idDrink);
+      // Toggle favorito: se já está favoritado, desmarca e remove do carrinho
+      if (this.favoritos.has(drink.idDrink)) {
+        this.favoritos.delete(drink.idDrink);
+        this.salvarFavoritos();
+        // Remove do carrinho
+        this.carrinhoService.remover(parseInt(drink.idDrink));
+        return; // Não navega se estiver desmarcando
+      }
+
+      // Marca como favorito e adiciona ao carrinho
+      this.favoritos.add(drink.idDrink);
       this.salvarFavoritos();
-      return; // Não navega se estiver desmarcando
+
+      // Adiciona ao carrinho
+      const item: ItemCarrinho = {
+        id: parseInt(drink.idDrink),
+        nome: drink.strDrink,
+        preco: parseFloat(drink.preco),
+        quantidade: 1,
+        imagem: drink.strDrinkThumb,
+      };
+      this.carrinhoService.adicionar(item);
+      return; // Não navega quando clica na patinha
     }
 
-    // Marca como favorito antes de navegar
-    this.favoritos.add(drink.idDrink);
-    this.salvarFavoritos();
+    // Se não foi clicado na patinha, apenas navega para detalhes
     localStorage.setItem('drinkSelecionado', JSON.stringify(drink));
-
-    // Pequeno delay para mostrar a mudança de cor antes de navegar
-    setTimeout(() => {
-      this.router.navigate(['/cafedetalhes']); // vai pra página de detalhes
-    }, 150);
+    this.router.navigate(['/cafedetalhes']);
   }
    ionViewWillEnter() {
     this.categoriaAtiva = 'cafes';
@@ -133,11 +181,7 @@ export class CafeespecificoPage implements OnInit {
   }
 
   toggleCart() {
-    if (this.cartAtivo) {
-      this.cartAtivo = false;
-    } else {
-      this.cartAtivo = true;
-      this.homeAtivo = false;
-    }
+    localStorage.setItem('lastFrom', '/cafeespecifico');
+    this.router.navigate(['/carrinho']);
   }
 }
