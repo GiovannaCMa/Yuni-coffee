@@ -77,10 +77,19 @@ export class BebidasFriasPage implements OnInit {
     this.carrinhoService.getCarrinho().subscribe((itens) => {
       this.cartCount = itens.reduce((sum, i) => sum + i.quantidade, 0);
 
-      // Sincroniza favoritos: remove favoritos que não estão mais no carrinho
+      // Sincroniza favoritos: adiciona itens do carrinho aos favoritos e remove favoritos que não estão no carrinho
       const idsNoCarrinho = new Set(itens.map((i) => i.id.toString()));
       let favoritosAtualizados = false;
 
+      // Adiciona itens do carrinho aos favoritos se não estiverem
+      idsNoCarrinho.forEach((id) => {
+        if (!this.favoritos.has(id)) {
+          this.favoritos.add(id);
+          favoritosAtualizados = true;
+        }
+      });
+
+      // Remove favoritos que não estão no carrinho
       this.favoritos.forEach((favoritoId) => {
         if (!idsNoCarrinho.has(favoritoId)) {
           this.favoritos.delete(favoritoId);

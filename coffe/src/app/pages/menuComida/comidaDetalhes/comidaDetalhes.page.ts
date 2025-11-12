@@ -149,11 +149,20 @@ export class ComidaDetalhesPage implements OnInit {
     if (!this.comida || !this.preco) return;
 
     const itemId = parseInt(this.comida.idMeal);
+    const comidaId = this.comida.idMeal;
 
     // Toggle: se já está no carrinho, remove; se não está, adiciona
     if (this.estaNoCarrinho) {
       this.carrinhoService.remover(itemId);
       this.estaNoCarrinho = false;
+      
+      // Remove dos favoritos
+      const favoritosSalvos = localStorage.getItem('favoritosComidas');
+      if (favoritosSalvos) {
+        const favoritos = new Set(JSON.parse(favoritosSalvos));
+        favoritos.delete(comidaId);
+        localStorage.setItem('favoritosComidas', JSON.stringify(Array.from(favoritos)));
+      }
     } else {
       const item: ItemCarrinho = {
         id: itemId,
@@ -164,6 +173,12 @@ export class ComidaDetalhesPage implements OnInit {
       };
       this.carrinhoService.adicionar(item);
       this.estaNoCarrinho = true;
+      
+      // Adiciona aos favoritos
+      const favoritosSalvos = localStorage.getItem('favoritosComidas');
+      const favoritos = favoritosSalvos ? new Set(JSON.parse(favoritosSalvos)) : new Set();
+      favoritos.add(comidaId);
+      localStorage.setItem('favoritosComidas', JSON.stringify(Array.from(favoritos)));
     }
   }
 }
