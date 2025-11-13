@@ -8,6 +8,7 @@ import {
   CarrinhoService,
   ItemCarrinho,
 } from 'src/app/services/carrinho.service';
+import { DrinksService } from 'src/app/services/drinks.service';
 
 @Component({
   selector: 'app-bebidas-frias',
@@ -28,7 +29,8 @@ export class BebidasFriasPage implements OnInit {
   constructor(
     private http: HttpClient,
     private router: Router,
-    private carrinhoService: CarrinhoService
+    private carrinhoService: CarrinhoService,
+    private drinkService: DrinksService
   ) {}
 
   selecionarCategoria(categoria: string) {
@@ -102,10 +104,7 @@ export class BebidasFriasPage implements OnInit {
       }
     });
 
-    this.http
-      .get(
-        'https://www.thecocktaildb.com/api/json/v1/1/filter.php?a=Non_Alcoholic'
-      )
+    this.drinkService.getBebidasFrias()
       .subscribe({
         next: (res: any) => {
           const todosDrinks = res.drinks;

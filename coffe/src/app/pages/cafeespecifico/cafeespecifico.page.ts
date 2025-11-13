@@ -8,13 +8,14 @@ import {
   CarrinhoService,
   ItemCarrinho,
 } from 'src/app/services/carrinho.service';
+import { DrinksService } from 'src/app/services/drinks.service';
 
 @Component({
   selector: 'app-cafe-especifico',
   templateUrl: './cafeespecifico.page.html',
   styleUrls: ['./cafeespecifico.page.scss'],
   standalone: true,
-  imports: [IonicModule, CommonModule, FormsModule, HttpClientModule],
+  imports: [IonicModule, CommonModule, FormsModule],
 })
 
 export class CafeespecificoPage implements OnInit {
@@ -29,7 +30,8 @@ export class CafeespecificoPage implements OnInit {
   constructor(
     private http: HttpClient,
     private router: Router,
-    private carrinhoService: CarrinhoService
+    private carrinhoService: CarrinhoService,
+    private drinkService: DrinksService
   ) {}
 
   ngOnInit() {
@@ -69,12 +71,11 @@ export class CafeespecificoPage implements OnInit {
       }
     });
 
-    this.http
-      .get('https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=Coffee')
+    this.drinkService.getCafesQuentes()
       .subscribe({
         next: (res: any) => {
           const todosDrinks = res.drinks;
-         
+
           const proibidos = [
             'frappé',
             'frappe',
@@ -88,7 +89,7 @@ export class CafeespecificoPage implements OnInit {
             'coke',
           ];
 
-          
+
 
           this.drinks = todosDrinks
             .filter((drink: any) => {
@@ -122,8 +123,8 @@ export class CafeespecificoPage implements OnInit {
     }
   }
 
- 
-  
+
+
   isFavorito(drinkId: string): boolean {
     return this.favoritos.has(drinkId);
   }
