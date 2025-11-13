@@ -164,8 +164,11 @@ export class CafeespecificoPage implements OnInit {
     }
 
     // Se não foi clicado na patinha, apenas navega para detalhes
+    // Passa o ID pela rota e preço como queryParam (nova forma) - mantém localStorage como backup
     localStorage.setItem('drinkSelecionado', JSON.stringify(drink));
-    this.router.navigate(['/cafedetalhes']);
+    this.router.navigate(['/cafedetalhes', drink.idDrink], {
+      queryParams: { preco: drink.preco },
+    });
   }
    ionViewWillEnter() {
     this.categoriaAtiva = 'cafes';

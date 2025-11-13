@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { IonicModule } from '@ionic/angular';
 import { CommonModule } from '@angular/common';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { addIcons } from 'ionicons';
 import {
@@ -25,6 +25,7 @@ import {
 })
 export class CafeDetalhePage implements OnInit {
   drink: any;
+  preco: string | null = null;
   descricao = '';
   avaliacao = 0;
   tamanhoSelecionado = '';
@@ -65,6 +66,7 @@ export class CafeDetalhePage implements OnInit {
 
   constructor(
     private router: Router,
+    private route: ActivatedRoute,
     private http: HttpClient,
     private carrinhoService: CarrinhoService
   ) {
@@ -78,47 +80,93 @@ export class CafeDetalhePage implements OnInit {
   }
 
   ngOnInit() {
-    const dados = localStorage.getItem('drinkSelecionado');
-    if (dados) {
-      this.drink = JSON.parse(dados);
-
-      const tamanhosPadrao: any = {
-        'Cafe Savoy': 'Médio',
-        'Irish Coffee': 'Pequeno',
-        'Espresso Martini': 'Médio',
-        'Coffee Liqueur': 'Grande',
-        'Coffee-Vodka': 'Grande',
-        Danbooka: 'Médio',
-      };
-
-      this.tamanhoSelecionado = tamanhosPadrao[this.drink.strDrink] || 'Médio';
-
-      const detalheCustom = this.descricaoPersonalizada[this.drink.strDrink];
-      if (detalheCustom) {
-        this.descricao = detalheCustom.descricao;
-        this.avaliacao = detalheCustom.avaliacao;
-      } else {
-        this.http
-          .get(
-            `https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${this.drink.idDrink}`
-          )
-          .subscribe((res: any) => {
-            const detalhe = res.drinks[0];
-            this.descricao =
-              detalhe.strInstructions || 'Sem descrição disponível.';
-            this.avaliacao = 0;
-          });
-      }
-
-      // Verifica se o item está no carrinho
-      this.carrinhoService.getCarrinho().subscribe((itens) => {
-        this.estaNoCarrinho = itens.some(
-          (item) => item.id === parseInt(this.drink.idDrink)
-        );
-      });
+    // Tenta pegar o ID da rota primeiro (nova forma)
+    const id = this.route.snapshot.paramMap.get('id');
+    this.preco = this.route.snapshot.queryParamMap.get('preco');
+    
+    if (id) {
+      // Busca os dados da API usando o ID da rota
+      this.http
+        .get(
+          `https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${id}`
+        )
+        .subscribe({
+          next: (res: any) => {
+            if (res.drinks && res.drinks.length > 0) {
+              this.drink = res.drinks[0];
+              // Se não tiver preço na query, tenta pegar do localStorage
+              if (!this.preco) {
+                const dados = localStorage.getItem('drinkSelecionado');
+                if (dados) {
+                  const drinkLocal = JSON.parse(dados);
+                  if (drinkLocal.idDrink === id) {
+                    this.preco = drinkLocal.preco;
+                  }
+                }
+              }
+              // Adiciona o preço ao drink se não tiver
+              if (this.preco && !this.drink.preco) {
+                this.drink.preco = this.preco;
+              }
+              this.carregarDadosDoDrink();
+            } else {
+              this.router.navigate(['/cafeespecifico']);
+            }
+          },
+          error: () => {
+            this.router.navigate(['/cafeespecifico']);
+          }
+        });
     } else {
-      this.router.navigate(['/cafeespecifico']);
+      // Fallback: usa localStorage (compatibilidade com código antigo)
+      const dados = localStorage.getItem('drinkSelecionado');
+      if (dados) {
+        this.drink = JSON.parse(dados);
+        this.preco = this.drink.preco;
+        this.carregarDadosDoDrink();
+      } else {
+        this.router.navigate(['/cafeespecifico']);
+      }
     }
+  }
+
+  private carregarDadosDoDrink() {
+    if (!this.drink) return;
+
+    const tamanhosPadrao: any = {
+      'Cafe Savoy': 'Médio',
+      'Irish Coffee': 'Pequeno',
+      'Espresso Martini': 'Médio',
+      'Coffee Liqueur': 'Grande',
+      'Coffee-Vodka': 'Grande',
+      Danbooka: 'Médio',
+    };
+
+    this.tamanhoSelecionado = tamanhosPadrao[this.drink.strDrink] || 'Médio';
+
+    const detalheCustom = this.descricaoPersonalizada[this.drink.strDrink];
+    if (detalheCustom) {
+      this.descricao = detalheCustom.descricao;
+      this.avaliacao = detalheCustom.avaliacao;
+    } else {
+      this.http
+        .get(
+          `https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${this.drink.idDrink}`
+        )
+        .subscribe((res: any) => {
+          const detalhe = res.drinks[0];
+          this.descricao =
+            detalhe.strInstructions || 'Sem descrição disponível.';
+          this.avaliacao = 0;
+        });
+    }
+
+    // Verifica se o item está no carrinho
+    this.carrinhoService.getCarrinho().subscribe((itens) => {
+      this.estaNoCarrinho = itens.some(
+        (item) => item.id === parseInt(this.drink.idDrink)
+      );
+    });
   }
 
   voltar() {

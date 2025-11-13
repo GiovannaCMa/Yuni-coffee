@@ -178,8 +178,11 @@ export class BebidasFriasPage implements OnInit {
     }
 
     // Se não foi clicado na patinha, apenas navega para detalhes
+    // Passa o ID pela rota e preço como queryParam (nova forma) - mantém localStorage como backup
     localStorage.setItem('drinkSelecionado', JSON.stringify(drink));
-    this.router.navigate(['/bebidasFriasDetalhes']);
+    this.router.navigate(['/bebidasFriasDetalhes', drink.idDrink], {
+      queryParams: { preco: drink.preco },
+    });
   }
 
   adicionarAoCarrinho(drink: any, event?: Event) {

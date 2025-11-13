@@ -21,11 +21,25 @@ export const routes: Routes = [
   },
 
   {
+    path: 'bebidasFriasDetalhes/:id',
+    loadComponent: () =>
+      import(
+        './pages/bebidasFrias/friosDetalhes/bebidasFriasDetalhes.page'
+      ).then((m) => m.BebidasFriasDetalhesPage),
+  },
+  {
     path: 'bebidasFriasDetalhes',
     loadComponent: () =>
       import(
         './pages/bebidasFrias/friosDetalhes/bebidasFriasDetalhes.page'
       ).then((m) => m.BebidasFriasDetalhesPage),
+  },
+  {
+    path: 'cafedetalhes/:id',
+    loadComponent: () =>
+      import('./pages/cafeespecifico/cafeDetalhe/cafeDetalhe.page').then(
+        (m) => m.CafeDetalhePage
+      ),
   },
   {
     path: 'cafedetalhes',
@@ -72,6 +86,7 @@ export const routes: Routes = [
   },
   {
     path: 'carrinho',
-    loadComponent: () => import('./pages/carrinho/carrinho.page').then( m => m.CarrinhoPage)
+    loadComponent: () =>
+      import('./pages/carrinho/carrinho.page').then((m) => m.CarrinhoPage),
   },
 ];
