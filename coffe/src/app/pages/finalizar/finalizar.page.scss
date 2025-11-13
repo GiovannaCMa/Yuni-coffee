@@ -65,8 +65,9 @@ ion-content {
 
 /* Gato grande no rodapé */
 .gato-rodape {
-  width: 90%;
-  max-width: 280px;
-  margin-bottom: 10px;
-  filter: drop-shadow(0 0 8px rgba(0, 0, 0, 0.4));
+  top: 54%; /* centralizado verticalmente */
+  left: 50%; /* centralizado horizontalmente */
+  transform: translate(30%, -23%); /* centralização perfeita */
+  width: 400px; /* ajuste conforme o tamanho do seu gato */
+  z-index: 10; /* garante que fique por cima dos outros elementos */
 }

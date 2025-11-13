@@ -19,7 +19,7 @@ import {
 @Component({
   selector: 'app-cafe-detalhes',
   standalone: true,
-  imports: [IonicModule, CommonModule, HttpClientModule],
+  imports: [IonicModule, CommonModule],
   templateUrl: './cafeDetalhe.page.html',
   styleUrls: ['./cafeDetalhe.page.scss'],
 })
@@ -185,7 +185,7 @@ export class CafeDetalhePage implements OnInit {
     if (this.estaNoCarrinho) {
       this.carrinhoService.remover(itemId);
       this.estaNoCarrinho = false;
-      
+
       // Remove dos favoritos
       const favoritosSalvos = localStorage.getItem('favoritosCafes');
       if (favoritosSalvos) {
@@ -203,7 +203,7 @@ export class CafeDetalhePage implements OnInit {
       };
       this.carrinhoService.adicionar(item);
       this.estaNoCarrinho = true;
-      
+
       // Adiciona aos favoritos
       const favoritosSalvos = localStorage.getItem('favoritosCafes');
       const favoritos = favoritosSalvos ? new Set(JSON.parse(favoritosSalvos)) : new Set();
