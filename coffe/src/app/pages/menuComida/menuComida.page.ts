@@ -10,7 +10,7 @@ import {
   CarrinhoService,
   ItemCarrinho,
 } from 'src/app/services/carrinho.service';
-
+import { ComidasServiceBreakfast,ComidasServiceDessert } from 'src/app/services/comidas.service';
 @Component({
   selector: 'app-menu-comida',
   templateUrl: './menuComida.page.html',
@@ -34,7 +34,9 @@ export class MenuComidaPage implements OnInit {
   constructor(
     private http: HttpClient,
     private router: Router,
-    private carrinhoService: CarrinhoService
+    private carrinhoService: CarrinhoService,
+    private breakfast: ComidasServiceBreakfast,
+    private dessert:ComidasServiceDessert
   ) {}
 
   selecionarCategoria(categoria: string) {
@@ -105,11 +107,6 @@ export class MenuComidaPage implements OnInit {
       }
     });
 
-    const breakfastUrl =
-      'https://www.themealdb.com/api/json/v1/1/filter.php?c=Breakfast';
-    const dessertUrl =
-      'https://www.themealdb.com/api/json/v1/1/filter.php?c=Dessert';
-
     const proibidos = [
       'sushi',
       'poutine',
@@ -172,14 +169,10 @@ export class MenuComidaPage implements OnInit {
     ]; // IDs que você quer tirar
 
     forkJoin({
-      breakfast: this.http.get(breakfastUrl).pipe(
-        map((res: any) => res.meals || []),
-        catchError(() => of([]))
-      ),
-      dessert: this.http.get(dessertUrl).pipe(
-        map((res: any) => res.meals || []),
-        catchError(() => of([]))
-      ),
+      breakfast:
+        this.breakfast.getBreakfast(),
+      dessert:
+        this.dessert.getDesserts(),
     }).subscribe({
       next: (responses) => {
         const todasComidas = [...responses.breakfast, ...responses.dessert];
